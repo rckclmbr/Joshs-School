@@ -1,0 +1,13 @@
+Application Layer
+
+http://en.wikipedia.org/wiki/Application_layer
+http://www.webopedia.com/quick_ref/OSI_Layers.asp 
+
+--This layer interfaces directly to and performs common application services for the application processes.
+--This layer supports application and end-user processes
+--Everything is application-specific.
+--Provide services for application, although some, like ftp and telnet, and pretty much the application itself.
+--Requests the Presentation Layer
+--Points to the data to be moved.
+
+http, gopher, bittorrent, ftp, irc, smtp, ssh, AIM (AOL IM Protocol)

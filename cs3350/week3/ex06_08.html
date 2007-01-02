@@ -1,0 +1,49 @@
+<?xml version  = "1.0" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+	"http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+
+<html xmlns = "http://www.w3.org/1999/xhtml">
+	<head>
+		<title>GreenMove
+		</title>
+		
+		<style type="text/css">
+		td {
+			padding: 5px /* So the text isn't right next to the border */
+		}
+		.red {
+			background-color: red;
+			font-weight: bold /* Added so we can see the writing better */
+		}
+		
+		.blue {
+			background-color: blue;
+			font-weight: bold /* Added so we can see the writing better */
+		}
+		
+		.yellow {
+			background-color: yellow;
+			font-weight: bold /* Added so we can see the writing better */
+		}
+		</style>
+	</head>
+	
+	<body>
+		<form name="theForm" method="post" action="#">
+			<label>Red<input type="radio" name="color" value="red" checked></label>
+			<label>Blue<input type="radio" name="color" value="blue"></label>
+			<label>Yellow<input type="radio" name="color" value="yellow"></label>
+		</form>
+		<table border="1" width="150px" cellspacing="2">
+			<tr>
+				<td class="red">Red: 0%</td>
+			</tr>
+			<tr>
+				<td class="blue">Blue: 0%</td>
+			</tr>
+			<tr>
+				<td class="yellow">Yellow: 0%</td>
+			</tr>
+		</table>
+	</body>
+</html>

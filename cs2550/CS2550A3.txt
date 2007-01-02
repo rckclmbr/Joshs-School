@@ -1,0 +1,56 @@
+CS2550 SQL Assignment 3
+September 7, 2006
+Joshua Braegger
+
+
+1.
+SELECT DISTINCT staffNo
+FROM PropertyForRent
+WHERE type = 'Flat'
+AND staffNo IS NOT NULL;
+
+2.
+SELECT clientNo, dateJoined
+FROM Registration;
+
+3.
+SELECT lName, fName
+FROM PrivateOwner
+ORDER BY lName, fName;
+
+4.
+SELECT propertyNo, rent
+FROM PropertyForRent
+WHERE type = 'Flat'
+ORDER BY rent DESC;
+
+5.
+SELECT lName, fName
+FROM Staff
+ORDER BY salary DESC;
+
+6.
+SELECT propertyNo
+FROM PropertyForRent
+WHERE branchNo = 'B003';
+
+7.
+SELECT DISTINCT  propertyNo
+FROM Viewing
+WHERE viewDate IS NOT NULL;
+
+8.
+SELECT lName, fName
+FROM Staff
+ORDER BY MONTH(DOB);
+
+9.
+SELECT PropertyNo
+FROM PropertyForRent
+WHERE rooms IN (3,4,5);
+
+10.
+SELECT lName, fName
+FROM Staff
+WHERE position = 'Manager'
+AND salary > 22000;

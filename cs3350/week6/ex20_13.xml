@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+
+<jobs>
+	<person name="Joe">
+		<job>Programmer</job>
+		<department>Engineering</department>
+		<cubicle>5E</cubicle>
+	</person>
+	<person name="Erin">
+		<job>Designer</job>
+		<department>Marketing</department>
+		<cubicle>9m</cubicle>
+	</person>
+	<person name="Melissa">
+		<job>Designer</job>
+		<department>Human Resources</department>
+		<cubicle>8H</cubicle>
+	</person>
+	<person name="Craig">
+		<job>Administrator</job>
+		<department>Engineering</department>
+		<cubicle>4E</cubicle>
+	</person>
+	<person name="Eileen">
+		<job>Project Coordinator</job>
+		<department>Marketing</department>
+		<cubicle>3M</cubicle>
+	</person>
+	<person name="Danielle">
+		<job>Programmer</job>
+		<department>Engineering</department>
+		<cubicle>12E</cubicle>
+	</person>
+	<person name="Frank">
+		<job>Salesperson</job>
+		<department>Marketing</department>
+		<cubicle>17M</cubicle>
+	</person>
+	<person name="Corinne">
+		<job>Programmer</job>
+		<department>Technical Support</department>
+		<cubicle>19T</cubicle>
+	</person>
+</jobs>

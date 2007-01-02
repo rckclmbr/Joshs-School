@@ -1,0 +1,2 @@
+This is a special test file which helps to illustrate the use of random access
+in Java. A specific letter will be substituted in place of every fifth character.

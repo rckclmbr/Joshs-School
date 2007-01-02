@@ -1,0 +1,84 @@
+Joshua Braegger
+CS2550A11
+November 21. 2006
+
+4.
+CREATE TABLE Inspections (
+PKey INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+propertyNo VARCHAR(4),
+staffNo VARCHAR(4),
+iDate DATETIME,
+
+FOREIGN KEY (propertyNo) REFERENCES PropertyForRent(propertyNo),
+FOREIGN KEY (staffNo) REFERENCES Staff(staffNo),
+FOREIGN KEY (staffNo) REFERENCES Inspections(staffNo)
+);
+
+INSERT INTO Inspections (propertyNo, staffNo, iDate)
+VALUES ('PA14','SG5',DATE '2006-03-01');
+INSERT INTO Inspections (propertyNo, staffNo, iDate)
+VALUES ('PA14','SG5',DATE '2006-02-02');
+INSERT INTO Inspections (propertyNo, staffNo, iDate)
+VALUES ('PG16','SA9',DATE '2006-03-01');
+INSERT INTO Inspections (propertyNo, staffNo, iDate)
+VALUES ('PL94','SG14',DATE '2006-02-03');
+INSERT INTO Inspections (propertyNo, staffNo, iDate)
+VALUES ('PL94','SG5',DATE '2006-02-15');
+
+5. 
+INSERT INTO Staff
+VALUES ('SG13', 'B002', 'Simon', 'Cowell', 'Manager','M',DATE '1972-12-17',32500);
+
+6.
+INSERT INTO Inspections (propertyNo, staffNo, iDate)
+VALUES ('PG16','SG13',DATE '2006-02-03');
+INSERT INTO Inspections (propertyNo, staffNo, iDate)
+VALUES ('PG21','SG13',DATE '2006-02-03');
+
+7.
+SELECT *
+FROM Staff;
+
+SELECT *
+FROM Inspections;
+
+8.
+SELECT @myVar:=MAX(salary)
+FROM Staff 
+LIMIT 1;
+
+UPDATE Staff
+SET 
+	salary = @myVar * 1.03,
+	position = 'Director'
+WHERE staffNo = 'SG13';
+
+SELECT *
+FROM Staff
+WHERE staffNo = 'SG13';
+
+9.
+SELECT PropertyForRent.street, PropertyForRent.propertyNo
+FROM PropertyForRent INNER JOIN Inspections ON PropertyForRent.propertyNo = Inspections.propertyNo
+WHERE Inspections.staffNo = 'SG13';
+
+10.
+DELETE
+FROM Staff
+WHERE staffNo = 'SG13';
+
+11.
+DELETE
+FROM Inspections
+WHERE staffNo = 'SG13';
+DELETE
+FROM Staff
+WHERE staffNo = 'SG13';
+
+12.
+SELECT *
+FROM Staff;
+
+SELECT *
+FROM Inspections;
+

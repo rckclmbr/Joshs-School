@@ -1,0 +1,31 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<title>Form</title>
+	<style type="text/css">
+		label {
+			display: inline-block;
+			width: 100px;
+		}
+		div {
+			border: 1px solid black;
+			padding: 20px;
+			width: 400px;
+		}
+	</style>
+
+</head>
+
+<body>
+
+<div>
+<form name="theform" method="post" action="ex26_13.php">
+	<label for="url" >URL:</label><input type="text" name="url" maxlength="50" /><br />
+	<label for="desc">Description:</label><input type="text" name="desc" maxlength="30" /><br />
+	<input type="button" value="Submit" onclick="document.theform.submit()" />
+</form>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,86 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<!-- Fig. 26.13: form.html                  --> 
+<!-- Form for use with the form.php program -->
+
+<html xmlns = "http://www.w3.org/1999/xhtml">
+   <head>
+      <title>Sample form to take user input in XHTML</title>
+   </head>
+
+   <body>
+   
+      <h1>This is a sample registration form.</h1>
+      Please fill in all fields and click Register.
+   
+      <!-- post form data to form.php -->
+      <form method = "post" action = "ex26_10.php">
+         <img src = "images/user.gif" alt = "User" /><br />
+         <span style = "color: blue">
+            Please fill out the fields below.<br />
+         </span>
+
+         <!-- create four text boxes for user input -->
+         <img src = "images/fname.gif" alt = "First Name" /> 
+         <input type = "text" name = "fname" /><br />
+      
+         <img src = "images/lname.gif" alt = "Last Name" />
+         <input type = "text" name = "lname" /><br />
+      
+         <img src = "images/email.gif" alt = "Email" /> 
+         <input type = "text" name = "email" /><br />
+      
+         <img src = "images/phone.gif" alt = "Phone" /> 
+         <input type = "text" name = "phone" /><br />
+      
+         <span style = "font-size: 10pt">
+            Must be in the form (555)555-5555</span>
+         <br /><br />
+      
+         <img src = "images/downloads.gif" 
+            alt = "Publications" /><br />
+
+         <span style = "color: blue">
+            Which book would you like information about?
+         </span><br />
+
+         <!-- create drop-down list containing book names -->
+         <select name = "book">
+            <option>Internet and WWW How to Program 3e</option>
+            <option>C++ How to Program 4e</option>
+            <option>Java How to Program 5e</option>
+            <option>XML How to Program 1e</option>
+         </select>
+         <br /><br />
+
+         <img src = "images/os.gif" alt = "Operating System" />
+         <br /><span style = "color: blue">
+            Which operating system are you currently using?
+         <br /></span>
+
+         <!-- create five radio buttons -->
+         <input type = "radio" name = "os" value = "Windows XP"
+            checked = "checked" /> 
+            Windows XP
+      
+         <input type = "radio" name = "os" value =  
+            "Windows 2000" />
+            Windows 2000
+      
+         <input type = "radio" name = "os" value =  
+            "Windows 98" />
+            Windows 98<br />
+      
+         <input type = "radio" name = "os" value = "Linux" /> 
+            Linux
+      
+         <input type = "radio" name = "os" value = "Other" /> 
+            Other<br />
+
+          <!-- create a submit button -->
+         <input type = "submit" value = "Register" />
+      </form>
+
+   </body>
+</html>

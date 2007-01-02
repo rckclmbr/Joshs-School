@@ -1,0 +1,19 @@
+// Joshua Braegger
+// 10/11/2005
+// Program logic_c.cpp
+// Function: f is the truth value of a logical proposition.
+
+[arnie@www project3]$ ./logic_c 1 1000
+4
+484
+676
+[arnie@www project3]$ ./logic_c 1000 1000000
+40804
+44944
+69696
+698896
+[arnie@www project3]$ ./logic_c 1000000 10000000
+4008004
+6948496
+
+// Takes a long time to search for any larger KNumbers

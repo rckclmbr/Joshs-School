@@ -1,0 +1,226 @@
+//			Joshua Braegger
+//			CS 1410 - 11 am
+//			Assignment #2
+//			Mr. Hart
+//			Due:  09/19/05
+//------------------------------------------------------
+// This program gets two inputs for time format hh:mm:ss
+// and outputs the two times.
+// -----------------------------------------------------
+
+
+// Compiler directives
+#include <iostream>
+#include <fstream>
+#include <cmath>
+#include <iomanip>	// for manipulators
+using namespace std;
+
+// Structer "Time" declaration
+struct Time {
+	int Hours;
+	int Minutes;
+	int Seconds;
+};
+
+// Function declarations
+int Input_Time (Time&);		// Populates a time value (hours,
+				// minutes, and seconds) and returns
+				// a code indicating valid or invalid
+				// data.
+void Display_Time(Time);	// Accepts hours, minutes, seconds, and
+				// returns nothing.
+long Time_To_Seconds(Time);	// Accept hours, minutes, seconds and returns
+				// the total seconds.
+Time Seconds_To_Time(long);	// Acceps total seconds and returns hours,
+				// minutes and seconds.
+void Print_Zero(int);		// Accepts an hours, minutes, or seconds value
+				// and prints a zero if the value < 10.
+				// Called from Display_Time().
+ofstream fout;			// Get our file output
+
+int main()
+{
+	int onCase = 1,
+	    error,		// Used to check whether or not inputs were good or not
+	    error2;		// Same as error, but for the second Time input
+	Time theTime1,		// The first Time variable to subtract
+	     theTime2,		// The second Time variable to subtract
+	     theTimeTotal;	// The difference of the times
+	long secondsDiff,	// Difference of the seconds
+	     seconds1,		// The total seconds for the first theTime
+	     seconds2;		// The total seconds for the second theTime
+
+	fout.open("time.txt");
+
+	// For loop to process the cases 10 times
+	for(onCase = 1; onCase <=10; onCase++)
+	{
+		// Initialize variables for each iteration 
+		theTime1.Hours = 0;
+		theTime1.Minutes = 0;
+		theTime1.Seconds = 0;
+		theTime2.Hours = 0;
+		theTime2.Minutes = 0;
+		theTime2.Seconds = 0;
+
+		// Asks for the two input times for the case
+		cout << endl << "Enter time for first time (Military Format)" << endl;	
+		error = Input_Time(theTime1);
+		cout << "Enter time for second time (Military Format)" << endl;
+		error2 = Input_Time(theTime2);
+
+		// Print the first and second times
+		cout << endl << "Case " << onCase << ": ";
+		fout << endl << "Case " << onCase << ": ";
+		cout << "First time: ";
+		fout << "First time: ";
+		Display_Time(theTime1);
+		cout << "        Second time: ";
+		fout << "        Second time: ";
+		Display_Time(theTime2);
+		cout << "        "; 
+		fout << "        "; 
+
+		// Check the errors, and display a message relating to the error
+		if(error == 1 || error2 == 1)
+		{
+			cout << "Hours must be greater than 0" << endl;
+			fout << "Hours must be greater than 0" << endl;
+		}
+		if(error ==  2 || error2 ==  2)
+		{
+			cout << "Hours must be less than 24" << endl;
+			fout << "Hours must be less than 24" << endl;
+		}
+		if(error ==  3 || error2 ==  3)
+		{
+			cout << "Minutes must be greater than 0" << endl;
+			fout << "Minutes must be greater than 0" << endl;
+		}
+		if(error ==  4 || error2 ==  4)
+		{
+			cout << "Minutes must be less than 60"  << endl;
+			fout << "Minutes must be less than 60"  << endl;
+		}
+		if(error ==  5 || error2 ==  5)
+		{
+			cout << "Seconds must be greater than 0" << endl;
+			fout << "Seconds must be greater than 0" << endl;
+		}
+		if(error ==  6 || error2 == 6)
+		{
+			cout << "Seconds must be less than 60" << endl;
+			fout << "Seconds must be less than 60" << endl;
+		}
+
+		// If there's no errors in either time, then calculate the totals
+		if(error == 0 && error2 == 0)
+		{
+		seconds1 = Time_To_Seconds(theTime1);
+		seconds2 = Time_To_Seconds(theTime2);
+
+		// Perform calculations
+		secondsDiff = seconds1 + seconds2;
+		secondsDiff = secondsDiff;
+		
+		// Change seconds back to time, and print the total time
+		theTimeTotal = Seconds_To_Time(secondsDiff);
+		cout << "Total time: ";
+		fout << "Total time: ";
+		Display_Time(theTimeTotal);
+		}
+		
+	}
+	fout.close();		// Close our file
+	return 0;
+}
+
+int Input_Time(Time& theTime)	
+{
+	int good = 0;		// Used to check whether a value is good or not
+
+	// Get user input
+	cout << "Enter the hours: ";
+	cin >> theTime.Hours;
+	cout << "Enter the minutes: ";
+	cin >> theTime.Minutes;
+	cout << "Enter the seconds: ";
+	cin >> theTime.Seconds;
+
+	// Get error codes depending on what's happening
+	if(theTime.Hours < 0)
+		good = 1;
+	if(theTime.Hours >= 24)
+		good = 2;
+	if(theTime.Minutes < 0)
+		good = 3;
+	if(theTime.Minutes >= 60)
+		good = 4;
+	if(theTime.Seconds < 0)
+		good = 5;
+	if(theTime.Seconds >= 60)
+		good = 6;
+
+	return good;
+}
+
+// Function that converts seconds to time, and returns Time
+Time Seconds_To_Time(long seconds)
+{
+	Time theTime;
+
+	// Get and check Hours if it's > 24
+	theTime.Hours = seconds / 3600;		// Calculate how many hours
+	if(theTime.Hours >= 24)
+		theTime.Hours = theTime.Hours - 24;
+
+	seconds = seconds % 3600;		// Get remaining seconds
+	theTime.Minutes = seconds / 60;		// Calculate the remaining minutes
+	seconds = seconds % 60;			// Get remaining seconds
+	theTime.Seconds = seconds;		// Calculate the remaining seconds
+
+	return theTime;
+}
+
+// Function that converts time to seconds, and returns seconds
+long Time_To_Seconds(Time theTime)
+{
+	long seconds = 0;		// The total time in seconds
+
+	seconds = theTime.Hours * 3600;
+	seconds += theTime.Minutes * 60;
+	seconds += theTime.Seconds;
+
+	return seconds;
+}
+
+// Functino to display the time
+void Display_Time(Time theTime)
+{
+	// Single-line output, format HH:MM:SS
+	Print_Zero(theTime.Hours);
+	cout << abs(theTime.Hours) << ":";
+	fout << abs(theTime.Hours) << ":";
+	Print_Zero(theTime.Minutes);
+	cout << abs(theTime.Minutes) << ":";
+	fout << abs(theTime.Minutes) << ":";
+	Print_Zero(theTime.Seconds);
+	cout << abs(theTime.Seconds) << endl;
+	fout << abs(theTime.Seconds) << endl;
+}
+
+// Functino to print a zero if the integer passed is < 10
+void Print_Zero(int isUnderTen)
+{
+	if(isUnderTen < 10 && isUnderTen >= 0)
+	{
+		cout << "0";
+		fout << "0";
+	}
+	if(isUnderTen < 0)
+	{
+		cout << "-0";
+		fout << "-0";
+	}
+}

@@ -1,0 +1,28 @@
+// Joshua Braegger
+
+
+find() function: 
+x = { 1, 2, 3, 4, 4, }
+First element that matches 4 is at location 3
+
+count() function: 
+x = { 2, 4, 5, 6, 5, }
+The number of 5's in x[] is: 2
+
+sort() (ascending) function: 
+x = { Mike, Joe, Josh, David, Harry, }
+sort() of x = { David, Harry, Joe, Josh, Mike, }
+
+search() function:
+x = { 1.23, 1.45, 2.5, 6, 2.56, }
+x2 = { 2.5, 6, }
+First location of searching for x2 in x1 is: 2
+
+merge() function:
+x = { 1, 2, 5, 6, 9, }
+x2 = { 7, 12, }
+merged x1 and x2 = { 1, 2, 5, 6, 7, 9, 12, } 
+
+for_each() function:
+x = { 1, 2, 3, 4, 5, }
+2 4 6 8 10 

@@ -1,0 +1,36 @@
+Joshua Braegger
+11/12/06
+CS2550A10
+
+4.
+SELECT staffNo, fName, lNameFROM StaffORDER BY salary DESCLIMIT 1;
+
+staffNo  	 fName  lNameSL21 		 John 	White
+
+5.
+SELECT DISTINCT Client.fName, Client.lName
+FROM Client INNER JOIN
+	Viewing ON Client.clientNo = Viewing.clientNo
+
+fName   lNameAline 	StewartMary 	TregearJohn 	Kay
+
+6.
+SELECT DISTINCT Client.fName, Client.lNameFROM Viewing INNER JOIN	Client ON Client.clientNo = Viewing.clientNo INNER JOIN	PropertyForRent pfr ON pfr.propertyNo = Viewing.propertyNo
+WHERE pfr.type <> Client.prefType;
+
+fName   lNameAline 	StewartMary 	Tregear
+
+7.
+SELECT DISTINCT Client.fName, Client.lNameFROM Viewing INNER JOIN	Client ON Client.clientNo = Viewing.clientNo INNER JOIN	Registration ON Registration.clientNo = Client.clientNo
+WHERE YEAR(Viewing.viewDate) = YEAR(Registration.dateJoined);
+
+fName   lNameAline 	StewartMary 	TregearJohn 	Kay
+
+8.
+SELECT AVG(salary) AS avgSalary, position
+FROM Staff
+GROUP BY position
+ORDER BY `avgSalary` DESC
+LIMIT 1;
+
+avgSalary  	position27000.0000 	Manager

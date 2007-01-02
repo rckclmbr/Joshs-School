@@ -1,0 +1,49 @@
+CS2550 SQL Assignment 1
+August 31, 2006
+Joshua Braegger
+
+1.
+SELECT fName, lName
+FROM Staff
+WHERE sex = 'M'
+    AND position = 'Manager';
+
+2.
+SELECT position,  lName, fName, sex
+FROM Staff;
+
+3.
+SELECT DISTINCT ownerNo
+FROM PropertyForRent;
+
+4.
+SELECT salary/12 AS salary
+FROM Staff;
+
+5.
+SELECT DISTINCT type
+FROM PropertyForRent;
+
+6.
+SELECT propertyNo, type, rooms
+FROM PropertyForRent;
+
+7.
+SELECT fName, lName, position, DOB
+FROM Staff
+WHERE position = 'Assistant';
+
+8.
+SELECT fName, lName
+FROM PrivateOwner
+WHERE address like '*Aberdeen*';
+
+9.
+SELECT DISTINCT city
+FROM PropertyForRent
+WHERE rent > 450;
+
+10.
+SELECT fName, lName
+FROM Staff
+WHERE salary BETWEEN 20000 AND 40000;

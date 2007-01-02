@@ -1,0 +1,27 @@
+Joshua Braegger
+SURVEY
+Homework #1
+
+Q0: Tell me a little about yourself. More specifically, what kind of work do you do, if any? 
+I am currently employed at Mortgage Computer, where we create a web-based Loan Servicing package for credit unions and small banks.  It's written in Coldfusion, and interacts with SQL Server 2000.  We also have a few small php applications that we keep updated (fix bugs every once in a while, etc).
+
+Q1: What experience do you have with Internet programming? 
+I have experience at my current job and also create webpages for local small businesses on the side.
+
+Q2: List everything, what your programming and software engineering strengths are, weaknesses are.
+My biggest strength is I like what I do.  As far as weaknesses go, even the smallest thing can be a weakness if I can't figure out a problem.
+
+Q3: Do you prefer the typical cut and dried course or one that allows for special projects that appeal to possible interests and areas you are unfamiliar with?
+As long as I know I'm learning something that will help me in the future in some way, it doesn't really matter how I learn it.  The hard part is realizing that the information I am learning is actually going to help.
+
+Q4: Do you prefer to work in groups, or by yourself at school? What about in the workplace?
+All of the above.
+
+Q5: What experience do you have taking an Internet course?
+I've taken three or four.
+
+Q6: What expectations do you have for an Internet class? This class?
+As long as I'm learning something, and the professor keeps in contact if I have any questions, all will be good.
+
+Q7: Why did you take this class at this time?
+I feel it will give a foundation for some of the things I am weak in, since this course covers a wide variety of topics, whereas the workplace focuses only on certain areas.

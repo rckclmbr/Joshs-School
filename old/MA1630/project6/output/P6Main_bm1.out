@@ -1,0 +1,16 @@
+Matrix BM1
+  1  0  0  0  0  0  0  0
+  1  1  0  0  0  0  0  0
+  0  0  1  0  0  0  0  0
+  1  0  0  1  0  0  0  0
+  0  0  0  0  1  0  0  0
+  0  0  1  0  0  1  0  0
+  1  0  0  0  0  0  1  0
+  1  0  1  0  0  0  1  1
+Is the digraph Reflexive? Yes
+Is the digraph Symmetric? No
+Is the digraph Transitive? Yes
+Does the digraph have any Cycles? Yes
+Is the digraph weakly connected? No
+Does the digraph have a root node? If so, where? No
+Is the digraph a tree? No

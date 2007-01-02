@@ -1,0 +1,119 @@
+Enter the word you want: hello tehre
+Enter number of guesses: 3
+
+
+Guesses left: 3
+Word: _____ _____
+
+Guessed letters: None
+
+Enter a letter to guess: h
+Guesses left: 3
+Word: h____ __h__
+
+Guessed letters: h 
+
+Enter a letter to guess: a
+
+Invalid guess, try again
+
+Guesses left: 2
+Word: h____ __h__
+
+Guessed letters: a h 
+
+Enter a letter to guess: c
+
+Invalid guess, try again
+
+Guesses left: 1
+Word: h____ __h__
+
+Guessed letters: a c h 
+
+Enter a letter to guess: 1
+
+Invalid guess, try again
+
+Guesses left: 0
+Word: h____ __h__
+Sorry, you lose
+The word was: hello tehre
+
+Enter the word you want: howdy1
+Enter number of guesses: 3
+
+
+Guesses left: 3
+Word: ______
+
+Guessed letters: None
+
+Enter a letter to guess: w
+Guesses left: 3
+Word: __w___
+
+Guessed letters: w 
+
+Enter a letter to guess: 1
+Guesses left: 3
+Word: __w__1
+
+Guessed letters: 1 w 
+
+Enter a letter to guess: a
+
+Invalid guess, try again
+
+Guesses left: 2
+Word: __w__1
+
+Guessed letters: 1 a w 
+
+Enter a letter to guess: v
+
+Invalid guess, try again
+
+Guesses left: 1
+Word: __w__1
+
+Guessed letters: 1 a v w 
+
+Enter a letter to guess: z
+
+Invalid guess, try again
+
+Guesses left: 0
+Word: __w__1
+Sorry, you lose
+The word was: howdy1
+
+Enter the word you want: i win
+Enter number of guesses: 2
+
+
+Guesses left: 2
+Word: _ ___
+
+Guessed letters: None
+
+Enter a letter to guess: i
+Guesses left: 2
+Word: i _i_
+
+Guessed letters: i 
+
+Enter a letter to guess: w
+Guesses left: 2
+Word: i wi_
+
+Guessed letters: i w 
+
+Enter a letter to guess: n
+Guesses left: 2
+Word: i win
+Congraratulations, you correctly guessed the word: i win
+
+Enter the word you want: done
+
+Ending game

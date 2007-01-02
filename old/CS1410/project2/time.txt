@@ -1,0 +1,40 @@
+
+Case 1: First time: 19:43:24
+        Second time: 07:24:43
+        Total time: 03:08:07
+
+Case 2: First time: 03:31:59
+        Second time: 08:28:01
+        Total time: 12:00:00
+
+Case 3: First time: 18:17:45
+        Second time: 15:05:10
+        Total time: 09:22:55
+
+Case 4: First time: 12:12:12
+        Second time: 12:12:12
+        Total time: 00:24:24
+
+Case 5: First time: 23:09:00
+        Second time: 04:01:02
+        Total time: 03:10:02
+
+Case 6: First time: -01:05:06
+        Second time: 09:08:14
+        Hours must be greater than 0
+
+Case 7: First time: 26:05:07
+        Second time: 15:17:30
+        Hours must be less than 24
+
+Case 8: First time: 12:08:09
+        Second time: 00:-05:04
+        Minutes must be greater than 0
+
+Case 9: First time: 03:06:14
+        Second time: 16:25:17
+        Total time: 19:31:31
+
+Case 10: First time: 12:06:09
+        Second time: 03:16:-05
+        Seconds must be greater than 0

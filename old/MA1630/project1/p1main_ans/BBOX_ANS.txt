@@ -1,0 +1,46 @@
+Josh Braegger
+Discrete Math
+Tues Thurs 12:00pm-2:00pm
+Project 1 Part A
+
+BBOX71.EXE
+
+1. Domain: x = all integers where 0 < x <=16
+2. Range:  y = all integers where 1 <= y <=65535
+3. One-to-one: Yes, no two values to x result in the same output.
+4. y = 2^x - 1 where x is a real integer.
+
+BBOX72.EXE
+
+1. Domain: x = all integers where 0 < x < 100000
+2. Range:  y = T or F.
+3. One-to-one: No, x could be any number of values (1,2,3,etc) and y would still be T.
+4. y is T ONLY when x is an integer that's a palindrome (read the same backwards and forwards... ie, 101, 202, 2002) and x is within the domain of question 1.
+
+BBOX73.EXE
+
+1. Domain: A <= x <= Z
+2. Range: y = 44-49, 4A-4F. 50-59, 5A, 41-43
+3. One-to-One: Yes, I can detemine the value of x by looking at the value of y.
+4. Starting with x = a (y = 44), y increases by one integer value as you go through the letters of the alphabet, until y = 5A (x = W), then y = 41 (x = X) and continues through Z where it is one integer less than the beginning (y = 43).
+
+BBOX74.EXE
+
+1. Domain: all real numbers where 0 <= x <= 10.
+2. Range: all real numbers where 0 <= y <= 1600.
+3. One-to-one: Yes, no two values of x can be inputted for the same value of y, or vice-versa (the values are continuous).
+4. y = (100 - x^2)*16
+
+BBOX75.EXE
+
+1. Domain: a <= x < =z OR any combination of lower case letters <= 6 characters.
+2. Range: 0 <= y <= 6
+3. Vowels = 0, Consonants = 1.  y = all the characters in the combination added together (ie. abcde = (a=0,b=1,c=1,d=1,e=0) = 0+1+1+1+0 = 3).
+
+Part B
+
+(code and output on other pages)
+
+Largest value:
+Multiply/Divide - 1023
+Squares - 	  1860

@@ -1,0 +1,33 @@
+														Joshua Braegger
+														Mr Anderson
+														CS2705
+														Mon-Thurs 9am
+
+
+Chapter 9
+2, 4, 5, 7, 17
+
+2.  It's asymmetrical, meaning that you get more bandwidth for downloading than for uploading.  Businesses that need more upload wouldn't be suited for it.
+
+4.  They separate voice and data communication.
+
+5.  Discrete multitone technique (DMT).  It combines QAM and FDM.
+
+7.  It's installed at the telephone companies site.  It functions like ADSL, but packets the data to be sent to the internet.
+
+17. It's a synchronous network.  A single clock is used to handle timing/transmissions and equipment across a network.
+SONET - Synchronous Optical Network.
+
+
+Chapter 10
+2, 3, 6, 13, 16
+
+2.  Redundancy is the concept of adding extra bits for error detection. 
+
+3.  Parity check, cyclic redundancy check, and checksum.
+
+6.  In a parity check, a parity bit is added to every data unit so that the total number of 1s is even (or odd for odd-parity).  It cannot detect errors when the total number of bits changed it even, because the result would still be even, and an error wouldn't be detected.
+
+13.  The two-dimensional parity check uses addition, where the CRC uses division.  If there's a non-zero remainder, then it was a bad data unit sent.
+
+16.  From the sending end:  The unit is divided into k sections, each of n bits.  Then, all sections are added using ones comlement to get the sum.  The sum is complemented and becomes the checksum.  The checksum is then sent to the data.  From the receiving end:  The unit is divided into k sections, each of n bits.  All sections are added using ones complement to get the sum.  The sum is then complemented.  If the result is zero, the data are accepted: otherwise, they are rejected.

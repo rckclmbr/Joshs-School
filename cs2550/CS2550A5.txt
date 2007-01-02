@@ -1,0 +1,51 @@
+Joshua Braegger
+CS2550 Assignment 5
+September 28, 2006
+
+1.  
+SELECT SUM(salary) AS totalSalary
+FROM Staff
+WHERE position = 'Assistant' AND sex = 'F';
+
+2.
+SELECT AVG(rent) AS averageRent
+FROM PropertyForRent
+WHERE rooms = 3;
+
+3.
+SELECT branchNo, COUNT(clientNo) AS numReg
+FROM Registration
+GROUP BY branchNo;
+
+4.
+SELECT COUNT(clientNo) AS numPref
+FROM Client
+WHERE prefType = 'Flat';
+
+5.
+SELECT city, MAX(rent) AS maxRent
+FROM PropertyForRent
+GROUP BY city;
+
+6.
+SELECT DISTINCT position
+FROM Staff;
+
+7.
+SELECT DISTINCT branchNo
+FROM Staff;
+
+8.
+SELECT comment
+FROM Viewing
+WHERE comment IS NOT NULL;
+
+9.
+SELECT COUNT(propertyNo) AS numberProperties, city
+FROM PropertyForRent
+GROUP BY city;
+
+10.
+SELECT AVG(rooms) AS averageRooms, city
+FROM PropertyForRent
+GROUP BY city;

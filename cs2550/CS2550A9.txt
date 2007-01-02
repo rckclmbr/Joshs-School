@@ -1,0 +1,54 @@
+Joshua Braegger
+CS2550A9.txt
+Assignment 9
+
+4.
+SELECT Staff.fName, Staff.lName
+FROM Staff INNER JOIN
+	PropertyForRent ON Staff.staffNo = PropertyForRent.staffNo
+WHERE PropertyForRent.type <> 'Flat';
+
+fName  	lName  
+Mary	Howe 
+Ann 	Beech 
+
+
+5.
+SELECT fName, lName
+FROM Staff
+WHERE staffNo NOT IN (SELECT staffNo
+			FROM PropertyForRent)
+
+fName  	lName  
+Susan 	Brand 
+John 	White 
+
+6.
+SELECT Staff.fName, Staff.lName, COUNT(PropertyForRent.propertyNo) AS numProps
+FROM Staff INNER JOIN
+	PropertyForRent ON Staff.staffNo = PropertyForRent.staffNo
+GROUP BY Staff.fName, Staff.lName
+ORDER BY `numProps` DESC
+LIMIT 1;
+
+fName  	lName 	numProps  
+Ann 	Beech 	2 
+
+7.
+SELECT PropertyForRent.street
+FROM PropertyForRent INNER JOIN
+	Viewing ON Viewing.propertyNo = PropertyForRent.propertyNo
+WHERE MONTH(Viewing.viewDate) = 5 AND YEAR(Viewing.viewDate) = 2004;
+
+(no rows returned - date fields empty)
+
+8. 
+SELECT COUNT(staffNo) AS totalManagers, Branch.city
+FROM Staff INNER JOIN
+	Branch ON Staff.branchNo = Branch.branchNo
+WHERE Staff.position = 'Manager'
+GROUP BY Branch.city;
+
+totalManagers  	city  
+1 		Glasgow 
+1 		London 

@@ -1,0 +1,74 @@
+<?xml version  = "1.0" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+	"http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+
+<html xmlns = "http://www.w3.org/1999/xhtml">
+	<head>
+		<title>University Feedback Form
+		</title>
+	</head>
+	
+	<body>
+		<form name="theform" method="post" action="">
+			<p>
+				<label>Name:
+					<input type="text" name="name" />
+				</label><br />
+				<label>Address:
+					<input type="text" name="address" />
+				</label><br />
+				<label>Email:
+					<input type="text" name="email" />
+				</label>
+			</p>
+		
+			<p>
+				<h3>What you like about campus:</h3>
+				<label>Students:
+					<input type="checkbox" name="students" />
+				</label>
+				<label>Location:
+					<input type="checkbox" name="location" />
+				</label>
+				<label>Campus:
+					<input type="checkbox" name="campus" />
+				</label>
+				<label>Atmosphere:
+					<input type="checkbox" name="atmosphere" />
+				</label>
+				<label>Dorm Rooms:
+					<input type="checkbox" name="dormRooms" />
+				</label>
+				<label>Sports:
+					<input type="checkbox" name="sports" />
+				</label>
+			</p>
+			
+			<p>
+				<h3>How you became interested:</h3>
+				<label>Friends:
+					<input type="radio" name="interested" value="friends" />
+				</label>
+				<label>Televesion:
+					<input type="radio" name="interested" value="television" />
+				</label>
+				<label>Internet:
+					<input type="radio" name="interested" value="internet" />
+				</label>
+				<label>Other:
+					<input type="radio" name="interested" value="other" />
+				</label>
+			</p>
+			
+			<p>
+				<h3>Comments:</h3>
+				<textarea name="comments" rows="4" cols="36"></textarea>
+			</p>
+			
+			<p>
+				<input type="submit" value="Submit" />
+				<input type="reset" value="Reset" />
+			</p>
+		</form>
+	</body>
+</html>

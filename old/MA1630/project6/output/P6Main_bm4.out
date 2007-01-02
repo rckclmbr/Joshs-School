@@ -1,0 +1,17 @@
+Matrix BM4
+  0  0  0  0  1  0  1  0  0
+  1  0  0  1  0  0  0  0  0
+  0  0  0  0  0  0  0  0  0
+  0  0  1  0  0  0  0  1  1
+  0  0  0  0  0  0  0  0  0
+  0  1  0  0  0  0  0  0  0
+  0  0  0  0  0  0  0  0  0
+  0  0  0  0  0  0  0  0  0
+  0  0  0  0  0  0  0  0  0
+Is the digraph Reflexive? No
+Is the digraph Symmetric? No
+Is the digraph Transitive? No
+Does the digraph have any Cycles? No
+Is the digraph weakly connected? No
+Does the digraph have a root node? If so, where? Yes, 5
+Is the digraph a tree? No

@@ -1,0 +1,21 @@
+Vector:
+
+Insertion at first:      0.07
+Insertion in middle:     0.04
+Insertion at end:        0.00
+Removal at Beginning:    0.07
+Removal at middle:       0.04
+Removal at end:          0.00
+Walk forwards:           0.82
+Walk backwards:          1.52
+
+Deque:
+
+Insertion at first:      0.00
+Insertion in middle:     0.22
+Insertion at end:        0.00
+Removal at Beginning:    0.00
+Removal at middle:       0.23
+Removal at end:          0.00
+Walk forwards:           0.73
+Walk backwards:          2.18

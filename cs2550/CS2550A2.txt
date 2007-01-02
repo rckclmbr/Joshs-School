@@ -1,0 +1,27 @@
+CS2550 SQL Assignment 2
+September 7, 2006
+Joshua Braegger
+
+1.
+SELECT lName, fName
+FROM Client
+ORDER BY lName;
+
+2.
+SELECT lname, fname
+FROM Staff
+WHERE MONTH(DOB) = 6;
+
+3.
+SELECT lname, fname
+FROM Client
+WHERE prefType = 'Flat';
+
+4.
+SELECT lname, fname, maxRent
+FROM Client;
+
+5.
+SELECT branchNo
+FROM Branch
+WHERE city = 'Bristol';

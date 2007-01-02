@@ -1,0 +1,25 @@
+
+ Input   x = 20
+ Sum of squares    y = 2870
+ Multiply/divide   y = 2870
+
+ Input   x = 40
+ Sum of squares    y = 22140
+ Multiply/divide   y = 22140
+
+ Input   x = 100
+ Sum of squares    y = 338350
+ Multiply/divide   y = 338350
+
+ Input   x = 1000
+ Sum of squares    y = 333833500
+ Multiply/divide   y = 333833500
+
+ Input   x = 1500
+ Sum of squares    y = 1126125250
+ Multiply/divide   y = -305530515
+
+ Input   x = 2000
+ Sum of squares    y = -1626300296
+ Multiply/divide   y = -194644530
+

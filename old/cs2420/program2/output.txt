@@ -1,0 +1,373 @@
+What would you like to do:
+1. Create a user/seller
+2. Modify user/seller information
+3. Look-up a user/seller
+4. View all users/sellers
+5. Add an item
+6. Bid on an item
+7. View all items
+8. View a users items
+9. Remove an item
+10. Quit
+
+Choice: 1
+Is this user a seller? (y/n)> y
+Enter a username: seller1
+Enter the real name: a seller
+Enter a password: no
+Enter email address: abc@123.com
+Enter preferred payment method: none
+Enter store name: the store
+
+A new user has been created
+
+What would you like to do:
+1. Create a user/seller
+2. Modify user/seller information
+3. Look-up a user/seller
+4. View all users/sellers
+5. Add an item
+6. Bid on an item
+7. View all items
+8. View a users items
+9. Remove an item
+10. Quit
+
+Choice: 1
+Is this user a seller? (y/n)> n
+Enter a username: user1
+Enter the real name: a user
+Enter a password: no
+Enter email address: user1@abc.com
+
+A new user has been created
+
+What would you like to do:
+1. Create a user/seller
+2. Modify user/seller information
+3. Look-up a user/seller
+4. View all users/sellers
+5. Add an item
+6. Bid on an item
+7. View all items
+8. View a users items
+9. Remove an item
+10. Quit
+
+Choice: 5
+Enter sellers username: user1
+
+Invalid username
+
+What would you like to do:
+1. Create a user/seller
+2. Modify user/seller information
+3. Look-up a user/seller
+4. View all users/sellers
+5. Add an item
+6. Bid on an item
+7. View all items
+8. View a users items
+9. Remove an item
+10. Quit
+
+Choice: 5
+Enter sellers username: seller1
+
+Enter item name: new item
+Enter item description: no desc
+
+A new item has been created
+
+
+What would you like to do:
+1. Create a user/seller
+2. Modify user/seller information
+3. Look-up a user/seller
+4. View all users/sellers
+5. Add an item
+6. Bid on an item
+7. View all items
+8. View a users items
+9. Remove an item
+10. Quit
+
+Choice: 5
+Enter sellers username: item 2
+
+Invalid username
+
+What would you like to do:
+1. Create a user/seller
+2. Modify user/seller information
+3. Look-up a user/seller
+4. View all users/sellers
+5. Add an item
+6. Bid on an item
+7. View all items
+8. View a users items
+9. Remove an item
+10. Quit
+
+Choice: Enter username of person you want to modify:
+[arnie@www program2]$ ls
+header.h  item.cpp  jbprog2.cpp  test*  user.cpp
+[arnie@www program2]$ ./test
+What would you like to do:
+1. Create a user/seller
+2. Modify user/seller information
+3. Look-up a user/seller
+4. View all users/sellers
+5. Add an item
+6. Bid on an item
+7. View all items
+8. View a users items
+9. Remove an item
+10. Quit
+
+Choice: 1
+Is this user a seller? (y/n)> y
+Enter a username: seller1
+Enter the real name: a seller
+Enter a password: no
+Enter email address: seller1@abc.com
+Enter preferred payment method: none
+Enter store name: a store
+
+A new user has been created
+
+What would you like to do:
+1. Create a user/seller
+2. Modify user/seller information
+3. Look-up a user/seller
+4. View all users/sellers
+5. Add an item
+6. Bid on an item
+7. View all items
+8. View a users items
+9. Remove an item
+10. Quit
+
+Choice: 1
+Is this user a seller? (y/n)> y
+Enter a username: seller2
+Enter the real name: seller 2
+Enter a password: none
+Enter email address: seller2@abc.com
+Enter preferred payment method: cash
+Enter store name: seller2 store
+
+A new user has been created
+
+What would you like to do:
+1. Create a user/seller
+2. Modify user/seller information
+3. Look-up a user/seller
+4. View all users/sellers
+5. Add an item
+6. Bid on an item
+7. View all items
+8. View a users items
+9. Remove an item
+10. Quit
+
+Choice: 5
+Enter sellers username: seller1
+
+Enter item name: item1
+Enter item description: item 1
+
+A new item has been created
+
+
+What would you like to do:
+1. Create a user/seller
+2. Modify user/seller information
+3. Look-up a user/seller
+4. View all users/sellers
+5. Add an item
+6. Bid on an item
+7. View all items
+8. View a users items
+9. Remove an item
+10. Quit
+
+Choice: 5
+Enter sellers username: seller2
+
+Enter item name: item 3
+Enter item description: item 3
+
+A new item has been created
+
+
+What would you like to do:
+1. Create a user/seller
+2. Modify user/seller information
+3. Look-up a user/seller
+4. View all users/sellers
+5. Add an item
+6. Bid on an item
+7. View all items
+8. View a users items
+9. Remove an item
+10. Quit
+
+Choice: 5
+Enter sellers username: seller1
+
+Enter item name: a drink
+Enter item description: a really good drink
+
+A new item has been created
+
+
+What would you like to do:
+1. Create a user/seller
+2. Modify user/seller information
+3. Look-up a user/seller
+4. View all users/sellers
+5. Add an item
+6. Bid on an item
+7. View all items
+8. View a users items
+9. Remove an item
+10. Quit
+
+Choice: 7
+
+Item ID: 1
+Item owner: seller1
+Item Name: item1
+High Bidder: none
+Current high bid: none
+Item Description: item 1
+
+Item ID: 2
+Item owner: seller2
+Item Name: item 3
+High Bidder: none
+Current high bid: none
+Item Description: item 3
+
+Item ID: 3
+Item owner: seller1
+Item Name: a drink
+High Bidder: none
+Current high bid: none
+Item Description: a really good drink
+
+
+What would you like to do:
+1. Create a user/seller
+2. Modify user/seller information
+3. Look-up a user/seller
+4. View all users/sellers
+5. Add an item
+6. Bid on an item
+7. View all items
+8. View a users items
+9. Remove an item
+10. Quit
+
+Choice: 8
+Enter a users items to view: seller1
+
+Item ID: 1
+Item owner: seller1
+Item Name: item1
+High Bidder: none
+Current high bid: none
+Item Description: item 1
+
+Item ID: 3
+Item owner: seller1
+Item Name: a drink
+High Bidder: none
+Current high bid: none
+Item Description: a really good drink
+
+
+What would you like to do:
+1. Create a user/seller
+2. Modify user/seller information
+3. Look-up a user/seller
+4. View all users/sellers
+5. Add an item
+6. Bid on an item
+7. View all items
+8. View a users items
+9. Remove an item
+10. Quit
+
+Choice: 9
+Enter an item ID to remove: 1
+
+
+What would you like to do:
+1. Create a user/seller
+2. Modify user/seller information
+3. Look-up a user/seller
+4. View all users/sellers
+5. Add an item
+6. Bid on an item
+7. View all items
+8. View a users items
+9. Remove an item
+10. Quit
+
+Choice: 7
+
+Item ID: 2
+Item owner: seller2
+Item Name: item 3
+High Bidder: none
+Current high bid: none
+Item Description: item 3
+
+Item ID: 3
+Item owner: seller1
+Item Name: a drink
+High Bidder: none
+Current high bid: none
+Item Description: a really good drink
+
+
+What would you like to do:
+1. Create a user/seller
+2. Modify user/seller information
+3. Look-up a user/seller
+4. View all users/sellers
+5. Add an item
+6. Bid on an item
+7. View all items
+8. View a users items
+9. Remove an item
+10. Quit
+
+Choice: 8
+Enter a users items to view: seller1
+
+Item ID: 3
+Item owner: seller1
+Item Name: a drink
+High Bidder: none
+Current high bid: none
+Item Description: a really good drink
+
+
+What would you like to do:
+1. Create a user/seller
+2. Modify user/seller information
+3. Look-up a user/seller
+4. View all users/sellers
+5. Add an item
+6. Bid on an item
+7. View all items
+8. View a users items
+9. Remove an item
+10. Quit
+
+Choice: 10
+
+

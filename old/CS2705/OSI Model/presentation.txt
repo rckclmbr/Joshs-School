@@ -1,0 +1,12 @@
+Presentation Layer
+
+http://en.wikipedia.org/wiki/Presentation_layer
+
+--Responds to service requests from the application layer, and requests things to the service layer.
+--"This layer deals with issues like how strings are represented - whether they use the Visual Basic method ("13,thisisastring") or the C++ method ("thisisastring\0")."
+--Encryption is typically done at this level.
+--Represents structure, such as XML
+-- You can't tell the different between the application and the presentation layers in many application and protocols (ftp and telnet.  Also, http can have both aspects).
+--http/html, xml, client-server databases, print and file servers.
+
+At this point, the data is complete (i.e. one large data file).

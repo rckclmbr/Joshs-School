@@ -1,0 +1,31 @@
+Vector:
+
+Insertion at first:        13.97
+Insertion in middle:        6.15
+Insertion at end:           1.12
+Removal at Beginning:       8.10
+Removal at middle:          5.03
+Removal at end:             0.84
+Walk forwards:            521.57
+Walk backwards:          1211.61
+
+Deque:
+
+Insertion at first:         2.23
+Insertion in middle:      185.22
+Insertion at end:           1.40
+Removal at Beginning:       1.40
+Removal at middle:        169.02
+Removal at end:             0.84
+Walk forwards:            606.50
+Walk backwards:          1855.82
+
+Linked List
+Insertion at first:         1.68
+Insertion at middle:       34.64
+Insertion at last:          1.68
+Removal at first:           1.40
+Removal at middle:         41.63
+Removal at end:            88.00
+Walk forwards:           37023.42
+Walk backwards:          38676.70

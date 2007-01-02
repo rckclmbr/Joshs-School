@@ -1,0 +1,137 @@
+<?xml version  = "1.0" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+	"http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+
+<html xmlns = "http://www.w3.org/1999/xhtml">
+	<head>
+		<title>Multiplication
+		</title>
+		
+	</head>
+	
+	<body>
+	
+		<script language="javascript" type="text/javascript">
+			<!--
+
+			var letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+			var morse = new Array(
+			".-",   // A
+			"-...",	// B	
+			"-.-.", // C
+			"-..",	// D
+			".",	// E
+			"..-.", // F
+			"--.",	// G
+			"....",	// H
+			"..",	// I
+			".---",	// J
+			"-.-",	// K
+			".-..",	// L
+			"--",	// M
+			"-.",	// N
+			"---",	// O
+			".--.",	// P
+			"--.-",	// Q
+			".-.",	// R
+			"...",	// S
+			"-",	// T
+			"..-",	// U
+			"...-",	// V
+			".--",	// W
+			"-..-",	// X
+			"-.--",	// Y
+			"--..",	// K
+			"-----",	// 0
+			".----",	// 1
+			"..---",	// 2
+			"...--",	// 3
+			"....-",	// 4
+			".....",	// 5
+			"-....",	// 6
+			"--...",	// 7
+			"---..",	// 8
+			"----."		// 9
+			);
+			
+			// This is a generic replace function
+			function replace(string,text,by) {
+				var strLength = string.length, 
+					txtLength = text.length;
+				if ((strLength == 0) || (txtLength == 0)) 
+					return string;
+			
+				var i = string.indexOf(text);
+				if ( !i && (text != string.substring(0,txtLength))) return string;
+				if (i == -1) 
+					return string;
+			
+				var newstr = string.substring(0,i) + by;
+			
+				if (i+txtLength < strLength)
+					newstr += replace(string.substring(i+txtLength,strLength),text,by);
+			
+				return newstr;
+			}
+			
+			function translate(myString) {
+				var myString = myString.toUpperCase();
+				var output = "";
+				
+				for(i = 0; i < myString.length;i++) {
+					tempChar = myString.charAt(i);
+					if(tempChar == " ") {
+						output += "   ";
+						continue;
+					}
+					for (j = 0; j < letters.length; j++) {
+						if (tempChar == letters.charAt(j)) {
+							output += morse[j] + " ";
+							break;
+						}
+					}
+				}
+				return output;
+			}
+			
+			function translate_back(input){
+				var output;
+				
+				// We want to replace all spaces in letters with ~~, one for the beginning of each word,
+				// one with the ending.  We will add two spaces at the beginning and end of this, so
+				// it becomes consistent. For example, a string could be " -..- -.   --.--- "
+				output = " " + input + "  ";
+				
+				// After this, it would be "~-..-~-.~~~--.---~"
+				output = replace(output," ", "~~");
+				
+				for (i = 0; i < letters.length; i++){
+						// Replace all morse with its letter
+						output = replace(output, "~" + morse[i] + "~", "~" + letters.charAt(i) + "~");
+				}
+				// Replace all spaces
+				output = replace(output, "~~~~", " ");
+				// Clean up between letters
+				output = replace(output, "~", "");
+				// Clean up double spaces
+				output = replace(output, "  ", " ");
+				// Return and make it look nice and 21st century
+				return output.toLowerCase(); 
+			}
+			// -->
+			
+			
+			// TEST INFORMATION
+			text = "Breaker Breaker 1 9";
+			x = translate(text);
+			y = translate_back(x);
+			
+			document.write("<pre>");
+			document.write("Text is: " + text + "\n");
+			document.write(x + "\n");
+			document.write(y);
+			document.write("</pre>");
+		</script>
+	
+	</body>
+</html>

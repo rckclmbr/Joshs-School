@@ -1,0 +1,66 @@
+<?xml version  = "1.0" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+	"http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+
+<html xmlns = "http://www.w3.org/1999/xhtml">
+	<head>
+		<title>Create asterix box
+		</title>
+		
+	</head>
+	
+	<body>
+	
+		<script language="javascript" type="text/javascript">
+			<!--
+			var MAX = 10,
+				x,
+				y;
+
+			document.write("<pre>"); // These are allowed
+			
+			// Part A
+			document.writeln("(a)");
+			for( x=1; x<=MAX; x++ ) {
+				for(y=0;y<x; y++ )
+					document.write("*");
+				document.write("<br />");
+			}
+			
+			// Part B
+			document.writeln("(b)");
+			for( x=0; x<MAX; x++ ) {
+				for(y=0;y<MAX-x; y++ )
+					document.write("*");
+				document.write("<br />");
+			}
+
+			// Part C
+			document.writeln("(c)");
+			for( x=0; x<MAX; x++ ) {
+				for(y=0;y<MAX; y++ )
+					if( y < x )
+						document.write(" ");
+					else
+						document.write("*");
+				document.write("<br />");
+			}
+
+
+			// Part D
+			document.writeln("(d)");
+			for( x=1; x<=MAX; x++ ) {
+				for(y=0;y<MAX; y++ )
+					if( y < MAX - x )
+						document.write(" ");
+					else
+						document.write("*");
+				document.write("<br />");
+			}
+	
+			document.write("</pre>"); // These are allowed
+			// -->
+		</script>
+	
+	</body>
+</html>

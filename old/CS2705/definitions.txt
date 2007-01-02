@@ -1,0 +1,17 @@
+ITU -
+
+
+
+ANSI -
+
+http://www.ansi.org/about_ansi/overview/overview.aspx?menuid=1
+http://en.wikipedia.org/wiki/ANSI
+
+ANSI, or the American Engineering Standards Committee, is a non-profit standards organization created to develop standards.  It is responsible for over 200 standards.  ANSI doesn't create standards, they leave that to developers.  However, they accredit standards.  ANSI was created in order to create a competitiveness in U.S. business by creating standards.  Although it is centered in the U.S., it promotes the use of its standardizations abroad.
+
+EIA - 
+
+http://www.eia.org/
+http://en.wikipedia.org/wiki/Electronic_Industries_Alliance
+
+The EIA is a trade organization that creates international standards, much the same way ANSI does.  They deal with electronics and well as data and internet security.  They have been responsible for such things as RS-170 (the standard NTSC format, the format used primarily in the US), and the RS-232 (the standard serial port on most every computer).

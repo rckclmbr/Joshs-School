@@ -1,0 +1,275 @@
+Datafile opened!
+
+Main Menu
+------------
+1.  Select a week
+2.  Add a week
+3.  Delete a week
+4.  View what weeks exists
+5.  Save data to file "data.dat": 
+6.  Quit
+Choice: 4
+
+Weeks that exist: 1, 2, 3, 
+
+Main Menu
+------------
+1.  Select a week
+2.  Add a week
+3.  Delete a week
+4.  View what weeks exists
+5.  Save data to file "data.dat": 
+6.  Quit
+Choice: 1
+
+Which week do you want to work with? 1
+Selected: Week 1
+
+Workout Menu
+--------------
+1.  Add a workout
+2.  Remove a workout
+3.  View a workout
+4.  View all workouts for the week
+5.  View all workouts for a day
+6.  View all workouts of specific name for the week (for tracking): 
+7.  Main Menu
+Choice: 4
+
+|---------------------------------------|
+| Day 1                                 |
+| Workout Name: workout                 |
+|  20 reps,  10 sets,                   |
+|---------------------------------------|
+
+
+|---------------------------------------|
+| Day 2                                 |
+| Workout Name: Bench press             |
+|   3 reps,  14 sets, 150 lbs           |
+|---------------------------------------|
+
+
+|---------------------------------------|
+| Day 2                                 |
+| Workout Name: Flys                    |
+|   4 reps,  13 sets, 170 lbs           |
+|---------------------------------------|
+
+
+|---------------------------------------|
+| Day 3                                 |
+| Workout Name: workout 1               |
+|  13 reps,   5 sets, 100 lbs           |
+|---------------------------------------|
+
+
+
+
+Workout Menu
+--------------
+1.  Add a workout
+2.  Remove a workout
+3.  View a workout
+4.  View all workouts for the week
+5.  View all workouts for a day
+6.  View all workouts of specific name for the week (for tracking): 
+7.  Main Menu
+Choice: 6
+
+Enter name of workouts to view: workout 1
+|---------------------------------------|
+| Day 3                                 |
+| Workout Name: workout 1               |
+|  13 reps,   5 sets, 100 lbs           |
+|---------------------------------------|
+
+
+
+Workout Menu
+--------------
+1.  Add a workout
+2.  Remove a workout
+3.  View a workout
+4.  View all workouts for the week
+5.  View all workouts for a day
+6.  View all workouts of specific name for the week (for tracking): 
+7.  Main Menu
+Choice: 1
+
+Enter day of week (1 - 7): 4
+Enter name of workout: workout 1
+Enter reps done: 10
+Enter sets done: 13
+Enter weight (0 if none): 0
+Entry added
+Workout Menu
+--------------
+1.  Add a workout
+2.  Remove a workout
+3.  View a workout
+4.  View all workouts for the week
+5.  View all workouts for a day
+6.  View all workouts of specific name for the week (for tracking): 
+7.  Main Menu
+Choice: 6
+
+Enter name of workouts to view: workout 1
+|---------------------------------------|
+| Day 3                                 |
+| Workout Name: workout 1               |
+|  13 reps,   5 sets, 100 lbs           |
+|---------------------------------------|
+
+
+|---------------------------------------|
+| Day 4                                 |
+| Workout Name: workout 1               |
+|  10 reps,  13 sets,                   |
+|---------------------------------------|
+
+
+
+Workout Menu
+--------------
+1.  Add a workout
+2.  Remove a workout
+3.  View a workout
+4.  View all workouts for the week
+5.  View all workouts for a day
+6.  View all workouts of specific name for the week (for tracking): 
+7.  Main Menu
+Choice: 2
+
+Enter day to erase: 3
+Enter workout name to erase: workout 1
+Workout deleted!
+
+
+Workout Menu
+--------------
+1.  Add a workout
+2.  Remove a workout
+3.  View a workout
+4.  View all workouts for the week
+5.  View all workouts for a day
+6.  View all workouts of specific name for the week (for tracking): 
+7.  Main Menu
+Choice: 5
+
+Enter day you want to view: 3
+
+
+Workout Menu
+--------------
+1.  Add a workout
+2.  Remove a workout
+3.  View a workout
+4.  View all workouts for the week
+5.  View all workouts for a day
+6.  View all workouts of specific name for the week (for tracking): 
+7.  Main Menu
+Choice: 4
+
+|---------------------------------------|
+| Day 1                                 |
+| Workout Name: workout                 |
+|  20 reps,  10 sets,                   |
+|---------------------------------------|
+
+
+|---------------------------------------|
+| Day 2                                 |
+| Workout Name: Bench press             |
+|   3 reps,  14 sets, 150 lbs           |
+|---------------------------------------|
+
+
+|---------------------------------------|
+| Day 2                                 |
+| Workout Name: Flys                    |
+|   4 reps,  13 sets, 170 lbs           |
+|---------------------------------------|
+
+
+|---------------------------------------|
+| Day 4                                 |
+| Workout Name: workout 1               |
+|  10 reps,  13 sets,                   |
+|---------------------------------------|
+
+
+
+
+Workout Menu
+--------------
+1.  Add a workout
+2.  Remove a workout
+3.  View a workout
+4.  View all workouts for the week
+5.  View all workouts for a day
+6.  View all workouts of specific name for the week (for tracking): 
+7.  Main Menu
+Choice: 7
+
+
+Main Menu
+------------
+1.  Select a week
+2.  Add a week
+3.  Delete a week
+4.  View what weeks exists
+5.  Save data to file "data.dat": 
+6.  Quit
+Choice: 4
+
+Weeks that exist: 1, 2, 3, 
+
+Main Menu
+------------
+1.  Select a week
+2.  Add a week
+3.  Delete a week
+4.  View what weeks exists
+5.  Save data to file "data.dat": 
+6.  Quit
+Choice: 3
+
+Which week do you want to delete? 3
+Week deleted!
+
+Week deleted!
+
+Main Menu
+------------
+1.  Select a week
+2.  Add a week
+3.  Delete a week
+4.  View what weeks exists
+5.  Save data to file "data.dat": 
+6.  Quit
+Choice: 4
+
+Weeks that exist: 1, 2, 
+
+Main Menu
+------------
+1.  Select a week
+2.  Add a week
+3.  Delete a week
+4.  View what weeks exists
+5.  Save data to file "data.dat": 
+6.  Quit
+Choice: 5
+
+Saved!
+
+Main Menu
+------------
+1.  Select a week
+2.  Add a week
+3.  Delete a week
+4.  View what weeks exists
+5.  Save data to file "data.dat": 
+6.  Quit
+Choice: 6

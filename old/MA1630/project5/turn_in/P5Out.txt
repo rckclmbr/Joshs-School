@@ -1,0 +1,66 @@
+// Joshua Braegger
+// MA1630
+// Project #5 Output
+
+ part a:
+((A OR B) AND C') AND B'
+  0  0  0  0  0
+  0  0  0  0  0
+  0  0  0  0  0
+  0  0  0  0  0
+  0  0  0  0  0
+
+
+Part b:
+(B o B^T) AND (C OR C^T)
+  0  1  0  0  0
+  1  0  1  0  1
+  0  1  0  0  0
+  0  0  0  0  0
+  0  1  0  0  0
+
+
+part c:
+oC^17
+  0  1  0  0  0
+  0  0  1  0  0
+  0  0  0  1  0
+  1  0  0  0  1
+  0  1  0  0  0
+
+
+part d:
+(no of arrows in E) - (trace of E):
+16 - 4 = 12
+
+
+part e:
+(D OR E)^T AND (D^T OR E^T)
+  1  0  0  0  0  1
+  1  1  0  0  0  0
+  1  1  1  1  0  1
+  0  0  1  1  1  0
+  0  0  0  1  1  1
+  1  1  1  1  1  1
+
+
+part f:
+oD^1 OR oD^2 OR ... oD^7
+  1  1  1  0  0  0
+  0  1  1  0  0  0
+  0  0  1  0  0  0
+  0  0  1  1  1  1
+  0  0  1  1  1  1
+  0  0  1  1  1  1
+
+
+part g:
+maximum out-degree of all nodes in D
+Max out: 3
+
+
+part h:
+no of nodes in D having in-degree 2
+Nodes: 3
+
+

@@ -1,0 +1,17 @@
+// Joshua Braegger
+// 10/11/2005
+// Program logic_a.cpp
+// Function: f is the truth value of a logical proposition.
+
+[arnie@www project3]$ ./logic_a
+(~q AND r AND ~p) OR (~(r OR ~p))
+p       q       r       |       f
+----------------------------------
+F       F       F       |       F
+F       F       T       |       T
+F       T       F       |       F
+F       T       T       |       F
+T       F       F       |       T
+T       F       T       |       F
+T       T       F       |       T
+T       T       T       |       F

@@ -1,0 +1,220 @@
+What would you like to do:
+1. Create a user/seller
+2. Modify user/seller information
+3. Look-up a user/seller
+4. View all users/sellers
+5. Add an item
+6. Bid on an item
+7. View all items
+8. Exit
+
+Choice: 1
+Is this user a seller? (y/n)> n
+Enter a username: user1
+Enter the real name: User One
+Enter a password: none
+Enter email address: user1@123.com
+
+A new user has been created
+
+What would you like to do:
+1. Create a user/seller
+2. Modify user/seller information
+3. Look-up a user/seller
+4. View all users/sellers
+5. Add an item
+6. Bid on an item
+7. View all items
+8. Exit
+
+Choice: 1
+Is this user a seller? (y/n)> y
+Enter a username: seller1
+Enter the real name: Seller One
+Enter a password: password
+Enter email address: seller1@123.com
+Enter preferred payment method: cash
+Enter store name: Seller1's store
+
+A new user has been created
+
+What would you like to do:
+1. Create a user/seller
+2. Modify user/seller information
+3. Look-up a user/seller
+4. View all users/sellers
+5. Add an item
+6. Bid on an item
+7. View all items
+8. Exit
+
+Choice: 4
+
+Type of user: User
+Username: user1
+Real name: User One
+Password: none
+Email address: user1@123.com
+
+Type of user: Seller
+Username: seller1
+Real name: Seller One
+Password: password
+Email address: seller1@123.com
+Store Name: Seller1's store
+Prefered payment method: cash
+
+What would you like to do:
+1. Create a user/seller
+2. Modify user/seller information
+3. Look-up a user/seller
+4. View all users/sellers
+5. Add an item
+6. Bid on an item
+7. View all items
+8. Exit
+
+Choice: 2
+Enter username of person you want to modify: seller1
+
+What would you like to modify?
+1. Username
+2. Real name
+3. Password
+4. Email
+5. Store name
+6. Prefered payment method:
+> 2
+New real name: SELLER ONE NEW
+
+
+What would you like to do:
+1. Create a user/seller
+2. Modify user/seller information
+3. Look-up a user/seller
+4. View all users/sellers
+5. Add an item
+6. Bid on an item
+7. View all items
+8. Exit
+
+Choice: 3
+Enter the username of person you want to view: seller1
+
+Type of user: Seller
+Username: seller1
+Real name: SELLER ONE NEW
+Password: password
+Email address: seller1@123.com
+Store Name: Seller1's store
+Prefered payment method: cash
+
+What would you like to do:
+1. Create a user/seller
+2. Modify user/seller information
+3. Look-up a user/seller
+4. View all users/sellers
+5. Add an item
+6. Bid on an item
+7. View all items
+8. Exit
+
+Choice: 5
+Enter item name: mtn dew
+Enter item description: a good drink
+
+A new item has been created
+
+What would you like to do:
+1. Create a user/seller
+2. Modify user/seller information
+3. Look-up a user/seller
+4. View all users/sellers
+5. Add an item
+6. Bid on an item
+7. View all items
+8. Exit
+
+Choice: 7
+
+Item Name: mtn dew
+High Bidder: none
+Current high bid: none
+Item Description: a good drink
+
+What would you like to do:
+1. Create a user/seller
+2. Modify user/seller information
+3. Look-up a user/seller
+4. View all users/sellers
+5. Add an item
+6. Bid on an item
+7. View all items
+8. Exit
+
+Choice: 6
+What item name would you like to bid on? mtn dew
+
+Enter your username: user1
+Enter your bid amount: 100
+What would you like to do:
+1. Create a user/seller
+2. Modify user/seller information
+3. Look-up a user/seller
+4. View all users/sellers
+5. Add an item
+6. Bid on an item
+7. View all items
+8. Exit
+
+Choice: 7
+
+Item Name: mtn dew
+High Bidder: user1
+Current high bid: 100
+Item Description: a good drink
+
+What would you like to do:
+1. Create a user/seller
+2. Modify user/seller information
+3. Look-up a user/seller
+4. View all users/sellers
+5. Add an item
+6. Bid on an item
+7. View all items
+8. Exit
+
+Choice: 6
+What item name would you like to bid on? mtn dew
+
+Enter your username: seller1
+Enter your bid amount: 101.17
+What would you like to do:
+1. Create a user/seller
+2. Modify user/seller information
+3. Look-up a user/seller
+4. View all users/sellers
+5. Add an item
+6. Bid on an item
+7. View all items
+8. Exit
+
+Choice: 7
+
+Item Name: mtn dew
+High Bidder: seller1
+Current high bid: 101.17
+Item Description: a good drink
+
+What would you like to do:
+1. Create a user/seller
+2. Modify user/seller information
+3. Look-up a user/seller
+4. View all users/sellers
+5. Add an item
+6. Bid on an item
+7. View all items
+8. Exit
+
+Choice: 8
+[arnie@www program1]$

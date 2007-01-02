@@ -1,0 +1,57 @@
+The insert item is already in the list -- duplicates are not allowed. - .CDX
+The insert item is already in the list -- duplicates are not allowed. - .CMF
+The insert item is already in the list -- duplicates are not allowed. - .DWG
+1.  Add an item to the dictionary.
+2.  Remove an item from the dictionary.
+3.  Lookup definition / description
+4.  Quit
+Choice: 1
+Enter dictionary name: .JPG
+Enter dictionary definition: a description
+The insert item is already in the list -- duplicates are not allowed. - .JPG
+
+1.  Add an item to the dictionary.
+2.  Remove an item from the dictionary.
+3.  Lookup definition / description
+4.  Quit
+Choice: 3
+Enter an item to lookup: .JPG
+.JPG: file extension for JPEG (Joint Photographic Experts Group). A file stored in JPEG format. JPEG,an ISO/ITU standard for storing images with high compression capability, uses a discreet cosine transform that can achieve compression rates of 100:1 (significant loss of data from original) and 20:1 (minimal loss). C-Cube Microsystems introduced the first JPEG chip.
+
+1.  Add an item to the dictionary.
+2.  Remove an item from the dictionary.
+3.  Lookup definition / description
+4.  Quit
+Choice: 2
+Enter the item you want to delete: .JPG
+
+1.  Add an item to the dictionary.
+2.  Remove an item from the dictionary.
+3.  Lookup definition / description
+4.  Quit
+Choice: 3
+Enter an item to lookup: .JPG
+Item not found
+
+1.  Add an item to the dictionary.
+2.  Remove an item from the dictionary.
+3.  Lookup definition / description
+4.  Quit
+Choice: 1
+Enter dictionary name: .JPG
+Enter dictionary definition: a description
+
+1.  Add an item to the dictionary.
+2.  Remove an item from the dictionary.
+3.  Lookup definition / description
+4.  Quit
+Choice: 3
+Enter an item to lookup: .JPG
+.JPG: a description
+
+1.  Add an item to the dictionary.
+2.  Remove an item from the dictionary.
+3.  Lookup definition / description
+4.  Quit
+Choice: 4
+Quitting

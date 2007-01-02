@@ -1,0 +1,48 @@
+<?xml version  = "1.0" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+	"http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+
+<html xmlns = "http://www.w3.org/1999/xhtml">
+	<head>
+		<title>Multiplication
+		</title>
+		
+	</head>
+	
+	<body onLoad="generateQuestion()">
+	
+		<script language="javascript" type="text/javascript">
+			<!--
+
+			var firstInt, secondInt, answer;
+			function generateQuestion() {
+				window.status = "";
+				firstInt = parseInt(10 * Math.random());
+				secondInt = parseInt(10 * Math.random());
+				answer = firstInt * secondInt;
+				document.getElementById("question").innerHTML = "How much is " +
+					firstInt + " times " + secondInt + "?";
+
+			}
+
+			function checkAnswer() {
+				var guessInt = parseInt(document.theform.answer.value);
+				if(guessInt == answer) {
+					window.status = "Very good!";
+					generateQuestion();
+				} else {
+					window.status = "No. Please try again.";
+				}
+			}
+
+			// -->
+		</script>
+
+		<span id="question"></span>
+			
+		<form name="theform">
+			<input type="text" name="answer">
+			<input type="button" onClick="checkAnswer()" value="Submit">
+		</form>
+	</body>
+</html>

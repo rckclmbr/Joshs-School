@@ -1,0 +1,53 @@
+Joshua Braegger
+CS2550 M-T 12:00PM
+Assignment #4
+September 21, 2006
+
+1.
+SELECT COUNT(branchNo) AS myCount, city
+FROM Branch
+GROUP BY city;
+
+2.
+SELECT COUNT(propertyNo) AS myCount
+FROM Viewing
+WHERE MONTH(viewDate) = 5;
+
+3.
+SELECT AVG(salary) AS myAverage, sex
+FROM Staff
+GROUP BY sex;
+
+4.
+SELECT SUM(rooms) AS roomCount
+FROM PropertyForRent
+WHERE city = 'Glasgow';
+
+5.
+SELECT COUNT(propertyNo) AS myCount
+FROM PropertyForRent
+WHERE staffNo IS NULL;
+
+6.
+SELECT MAX(rent) AS maxRent, type
+FROM PropertyForRent
+GROUP BY type;
+
+7.
+SELECT MIN(maxRent) AS minMaxRent
+FROM Client;
+
+8.
+SELECT MAX(salary), branchNo
+FROM Staff
+GROUP BY branchNo;
+
+9.
+SELECT AVG(rent) AS averageRent, city
+FROM PropertyForRent
+GROUP BY city
+
+10.
+SELECT MAX(salary) as maxSalary, position
+FROM Staff
+GROUP BY position;

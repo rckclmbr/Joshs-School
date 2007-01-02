@@ -1,0 +1,82 @@
+CS2550 Lab Assignment 6
+Joshua Braegger
+10/5/2006
+
+1.
+CREATE TABLE Branch (
+    branchNo VARCHAR(4) NOT NULL PRIMARY KEY,
+    street VARCHAR(20),
+    city VARCHAR(15),
+    postcode VARCHAR(8)
+);
+
+2.
+CREATE TABLE Staff (
+    staffNo VARCHAR(4) NOT NULL PRIMARY KEY,
+    branchNo VARCHAR(4),
+    fName VARCHAR(20),
+    lName VARCHAR(20),
+    position VARCHAR(9),
+    sex VARCHAR(1),    
+    DOB DATETIME,
+    salary INTEGER,    
+    FOREIGN KEY (branchNo) REFERENCES Branch(branchNo)
+);
+
+3. 
+CREATE TABLE PropertyForRent (
+    propertyNo VARCHAR(4) NOT NULL PRIMARY KEY,
+    street VARCHAR(20),
+    city VARCHAR(20),
+    postcode VARCHAR(10),
+    type VARCHAR(5),
+    rooms INTEGER,
+    rent CURRENCY,
+    ownerNo VARCHAR(4),
+    staffNo VARCHAR(4),
+    branchNO VARCHAR(4),
+    FOREIGN KEY (ownerNo) REFERENCES PrivateOwner(ownerNo),
+    FOREIGN KEY (staffNo) REFERENCES Staff(staffNo),
+    FOREIGN KEY (branchNo) REFERENCES Branch(branchNo)
+);
+
+4.
+CREATE TABLE Client (
+    clientNo VARCHAR(4) NOT NULL PRIMARY KEY,
+    fName VARCHAR(20),
+    lName VARCHAR(20),
+    telNo VARCHAR(15),
+    prefType VARCHAR(5),
+    maxRent CURRENCY
+);
+
+5.
+CREATE TABLE PrivateOWner (
+    ownerNo VARCHAR(4) NOT NULL PRIMARY KEY,
+    fName VARCHAR(20),
+    lName VARCHAR(20),
+    address VARCHAR(35),
+    telNo VARCHAR(15)
+);
+
+6.
+CREATE TABLE Viewing (
+    clientNo VARCHAR(4) NOT NULL,
+    propertyNo VARCHAR(4) NOT NULL,
+    viewDate DATETIME,
+    comment VARCHAR(255),
+    PRIMARY KEY(clientNo, propertyNo),
+    FOREIGN KEY (clientNo) REFERENCES Client(clientNo),
+    FOREIGN KEY (propertyNo) REFERENCES PropertyForRent(propertyNo)
+);
+
+7.
+CREATE TABLE Registration (
+    clientNo VARCHAR(4) NOT NULL,
+    branchNo VARCHAR(4) NOT NULL,
+    staffNo VARCHAR(4),
+    PRIMARY KEY(clientNo, branchNo),
+    FOREIGN KEY (clientNo) REFERENCES Client(clientNo),
+    FOREIGN KEY (branchNo) REFERENCES Branch(branchNo),
+    FOREIGN KEY (staffNo) REFERENCES Staff(staffNo)    
+);
