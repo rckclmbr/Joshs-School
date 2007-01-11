@@ -94,13 +94,13 @@ void keyboard(unsigned char key, int x, int y)
 		break;
 	case 'l':
 	case 'L':
-		glRotatef(3.0, 0.0, 0.0, 1.0); /* pitch back */
+		glRotatef(3.0, 0.0, 0.0, 1.0); /* pitch left */
                 glutPostRedisplay();
 		break;
 
 	case 'r':
 	case 'R':
-		glRotatef(-3.0, 0.0, 0.0, 1.0); /* pitch back */
+		glRotatef(-3.0, 0.0, 0.0, 1.0); /* pitch right */
                 glutPostRedisplay();
 		break;	
         default:
