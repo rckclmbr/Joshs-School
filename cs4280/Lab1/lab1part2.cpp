@@ -1,12 +1,10 @@
-#include <GL/gl.h>
-#include <GL/glu.h>
-#include <GL/glut.h>
-#include <iostream>
-using namespace std;
-
 #ifndef __linux__
 #include <windows.h>
 #endif
+
+#include <GL/gl.h>
+#include <GL/glu.h>
+#include <GL/glut.h>
 
 void init(void);
 void display(void);
@@ -45,6 +43,12 @@ void init(void)
 void display(void)
 {
 	glClear(GL_COLOR_BUFFER_BIT);
-	glRectf(-5.0, 5.0, 5.0, -5.0);
+//	glRectf(-5.0, 5.0, 5.0, -5.0);
+	glBegin(GL_POLYGON);
+		glVertex3f(-5.0, 5.0, 0.0);
+		glVertex3f(5.0, 5.0, 0.0);
+		glVertex3f(5.0, -5.0, 0.0);
+		glVertex3f(-5.0, -5.0, 0.0);
+	glEnd();
 	glFlush();
 }
