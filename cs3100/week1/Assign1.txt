@@ -1,0 +1,4 @@
+1. They are in fact computers, because they are essentially hardware and software.  Just because the software isn't very complex (it just moves bits around) doesn't mean that it's not software.  They already have an operating system, as previously stated as "software".
+2.  A system or software interrupt will switch you from user mode to kernel mode.
+
+1.1  
