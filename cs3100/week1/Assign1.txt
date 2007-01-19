@@ -1,9 +1,14 @@
+Joshua Braegger
+CS3100
+MW 10:00AM – 11:50 PM
+
+
 1. They are in fact computers, because they are essentially hardware and software.  Just because the software isn't very complex (it just moves bits around) doesn't mean that it's not software.  They already have an operating system, as previously stated as "software".
 2.  A system or software interrupt will switch you from user mode to kernel mode.
 
 1.1  
 a.  1) Since the programs share memory, other users have access to another persons memory, and they can read all their data that's currently in memory.
-    2)
+    2) Programs also share data.  Without proper security (which has to be programmed in), one user could access everything another user can access.
 b.  You can't, because since the system is shared by multiple users, there is always a chance that the two users information can collide (IE, one user MAY sometime have access to another users data).
 
 1.10
