@@ -27,7 +27,7 @@ class GLRectangle {
 GLRectangle::GLRectangle(GLfloat w, GLfloat h) { 
 	pos = LEFT; 
 
-	// Get whether to clip the rectangle by width or height
+	// Get whether to clip the rectangle by width or h
 	if(w / h > GOLDEN_RATIO) {
 		width = w;
 		height = w * GOLDEN_RATIO;
