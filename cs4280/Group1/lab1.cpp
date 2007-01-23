@@ -1,12 +1,31 @@
+// -----------------------------------------------------------------
+//                      Learning Team c
+//                      Members:
+//                      Lorin Kartchner
+//						Todd Brown
+//						Royce Judd
+//						Josh Braegger
+//                      CS 4280 – 7:30 pm
+//                      Section 1 Learning Team Assignment
+//                      Mr. Rague
+//                      Due: 01/24/07
+//                      Version: 1.2
+// -----------------------------------------------------------------
+//  This program finds the size of the biggest golden rectangle that
+//  will fit on the viewing window. It then continualy takes sqaures
+//  out forming smaller golden rectangles. It stops when the golden 
+//  rectangle has a width of 1
+// -----------------------------------------------------------------
 #include "header.h"
 
-static int WIDTH = 600;
-static int HEIGHT = 400;
-static float GOLDEN_RATIO = .618033;
+static int WIDTH = 600;  //width of window
+static int HEIGHT = 400;  //height of window
+static float GOLDEN_RATIO = .618033;  //golden ratio
 typedef enum direction {UP, DOWN, LEFT, RIGHT};
 
 class GLfloatPoint { public: float x,y; };	// A point on the graph
 
+//class to define a rectangle
 class GLRectangle {
 	public: 
 		GLfloat width, height;
@@ -89,16 +108,16 @@ void GLRectangle::getNewRectangleCoords() {
 void GLRectangle::drawRectangle() {
 	// Different colors, so we can distinguish where one begins
 	// and one ends
-	if(pos == UP)
-		glColor3f(0,0,1);
-	else if(pos == RIGHT)
-		glColor3f(1,0,1);
-	else if(pos == DOWN)
-		glColor3f(1,1,1);
-	else if(pos == LEFT)
-		glColor3f(0,1,1);
+	//if(pos == UP)
+	//	glColor3f(0,0,1);
+	//else if(pos == RIGHT)
+	//	glColor3f(1,0,1);
+	//else if(pos == DOWN)
+	//	glColor3f(1,1,1);
+	//else if(pos == LEFT)
+	//	glColor3f(0,1,1);
 
-	glBegin(GL_QUADS);
+	glBegin(GL_LINE_LOOP);
 		glVertex3f(bottomLeft.x, bottomLeft.y, 0.0);
 		glVertex3f(bottomLeft.x, bottomLeft.y + height, 0.0);
 		glVertex3f(bottomLeft.x + width, bottomLeft.y + height, 0.0);
@@ -109,6 +128,7 @@ void GLRectangle::drawRectangle() {
 void init(void);
 void display(void);
 
+//main GL function
 int main (int argc, char **argv) {
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB);
@@ -121,6 +141,7 @@ int main (int argc, char **argv) {
 	return 0;
 }
 
+//GL initalize function
 void init(void) {
 	glClearColor(0.0, 0.0, 0.0, 0.0);
 	glMatrixMode(GL_PROJECTION);
@@ -128,6 +149,7 @@ void init(void) {
 	glOrtho(0.0, WIDTH, 0.0, HEIGHT, 0.0, 100.0);
 }
 
+//GL display function
 void display(void) {
 	int diameter;		// Diameter of the diamond
 	GLRectangle* rect = new GLRectangle(WIDTH, HEIGHT);
@@ -141,3 +163,19 @@ void display(void) {
 	
 	glutSwapBuffers();
 }
+
+// -----------------------------------------------------------------
+//   Change Control Section
+// -----------------------------------------------------------------
+//       Team Member:  Josh Braegger
+//       Version: 1.0
+//       Date:  01/22/07
+//       Wrote the functionality of the code
+//		 Version: 1.0
+
+//       Team Member:  Royce Judd
+//       Version: 1.1
+//       Date:  01/22/07
+//       Added header and comments in the code
+//		 Version: 1.2
+
