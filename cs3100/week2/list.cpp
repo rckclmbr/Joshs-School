@@ -10,6 +10,8 @@ using namespace std;
 #include <string.h>
 #include <time.h>
 
+int examine(char*);
+
 struct modes {
 	unsigned others : 3;
 	unsigned group  : 3;
@@ -30,10 +32,7 @@ int main(int argc, char* argv[])
 	int i;
 
 	if(argc < 2)
-	{
-		fprintf(stderr, "USAGE: list <directory/file>\n");
-		exit(1);
-	}
+		examine("./*");
 
 	for(i = 1; i < argc; i++)
 		examine(argv[i]);
@@ -44,30 +43,47 @@ int main(int argc, char* argv[])
 
 int examine(char* argv)
 {
-	struct stat				file_info;
+	struct _stat			file_info;
 	union short_to_modes 	convert;
 		  _finddata_t		data;
 		  intptr_t			handle;
 
-	_stat(argv, &file_info);
-	convert.statmode = file_info.st_mode;
+		if((handle = _findfirst(argv, &data)) > 0)		
+		do
+		{
+			_stat(data.name, &file_info);
+			convert.statmode = file_info.st_mode;
 
-	if(_S_IFDIR & file_info.st_mode)
-			cout << "d";
-	else
-			cout << "-";
+			if(_S_IFDIR & file_info.st_mode) {
+				cout << "d";
+			}
+			else
+					cout << "-";
 
-	cout << fmodes[convert.conv.user] << 
-			fmodes[convert.conv.group] << 
-			fmodes[convert.conv.others] << endl;
+			cout << fmodes[convert.conv.user] << 
+					fmodes[convert.conv.group] << 
+					fmodes[convert.conv.others];
 
-	handle = _findfirst(argv, &data);
-	cout << data.name << endl;
+			// Print filesize
+			cout << setw(9) << data.size;
 
-	struct tm* t = localtime(&data.time_write);
+			struct tm* t = localtime(&data.time_write);
 
-	cout << setw(2) << setfill('0') << t->tm_hour << endl;
-	_findclose(handle);
-					
+			// Print Date
+			char buffer[48];
+			strftime(buffer, 256," %m/%d/%Y", t);
+			fputs(buffer,stdout);
+
+			// Print time
+			cout << " " << 
+				setw(2) << setfill('0') << t->tm_hour << ":" <<
+				setw(2) << t->tm_min  << ":" << 
+				setw(2) << t->tm_sec;
+
+			cout << setfill(' ');
+
+			cout << " " << data.name << endl;
+		} while(!(_findnext(handle, &data)));
+		_findclose(handle);
 	return 0;
 }
