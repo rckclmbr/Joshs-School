@@ -1,3 +1,7 @@
+// Joshua Braegger
+// CS3100
+// Assignment 1
+
 #define _CRT_SECURE_NO_DEPRECATE
 
 #include <iostream>
@@ -10,7 +14,7 @@ using namespace std;
 #include <string.h>
 #include <time.h>
 
-int examine(char*);
+int examine(char*,char*);
 
 struct modes {
 	unsigned others : 3;
@@ -32,34 +36,40 @@ int main(int argc, char* argv[])
 	int i;
 
 	if(argc < 2)
-		examine("./*");
+		examine("./*","");
 
 	for(i = 1; i < argc; i++)
-		examine(argv[i]);
+		examine(argv[i],"");
 
 	return 0;
 
 }
 
-int examine(char* argv)
+int examine(char* argv, char* dir)
 {
 	struct _stat			file_info;
 	union short_to_modes 	convert;
 		  _finddata_t		data;
 		  intptr_t			handle;
 
-		if((handle = _findfirst(argv, &data)) > 0)		
+	if((handle = _findfirst(argv, &data)) > 0) {
 		do
 		{
+			// Filter out the . and .. directories
+			if(strcmp(data.name,".") == 0 || strcmp(data.name,"..") == 0)
+				continue;
+				
 			_stat(data.name, &file_info);
 			convert.statmode = file_info.st_mode;
 
+			// Print if directory
 			if(_S_IFDIR & file_info.st_mode) {
 				cout << "d";
 			}
 			else
-					cout << "-";
+				cout << "-";
 
+			// Print permissions
 			cout << fmodes[convert.conv.user] << 
 					fmodes[convert.conv.group] << 
 					fmodes[convert.conv.others];
@@ -82,8 +92,11 @@ int examine(char* argv)
 
 			cout << setfill(' ');
 
-			cout << " " << data.name << endl;
+			cout << " " << dir << data.name << endl;
 		} while(!(_findnext(handle, &data)));
+
 		_findclose(handle);
+	}
+	
 	return 0;
 }
