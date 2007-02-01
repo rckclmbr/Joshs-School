@@ -14,7 +14,7 @@ using namespace std;
 #include <string.h>
 #include <time.h>
 
-int examine(char*,char*);
+int examine(char*);
 
 struct modes {
 	unsigned others : 3;
@@ -36,16 +36,16 @@ int main(int argc, char* argv[])
 	int i;
 
 	if(argc < 2)
-		examine("./*","");
+		examine("./*");
 
 	for(i = 1; i < argc; i++)
-		examine(argv[i],"");
+		examine(argv[i]);
 
 	return 0;
 
 }
 
-int examine(char* argv, char* dir)
+int examine(char* argv)
 {
 	struct _stat			file_info;
 	union short_to_modes 	convert;
@@ -92,7 +92,7 @@ int examine(char* argv, char* dir)
 
 			cout << setfill(' ');
 
-			cout << " " << dir << data.name << endl;
+			cout << " " << data.name << endl;
 		} while(!(_findnext(handle, &data)));
 
 		_findclose(handle);
