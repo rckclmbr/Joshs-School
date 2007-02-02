@@ -9,8 +9,8 @@ public:
 	Canvas(int width, int height, char* windowTitle); //constructor
 	void setWindow(float l, float r, float b, float t);
 	void setViewport(int l, int r, int b, int t);
-	IntRect getViewport(void); //divulge the viewport data
-	RealRect getWindow(void); // divulge the window data
+	IntRect getViewport(void); 		// divulge the viewport data
+	RealRect getWindow(void); 		// divulge the window data
 	float getWindowAspectRatio(void);
 	void clearScreen();
 	void setBackgroundColor(float r, float g, float b);
@@ -21,6 +21,8 @@ public:
 	void moveTo(Point2 p);
 	void moveRel(float dx, float dy);
 	void lineRel(float dx, float dy);
+	float getCD(void) { return CD; }	// get the current direction
+	Point2 getCP(void) { return CP; }
 	
 	// Turtle methods
 	void turnTo(float angle);

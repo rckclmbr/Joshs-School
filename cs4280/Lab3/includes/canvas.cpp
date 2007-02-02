@@ -84,15 +84,18 @@ void Canvas::lineRel(float dx, float dy)
 	CP.set(x, y);
 }
 
-void Canvas::turnTo(float angle) {
+void Canvas::turnTo(float angle) 
+{
 	CD = angle;
 }
 
-void Canvas::turn(float angle) {
+void Canvas::turn(float angle) 
+{
 	CD += angle;
 }
 
-void Canvas::forward(float dist, int isVisible) {
+void Canvas::forward(float dist, int isVisible) 
+{
 	const float RadPerDeg = 0.017453393;
 	float x = CP.getX() + dist * cos(RadPerDeg * CD);
 	float y = CP.getY() + dist * sin(RadPerDeg * CD);
