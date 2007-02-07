@@ -1,3 +1,23 @@
+//						Learning Team C
+//						Members:
+//							Lorin Kartchner
+//							Todd William Brown
+//							Royce Judd
+//							Josh Braegger
+//							Jeremiah Stephenson
+//                      CS 4280 – 7:30 pm
+//                      Section 2 Learning Team Assignment
+//                      Mr. Rague
+//                      Due: 02/07/06
+//                      Version: 1.0
+// -----------------------------------------------------------------
+// This file contains most of the method defintions from the classes
+// that are defined in Canvas.h.  Most of the definitions were 
+// developed using code from the text book between pages 101 and
+// 105.  
+// -----------------------------------------------------------------
+
+
 #include <windows.h>
 #include<gl/glut.h>
 #include<cmath>

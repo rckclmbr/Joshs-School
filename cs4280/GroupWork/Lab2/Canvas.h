@@ -1,3 +1,26 @@
+//						Learning Team C
+//						Members:
+//							Lorin Kartchner
+//							Todd William Brown
+//							Royce Judd
+//							Josh Braegger
+//							Jeremiah Stephenson
+//                      CS 4280 – 7:30 pm
+//                      Section 2 Learning Team Assignment
+//                      Mr. Rague
+//                      Due: 02/07/06
+//                      Version: 1.0
+// -----------------------------------------------------------------
+// This is the header file for the TeamProject2 assignment.  This 
+// file contains the class declarations as well as some definitions
+// of methods contained in the classes.  The classes Point2, IntRect,
+// RealRect, and Canvas were developed using code samples from the 
+// text book between pages 101 and 105.  There are additional
+// classes contained here that were written for this assignement such
+// as Color and Line.  The methods that are not defined in this file
+// are defined in Canvas.cpp
+// -----------------------------------------------------------------
+
 #include <windows.h>
 #include<gl/glut.h>
 #include<cmath>
@@ -44,11 +67,11 @@ class Line
 {
 public:
 	Line() {} 
-	Line(Point2 _p1, Point2 _p2, Color _c)
+	Line(Point2 _p1, Point2 _p2, Color _c)		//constructor
 	{
-		p1.set(_p1.getX(), _p1.getY());
+		p1.set(_p1.getX(), _p1.getY());			//sets the points
 		p2.set(_p2.getX(), _p2.getY());
-		c.setColor(_c);
+		c.setColor(_c);							//sets the color
 	}
 	Line(float x1, float y1, float x2, float y2, Color _c)
 	{
@@ -56,7 +79,13 @@ public:
 		p2.set(x2, y2);
 		c.setColor(_c);
 	}
-	void setPoint1(float x, float y) {p1.set(x, y);}
+	void setLine(Point2 _p1, Point2 _p2, Color _c)
+	{
+		p1.set(_p1.getX(), _p1.getY());
+		p2.set(_p2.getX(), _p2.getY());
+		c.setColor(_c);
+	}
+	void setPoint1(float x, float y) {p1.set(x, y);}		
 	void setPoint1(Point2 p) {p1.set(p.getX(), p.getY());}
 	void setPoint2(float x, float y) {p2.set(x, y);}
 	void setPoint2(Point2 p) {p2.set(p.getX(), p.getY());}
