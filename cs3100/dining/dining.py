@@ -4,15 +4,17 @@ import random, time
 from threading import Lock, Thread
 from timer import Timer
 
-
-
 NUM_PHILOSOPHERS = 5    # Number of philosophers.
 RUN_TIME = 60           # Approximately how long to run (in seconds)
 
+class ChopsticksBusy(Exception):  
+    """ This is an exception when a philosopher can't get 
+        both chopsticks """
+    pass
 
-
-# This is an exception when a philosopher can't get both chopsticks
-class ChopsticksBusy(Exception):  pass
+def wait(seconds):
+    """ Wait a random time, with the max time in seconds """
+    time.sleep(random.random() * seconds)
 
 class Philosopher(Thread):
 
@@ -27,6 +29,8 @@ class Philosopher(Thread):
         self.chopstick_timer = Timer()
 
     def run(self):
+        """ Called when the thread is started.  Keeps trying to eat
+            until it's time to stop """
         while time.time() < self.stop_time:
             self.chopstick_timer.start()
             try: 
@@ -46,6 +50,7 @@ class Philosopher(Thread):
         wait(4)
 
     def eat(self):
+        """ Mmmm.... food """
         self.feedings = self.feedings + 1
         print "philosopher %d on feeding #%d" % (self.id, self.feedings)
         wait(2)
@@ -66,14 +71,13 @@ class Philosopher(Thread):
         self.right_chopstick.release()
 
     def get_waittime(self):
+        """ Returns the total amount of time the philosopher
+            has waited """
         return self.chopstick_timer.get_waittime()
     
     def get_feedings(self):
+        """ Returns the total amount of feedings """
         return self.feedings
-
-def wait(seconds):
-    """Wait a random time, with the max time in seconds"""
-    time.sleep(random.random() * seconds)
 
 if __name__ == "__main__":
 
@@ -83,7 +87,6 @@ if __name__ == "__main__":
         chopsticks.append(Lock())
 
     timer1 = Timer()
-    
     timer1.start()
         
     # Create the philosophers and get them feeding
@@ -99,6 +102,7 @@ if __name__ == "__main__":
     
     timer1.stop()
     
+    # Print all totals
     print "\nTime each philosopher waited:"
     for p in philosophers:
         print "Philosopher %d wait time: %.2f seconds" % ( p.id, p.get_waittime() )
