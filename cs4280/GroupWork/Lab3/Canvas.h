@@ -1,7 +1,6 @@
 // this includes code from Figs. 3.25 3.26 3.27 3.28 
 // and page 101
 
-#include<gl/glut.h>
 #include<cmath>
 #include<iostream>
 

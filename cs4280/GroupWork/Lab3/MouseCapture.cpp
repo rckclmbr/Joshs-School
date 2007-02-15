@@ -1,8 +1,4 @@
-#include<windows.h>
-#include<gl/gl.h>
-#include<gl/glu.h>
-#include<gl/glut.h>
-
+#include "header.h"
 #include"canvas.h"
 
 using namespace std;
@@ -36,7 +32,7 @@ void drawPolygon()
 void myMouse(int button, int state, int x, int y)
 {
 	RealRect window = cvs.getWindow();
-	int tempy = window.getT() - window.getB() - y;
+	int tempy = (int)(window.getT() - window.getB() - y);
 	if(button == GLUT_LEFT_BUTTON && state == GLUT_DOWN)
 	{
 		Point2 tempPoint(x,tempy);
@@ -65,11 +61,13 @@ void myDisplay(void)
 	glFlush();
 }
 
-void main()
+int main()
 {
 	cvs.setBackgroundColor(1,1,1);
 
 	glutDisplayFunc(myDisplay);
 	glutMouseFunc(myMouse);
 	glutMainLoop();
+
+	return 0;
 }
