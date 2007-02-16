@@ -1,3 +1,51 @@
+//						Learning Team C
+//						Members:
+//							Lorin Kartchner
+//							Todd William Brown
+//							Royce Judd
+//							Josh Braegger
+//							Jeremiah Stephenson
+//                      CS 4280 – 7:30 pm
+//                      Section 3 Learning Team Assignment
+//                      Mr. Rague
+//                      Due: 02/21/06
+//                      Version: 1.0
+// -----------------------------------------------------------------
+// This programs allows a user to create a convex polygon using the
+// mouse.  The user can then create a point on the screen.  The 
+// program will run through it's testing algorithums and display
+// wether the point is outside or inside the polygon.  As a bonus 
+// feature the user can also move the endpoints of the polygon.
+// -----------------------------------------------------------------
+
+// -----------------------------------------------------------------
+//   Change Control Section
+// -----------------------------------------------------------------
+//		Team Member: Lorin Kartchner
+//		Version 1.0
+//		Date: 02/07/2007
+//		Coded algorithum for testing outside or in 
+//
+//		Team Member: Todd William Brown
+//		Version 1.0
+//		Date: 02/06/2007
+//		Created methods that allows the user to create polygon, move endpoints, and selection location
+//
+//		Team Member: Royce Judd
+//		Version 1.0
+//		Date 02/07/2007
+//		Commented the code
+//
+//		Team Member: Josh Braegger
+//		Version 1.0
+//		Date 02/06/2007
+//		Presented code in class
+//
+//		Team Member: Jeremiah Stephenson
+//		Version 1.0
+//		Date 02/06/2007
+//		Wrote the write up to go with the code
+
 #include <windows.h>
 #include <stdio.h>
 #include <gl/gl.h>
@@ -10,6 +58,7 @@ void display(void);
 const int WINDOW_WIDTH = 600;
 const int WINDOW_HEIGHT = 600;
 
+//class defining a point
 class Point2
 {
 public:
@@ -45,7 +94,7 @@ void insideOutside(Point2 _testPoint, Point2 *_polyPointPtr, int _numPoints)
 	//pointInside = true or pointInside = false
 	glutPostRedisplay();
 }
-
+//function that detects mouse movement and moves endpoints
 void myMovedMouse(int x, int y)
 {
 	if (moveEnabled == true)
@@ -55,7 +104,7 @@ void myMovedMouse(int x, int y)
 	}
 }
 
-
+//function that detects mouse clicks and creates the polygon
 void myMouseState(int button, int state, int x, int y)
 {
 	if (initializeComplete == false)
@@ -123,6 +172,7 @@ void myMouseState(int button, int state, int x, int y)
 	}
 }
 
+//main function
 int main (int argc, char **argv)
 {
     glutInit(&argc, argv);
@@ -139,17 +189,17 @@ int main (int argc, char **argv)
     glutMainLoop();
     return 0;
 }
- 
+//initilizes OpenGL window
 void init(void)
 {
-    glClearColor(0.0, 0.0, 0.0, 0.0);
+    glClearColor(0.0,0.0,0.0,0.0);
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
     gluOrtho2D(0, WINDOW_WIDTH, 0, WINDOW_HEIGHT);
 	glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
 }
- 
+//glut display function
 void display(void)
 {
 	char inside[39] = "The point drawn is INSIDE the polygon.";
