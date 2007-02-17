@@ -46,11 +46,7 @@
 //		Date 02/06/2007
 //		Wrote the write up to go with the code
 
-#include <windows.h>
-#include <stdio.h>
-#include <gl/gl.h>
-#include <gl/glu.h>
-#include <gl/glut.h>
+#include "header.h"
 
 void init(void);
 void display(void);

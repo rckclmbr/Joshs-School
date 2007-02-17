@@ -6,7 +6,7 @@ else
 CFLAGS= -IGL -IGLU -lglut
 endif
 CC=g++
-SRCS=MouseCapture
+SRCS=Project3
 
 all : $(SRCS)
 
