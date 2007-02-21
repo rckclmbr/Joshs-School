@@ -70,6 +70,30 @@ public:
 		glEnd();
 		glFlush();
 	}
+
+	// calculates the length of a vector -- added by Lorin
+	float Length(void)
+	{
+		return sqrt(x * x + y * y);
+	}
+	
+	// calculates the Dot Product of two vectors -- added by Lorin
+	float Dot(Point2 &vec)
+	{
+		return (x * vec.getX() + y * vec.getY());
+	}
+	
+	// normalizes a vector -- added by Lorin 
+	Point2 Normalize(void)
+	{
+		float length = Length();
+
+		x /= length;
+		y /= length;
+		
+		return *this;
+	}
+
 private:
 	float x, y;
 };
@@ -82,14 +106,79 @@ bool initializeComplete = false; //the polygon has been drawn
 bool moveEnabled = false; //used for the movement of the polygon points
 bool firstPointDrawn = false; //makes sure messages are not printed before the very first testPoint is drawn
 bool pointInside = false; //boolean for inside or outside. Is the ONLY prameter that needs code for the point being inside or outside
+#define PI	3.14159  // defines PI
 
-//function that needs added code for the point lying inside or outside the given polygon
-//variable names kept the same with the exception of the '_' character in front (for local modification if necessary)
+////////////////////////////////////////////////////////////////
+// Function insideOutside: Through various calculations this  //
+// function determines whether a point Q is inside or outside //
+// of a user defined polygon. -- added by Lorin     		  //
+////////////////////////////////////////////////////////////////
 void insideOutside(Point2 _testPoint, Point2 *_polyPointPtr, int _numPoints)
 {
-	//pointInside = true or pointInside = false
+	Point2 Q = _testPoint;  // hold the test point
+	Point2 *P = _polyPointPtr; // pointer to Points list
+	Point2 ptNormal[100];  //list of point normals
+	Point2 vecQ;  // Q - P vector
+	Point2 vecN;  // normal - P vector
+	GLfloat nX; // temp x
+	GLfloat nY; // temp y
+	float Angle;  //holds the angle of vecQ & vecN
+	int i = 0;
+	
+	//calculate the point normals
+	for ( i; i < _numPoints; i++)
+	{
+		if ( i < _numPoints - 1 )
+		{
+			nX = (P[i].getX() - P[i + 1].getX());
+			nY = (P[i].getY() - P[i + 1].getY());
+		}
+		else if ( i == _numPoints - 1 ) // pick up the last point normal
+		{
+			nX = (P[i].getX() - P[0].getX());
+			nY = (P[i].getY() - P[0].getY());
+		}
+
+		// fill the ptNormal array with all point normals
+		ptNormal[i].set(-(nY) + P[i].getX(), nX + P[i].getY());
+	}
+	
+	// Find the angles of vectors Q - P & N - P
+	for ( int x = 0; x < _numPoints; x++)
+	{
+		//calculate the Q - P  vectors
+		nX = Q.getX() - P[x].getX();
+		nY = Q.getY() - P[x].getY();
+		vecQ.set(nX, nY);
+		
+		// calculate the normal - P vector
+		nX = ptNormal[x].getX() - P[x].getX();
+		nY = ptNormal[x].getY() - P[x].getY();
+		vecN.set(nX, nY);
+
+		//normalize the vectors Q & N
+		vecQ.Normalize();
+		vecN.Normalize();
+		
+		// calculate the angle using the Dot product than convert to degrees
+		Angle = (acos(vecQ.Dot(vecN))*(180/PI));
+		
+		// Check angle.  Q is inside if Angle > 90, Outside is Angle < 90
+		if(Angle > 90)
+		{
+			pointInside = true;
+		}
+		else 
+		{
+			pointInside = false;
+			break;  // break is any angle is outside.
+		}
+	}
+
+	// refresh display
 	glutPostRedisplay();
 }
+
 //function that detects mouse movement and moves endpoints
 void myMovedMouse(int x, int y)
 {
