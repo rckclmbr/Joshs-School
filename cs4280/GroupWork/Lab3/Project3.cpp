@@ -47,8 +47,9 @@
 //		Wrote the write up to go with the code
 
 #include "header.h"
+#include <iostream>
+using namespace std;
 
-void init(void);
 void display(void);
 
 const int WINDOW_WIDTH = 600;
@@ -71,90 +72,80 @@ public:
 		glFlush();
 	}
 
-	// calculates the length of a vector -- added by Lorin
-	float Length(void)
-	{
-		return sqrt(x * x + y * y);
+private:
+	float x, y;
+};
+
+class Vector
+{
+public:
+	Vector() {x = y = 0.0f;} 
+	Vector(Point2 pt, Point2 pt2) {
+		x = pt.getX() - pt2.getX();
+		y = pt.getY() - pt2.getY();	
 	}
+	float getX() {return x;}
+	float getY() {return y;}
+
+	// calculates the length of a vector -- added by Lorin
+	float Length(void) { return sqrt(x * x + y * y); }
 	
 	// calculates the Dot Product of two vectors -- added by Lorin
-	float Dot(Point2 &vec)
-	{
-		return (x * vec.getX() + y * vec.getY());
-	}
+	float Dot(Vector &vec) { return (x * vec.getX() + y * vec.getY()); }
 	
 	// normalizes a vector -- added by Lorin 
-	Point2 Normalize(void)
+	void Normalize(void)
 	{
 		float length = Length();
 
 		x /= length;
 		y /= length;
-		
-		return *this;
 	}
-
 private:
 	float x, y;
 };
 
-Point2 testPoint; //the point in question as to whether inside or outside polygon
-Point2 polyPoint[100]; //the points in the polygon itself (max of 100)
-int polyIndex = 0; //used for the adjustment of the polygon points
-int numPoints = 0; //num of points in the polygon array (can be used to loop through populated points)
-bool initializeComplete = false; //the polygon has been drawn
-bool moveEnabled = false; //used for the movement of the polygon points
-bool firstPointDrawn = false; //makes sure messages are not printed before the very first testPoint is drawn
-bool pointInside = false; //boolean for inside or outside. Is the ONLY prameter that needs code for the point being inside or outside
-#define PI	3.14159  // defines PI
+Point2 testPoint; 		// the point in question as to whether inside or outside polygon
+Point2 polyPoint[100];  	// the points in the polygon itself (max of 100)
+int polyIndex = 0; 		// used for the adjustment of the polygon points
+int numPoints = 0; 		// num of points in the polygon array (can be used to loop through populated points)
+bool initializeComplete = false;// the polygon has been drawn
+bool moveEnabled = false; 	// used for the movement of the polygon points
+bool firstPointDrawn = false; 	// makes sure messages are not printed before the very first testPoint is drawn
+bool pointInside = false; 	// boolean for inside or outside. Is the ONLY prameter that needs code for the point being inside or outside
+#define PI	3.14159  	// defines PI
 
 ////////////////////////////////////////////////////////////////
 // Function insideOutside: Through various calculations this  //
 // function determines whether a point Q is inside or outside //
-// of a user defined polygon. -- added by Lorin     		  //
+// of a user defined polygon. -- added by Lorin		      //
 ////////////////////////////////////////////////////////////////
 void insideOutside(Point2 _testPoint, Point2 *_polyPointPtr, int _numPoints)
 {
-	Point2 Q = _testPoint;  // hold the test point
-	Point2 *P = _polyPointPtr; // pointer to Points list
-	Point2 ptNormal[100];  //list of point normals
-	Point2 vecQ;  // Q - P vector
-	Point2 vecN;  // normal - P vector
-	GLfloat nX; // temp x
-	GLfloat nY; // temp y
-	float Angle;  //holds the angle of vecQ & vecN
-	int i = 0;
-	
-	//calculate the point normals
-	for ( i; i < _numPoints; i++)
-	{
-		if ( i < _numPoints - 1 )
-		{
-			nX = (P[i].getX() - P[i + 1].getX());
-			nY = (P[i].getY() - P[i + 1].getY());
-		}
-		else if ( i == _numPoints - 1 ) // pick up the last point normal
-		{
-			nX = (P[i].getX() - P[0].getX());
-			nY = (P[i].getY() - P[0].getY());
-		}
-
-		// fill the ptNormal array with all point normals
-		ptNormal[i].set(-(nY) + P[i].getX(), nX + P[i].getY());
-	}
+	Point2 Q = _testPoint;		// hold the test point
+	Point2 *P = _polyPointPtr;	// pointer to Points list
+	Point2 ptNormal[100];		// list of point normals
+	GLfloat nX;			// temp x
+	GLfloat nY;			// temp y
+	float Angle;			// holds the angle of vecQ & vecN
 	
 	// Find the angles of vectors Q - P & N - P
 	for ( int x = 0; x < _numPoints; x++)
 	{
-		//calculate the Q - P  vectors
-		nX = Q.getX() - P[x].getX();
-		nY = Q.getY() - P[x].getY();
-		vecQ.set(nX, nY);
-		
-		// calculate the normal - P vector
-		nX = ptNormal[x].getX() - P[x].getX();
-		nY = ptNormal[x].getY() - P[x].getY();
-		vecN.set(nX, nY);
+		// Used a lot here, let's make them shorter vars
+		float pX = P[x].getX();
+		float pY = P[x].getY();
+
+		// Calculate normal point
+		nX = (pX - P[(x + 1) % _numPoints].getX());
+		nY = (pY - P[(x + 1) % _numPoints].getY());
+
+		// fill the ptNormal array with the point normals
+		ptNormal[x].set(-(nY) + pX, nX + pY);
+
+		//calculate the Q-P and normal-P  vectors
+		Vector vecQ = Vector(Q, P[x]);
+		Vector vecN = Vector(ptNormal[x], P[x]);
 
 		//normalize the vectors Q & N
 		vecQ.Normalize();
@@ -164,15 +155,9 @@ void insideOutside(Point2 _testPoint, Point2 *_polyPointPtr, int _numPoints)
 		Angle = (acos(vecQ.Dot(vecN))*(180/PI));
 		
 		// Check angle.  Q is inside if Angle > 90, Outside is Angle < 90
-		if(Angle > 90)
-		{
-			pointInside = true;
-		}
-		else 
-		{
-			pointInside = false;
-			break;  // break is any angle is outside.
-		}
+		pointInside = (Angle > 90);
+		
+		if(!pointInside) break; // break is any angle is outside.
 	}
 
 	// refresh display
@@ -198,13 +183,9 @@ void myMouseState(int button, int state, int x, int y)
 		{
 			polyPoint[numPoints].set((float) x, (float) (WINDOW_HEIGHT-y));
 			++numPoints;
-			glutPostRedisplay();
 		}
 		else if ((button == GLUT_RIGHT_BUTTON) && (state == GLUT_DOWN))
-		{
-			initializeComplete = true;
-			glutPostRedisplay();
-		}
+			initializeComplete = true;		glutPostRedisplay();
 	}
 	else
 	{
@@ -260,67 +241,64 @@ void myMouseState(int button, int state, int x, int y)
 //main function
 int main (int argc, char **argv)
 {
-    glutInit(&argc, argv);
-    glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB);
-    glutInitWindowSize(WINDOW_WIDTH, WINDOW_HEIGHT);
-    glutInitWindowPosition(50, 50);
-    glutCreateWindow("Team C Project 3");
-    init();
+	glutInit(&argc, argv);
+	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB);
+	glutInitWindowSize(WINDOW_WIDTH, WINDOW_HEIGHT);
+	glutInitWindowPosition(50, 50);
+	glutCreateWindow("Team C Project 3");
+
+	glClearColor(0.0,0.0,0.0,0.0);
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	gluOrtho2D(0, WINDOW_WIDTH, 0, WINDOW_HEIGHT);
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+
 	glPointSize(8);
 	glLineWidth(3);
 	glutDisplayFunc(display);
 	glutMouseFunc(myMouseState);
 	glutMotionFunc(myMovedMouse);
-    glutMainLoop();
-    return 0;
+	glutMainLoop();
+	return 0;
 }
-//initilizes OpenGL window
-void init(void)
-{
-    glClearColor(0.0,0.0,0.0,0.0);
-    glMatrixMode(GL_PROJECTION);
-    glLoadIdentity();
-    gluOrtho2D(0, WINDOW_WIDTH, 0, WINDOW_HEIGHT);
-	glMatrixMode(GL_MODELVIEW);
-    glLoadIdentity();
-}
+
 //glut display function
 void display(void)
 {
-	char inside[39] = "The point drawn is INSIDE the polygon.";
-	char outside[40] = "The point drawn is OUTSIDE the polygon.";
+	
 	glClear(GL_COLOR_BUFFER_BIT);
-    for (int x=0; x<numPoints; x++)
-	{
-        glColor3f(1.0, 0.0, 0.0);  
+	
+	// Draw all the points
+	glColor3f(1.0, 0.0, 0.0);  
+	for (int x=0; x<numPoints; x++)
 		polyPoint[x].draw();
-	}
-	if (initializeComplete == true)
+
+	// Draw the polgon
+	if (initializeComplete)
 	{
+		glColor3f(0.0, 0.0, 1.0);
 		glBegin(GL_LINE_LOOP);
-		for (int x=0; x<numPoints; x++)
-		{
-			glColor3f(0.0, 0.0, 1.0);  
+	for (int x=0; x<numPoints; x++)
 			glVertex2f(polyPoint[x].getX(), polyPoint[x].getY());
-		}
 		glEnd();
 	}
-	if (firstPointDrawn == true)
+	
+	// Draw the test point, and the text saying whether it's inside or outside.
+	if (firstPointDrawn)
 	{
+		char inside[] = "The point drawn is INSIDE the polygon.";
+		char outside[] = "The point drawn is OUTSIDE the polygon.";
+
 		glColor3f(0.0, 1.0, 0.0);  
 		testPoint.draw();
-		//
+
+		char* dispText = (pointInside) ? inside : outside;
+
 		glRasterPos2i(100,100);
-		if (pointInside == true)
-		{
-			for (int x=0; x<38; x++)
-				glutBitmapCharacter(GLUT_BITMAP_8_BY_13, inside[x]);
-		}
-		else
-		{
-			for (int x=0; x<39; x++)
-				glutBitmapCharacter(GLUT_BITMAP_8_BY_13, outside[x]);
-		}
+		for (int x=0; x< strlen(dispText); x++)
+			glutBitmapCharacter(GLUT_BITMAP_8_BY_13, dispText[x]);
+
 	}
 	glutSwapBuffers();
 }
