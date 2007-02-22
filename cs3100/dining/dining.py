@@ -1,5 +1,9 @@
 #!/usr/bin/python
 
+# Joshua Braegger
+# CS3100
+# Dining Philosopher Problem
+
 import random, time
 from threading import Lock, Thread
 from timer import Timer
@@ -42,17 +46,16 @@ class Philosopher(Thread):
                 self.release_chopsticks()      
             except ChopsticksBusy:
                 pass
-        print "philosopher %d stuffed" % self.id
 
     def think(self):
         """ Philosophers like to think in between feedings  """
-        print "philosopher %d thinking" % self.id
+        #print "philosopher %d thinking" % self.id
         wait(4)
 
     def eat(self):
         """ Mmmm.... food """
         self.feedings = self.feedings + 1
-        print "philosopher %d on feeding #%d" % (self.id, self.feedings)
+        #print "philosopher %d on feeding #%d" % (self.id, self.feedings)
         wait(2)
 
     def acquire_chopsticks(self):
