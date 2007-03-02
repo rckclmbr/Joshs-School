@@ -5,7 +5,7 @@ Canvas::Canvas(int width, int height, char* windowTitle)
 	argv[0] = dummyString; 			//hook up the pointer
 	int argc =1; 				//to satisfy glutInit()
 	glutInit(&argc, argv);
-	glutInitDisplayMode(GLUT_SINGLE |GLUT_RGB);
+	glutInitDisplayMode(GLUT_RGB | GLUT_DOUBLE | GLUT_DEPTH);
 	glutInitWindowSize(width, height);
 	glutInitWindowPosition(20, 20);
 	glutCreateWindow(windowTitle); 		//open the screen window
