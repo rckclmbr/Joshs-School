@@ -91,9 +91,10 @@ public:
 };
 
 static int num_points = 2;
-float radius = 1;
+float radius = 4;
+float rotate = 0;
 Point2 circlePoint[50];
-Circle circ(1);
+Circle circ(radius);
 
 void display(void);
 void keyboard(int key, int x, int y);
@@ -109,7 +110,7 @@ int main(int argc, char **argv)
 	  
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	gluOrtho2D(-2, 2, -2, 2);
+	gluOrtho2D(-5, 5, -5, 5);
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 
@@ -135,7 +136,7 @@ void display(void)
 
     for(int i = 0; i < num_points; i++)
 	{
-		angle = i*2*pi/num_points;
+		angle = (i*2*pi/num_points) + rotate;
 	
 		GLfloat x = cos(angle)*radius;
 		GLfloat y = sin(angle)*radius;
@@ -183,6 +184,16 @@ void keyboard(int key, int x, int y)
 				num_points--;
 				glutPostRedisplay();
 			}
+			break;
+
+		case GLUT_KEY_LEFT:
+			rotate+=(radius*0.0025);
+			glutPostRedisplay();
+			break;
+
+		case GLUT_KEY_RIGHT:
+			rotate-=(radius*0.0025);
+			glutPostRedisplay();
 			break;
 	}
 }
