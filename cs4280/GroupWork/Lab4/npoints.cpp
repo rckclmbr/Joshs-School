@@ -61,7 +61,9 @@ public:
 	float getY() {return y;}
 	void draw(void)
 	{
+		glBegin(GL_POINTS);
 		glVertex2f((GLfloat)x, (GLfloat)y);
+		glEnd();
 	}
 private:
 	float x, y;
@@ -99,6 +101,7 @@ Circle circ(radius);
 void display(void);
 void keyboard(int key, int x, int y);
 void reshape(int x, int y);
+void drawPoints(Point2 p, double R, double startangle, double sweep);
 
 int main(int argc, char **argv)
 {
@@ -126,26 +129,14 @@ int main(int argc, char **argv)
 
 void display(void)
 {
-	double angle;
-
+	
 	glClear(GL_COLOR_BUFFER_BIT);
-
-	glBegin(GL_POINTS);
 
 	glColor3f(1.5, 0.0, 0.0);  
 
-    for(int i = 0; i < num_points; i++)
-	{
-		angle = (i*2*pi/num_points) + rotate;
-	
-		GLfloat x = cos(angle)*radius;
-		GLfloat y = sin(angle)*radius;
+	Point2 p(0,0);
 
-		circlePoint[i].set(x, y);
-
-		circlePoint[i].draw();
-    }
-	glEnd();
+	drawPoints(p, 4, 0, 360);
 
 	glColor3f(0.0, 0.0, 1.5);  
 	circ.drawCircle();
@@ -187,13 +178,32 @@ void keyboard(int key, int x, int y)
 			break;
 
 		case GLUT_KEY_LEFT:
-			rotate+=(radius*0.0025);
+			rotate+=2;
 			glutPostRedisplay();
 			break;
 
 		case GLUT_KEY_RIGHT:
-			rotate-=(radius*0.0025);
+			rotate-=2;
 			glutPostRedisplay();
 			break;
+	}
+}
+
+void drawPoints(Point2 p, double R, double startangle, double sweep)
+{
+	#define RadPerDeg 0.01745329
+	double delang = (RadPerDeg * sweep / num_points);
+	double T = tan(delang/2);
+	double S = 2*T/(1+T*T);
+	double snR = R*sin(RadPerDeg*(startangle + rotate));
+	double csR = R*cos(RadPerDeg*(startangle + rotate));
+	
+	for(int i = 0; i < num_points; i++)
+	{
+		snR += T * csR;
+		csR -= S * snR;
+		snR += T * csR;
+		circlePoint[i].set(p.getX() + csR, p.getY() + snR);
+		circlePoint[i].draw();
 	}
 }
