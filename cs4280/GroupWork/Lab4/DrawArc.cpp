@@ -9,7 +9,64 @@ using namespace std;
 void drawArc2(Point2 c, double R, double startAngle, double sweep);
 
 Canvas cvs(600,600,"Draw Arc 2");
+double radius = 10;
+double sAngle = 0;
+double swAngle = 90;
+bool startORsweep = true;
 
+//arrow keyboard display
+void myKeyboard(int key, int x,int y)
+{
+	switch (key)
+	{
+		case GLUT_KEY_UP:
+			{
+				radius++;
+				break;
+			}
+		case GLUT_KEY_DOWN:
+			{
+				radius--;
+				break;
+			}
+		case GLUT_KEY_RIGHT:
+			{
+				if(startORsweep == true)
+					sAngle++;
+				else
+					swAngle++;
+				break;
+			}
+		case GLUT_KEY_LEFT:
+			{
+				if(startORsweep == true)
+					sAngle--;
+				else
+					swAngle--;
+				break;
+			}
+		default:
+			{}
+	}
+	glutPostRedisplay();
+}
+//normal keyboard function
+void myKeys(unsigned char key, int x, int y)
+{
+	switch(key)
+	{
+	case 's':
+		{
+			if(startORsweep == true)
+				startORsweep = false;
+			else
+				startORsweep = true;
+		}
+	default:
+		{}
+	}
+}
+//display function
 void myDisplay(void)
 {
 	cvs.clearScreen();
@@ -18,7 +75,7 @@ void myDisplay(void)
 	glLineWidth(2);
 
 //draw arc call
-	drawArc2(center,25,80,145);
+	drawArc2(center,radius,sAngle,swAngle);
 
 	glFlush();
 }
@@ -29,7 +86,8 @@ void main()
 	cvs.setBackgroundColor(1,1,1);
 	cvs.setWindow(-100,100,-100,100);
 	glutDisplayFunc(myDisplay);
-
+	glutSpecialFunc(myKeyboard);
+	glutKeyboardFunc(myKeys);
 	glutMainLoop();
 }
 
