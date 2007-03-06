@@ -4,17 +4,17 @@
 using namespace std;
 
 void redraw(void);
-void local_rotate();
-void global_rotate();
+bool local_rotate = false;
+bool global_rotate = false;
 
 Canvas cvs(600,600,"Rotations!"); //global canvas object
 
-class Rectangle {
+class Rectangle2 {
 	private:
 		float center;
 		RealRect r;
 	public:
-		Rectangle() {
+		Rectangle2() {
 			cvs.moveTo(0,0);
 			center = 0.0;
 			r = RealRect();
@@ -32,12 +32,13 @@ class Rectangle {
 			r.draw();
 		}
 };
-	
-Rectangle temp = Rectangle();
 
 int tran_x, tran_y;
 float rot_amt = 0;
 float glob_rot_amt = 0;
+void rotate();
+
+Rectangle2 temp = Rectangle2();
 
 void display(void)
 {	
@@ -73,16 +74,22 @@ void keyboard(unsigned char key, int x, int y) {
 
 	switch(key) {
 			case 'G':
-				glutIdleFunc(global_rotate); // This starts the callback
+				global_rotate = true;
+				glutIdleFunc(rotate); // This starts the callback
 				break;
 			case 'g':
-				glutIdleFunc(NULL);
+				global_rotate = false;
+				if(!local_rotate)
+					glutIdleFunc(NULL);
 				break;
 			case 'L':
-				glutIdleFunc(local_rotate); // This starts the callback
+				local_rotate = true;
+				glutIdleFunc(rotate); // This starts the callback
 				return;
 			case 'l':
-				glutIdleFunc(NULL);
+				local_rotate = false;
+				if(!global_rotate)
+					glutIdleFunc(NULL);
 				break;
 			case 'X':
 				tran_x += 1;
@@ -119,6 +126,8 @@ void mouse(int button, int state, int x, int y) {
 		// in order for it to work right
 		float xx = (float)x * asp_ratio;
 		float yy = (float)y * asp_ratio;
+		global_rotate = false;
+		local_rotate = false;
 		tran_x = (int)xx;
 		tran_y = (int)yy;
 		glutPostRedisplay();
@@ -128,18 +137,18 @@ void mouse(int button, int state, int x, int y) {
 		tran_y = 0;
 		rot_amt = 0;
 		glob_rot_amt = 0;
+		global_rotate = false;
+		local_rotate = false;
 		glutIdleFunc(NULL);
 		glutPostRedisplay();
 	}
 }
 
-void local_rotate() {
-	rot_amt += .5;
-	glutPostRedisplay();
-}
-
-void global_rotate() {
-	glob_rot_amt += .5;
+void rotate() {
+	if(local_rotate)
+		rot_amt += 1;
+	if(global_rotate)
+		glob_rot_amt += 1;
 	glutPostRedisplay();
 }
 
