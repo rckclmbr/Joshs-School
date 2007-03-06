@@ -44,6 +44,7 @@
 #include<windows.h>
 #include<iostream>
 #include<cmath>
+#include <iomanip>
 #include<gl/Gl.h>
 #include<gl/glut.h>
 using namespace std;
@@ -65,6 +66,7 @@ public:
 		glVertex2f((GLfloat)x, (GLfloat)y);
 		glEnd();
 	}
+
 private:
 	float x, y;
 };
@@ -118,7 +120,6 @@ int main(int argc, char **argv)
 	glLoadIdentity();
 
 	glPointSize(8);
-	glLineWidth(2);
 	glClearColor(1.0,1.0,1.0,0.0);
 	glutDisplayFunc(display);
 	glutSpecialFunc(keyboard);
@@ -136,16 +137,25 @@ void display(void)
 
 	Point2 p(0,0);
 
-	drawPoints(p, 4, 0, 360);
+	drawPoints(p, radius, 0, 360);
 
-	glColor3f(0.0, 0.0, 1.5);  
+	glColor3f(0.0, 0.0, 1.5); 
+	glLineWidth(2);
 	circ.drawCircle();
 
 	cout << endl << "Circle is showing " << num_points << " points " << endl << endl;
+
+	
+	glColor3f(0.0, 1.0, 0.0);
+	glLineWidth(1);
+	glBegin(GL_LINE_LOOP);
 	for(int j = 0; j < num_points; j++)
 	{
-		cout << "Point " << j + 1 << " is [" << circlePoint[j].getX() << ", " << circlePoint[j].getY() << "]" << endl;
+		cout << "Point " << j + 1 << " is [" << setprecision(3) << circlePoint[j].getX() << ", " << setprecision(3) << circlePoint[j].getY() << "]" << endl;
+		glVertex2f(circlePoint[j].getX(), circlePoint[j].getY());
+		
 	}
+	glEnd();
 	glutSwapBuffers();
 }
 
