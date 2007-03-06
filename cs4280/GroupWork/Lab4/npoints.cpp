@@ -97,25 +97,28 @@ public:
 static int num_points = 2;
 float radius = 4;
 float rotate = 0;
+int windowWidth = 500;
+int windowHeight = 500;
+GLdouble coor = 5;
 Point2 circlePoint[50];
-Circle circ(radius);
 
 void display(void);
 void keyboard(int key, int x, int y);
 void reshape(int x, int y);
 void drawPoints(Point2 p, double R, double startangle, double sweep);
+void myMouse(int, int, int, int);	
 
 int main(int argc, char **argv)
 {
 	glutInit(&argc,argv);
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA);
-	glutInitWindowSize(400,400);
+	glutInitWindowSize(windowWidth,windowHeight);
 	glutInitWindowPosition(400,400);
 	glutCreateWindow("Circle Points.cpp");
 	  
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	gluOrtho2D(-5, 5, -5, 5);
+	gluOrtho2D(-coor, coor, -coor, coor);
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 
@@ -123,6 +126,7 @@ int main(int argc, char **argv)
 	glClearColor(1.0,1.0,1.0,0.0);
 	glutDisplayFunc(display);
 	glutSpecialFunc(keyboard);
+	glutMouseFunc(myMouse);
 	glutReshapeFunc(reshape);
 	glutMainLoop();
 	return 0;
@@ -130,7 +134,7 @@ int main(int argc, char **argv)
 
 void display(void)
 {
-	
+	Circle circ(radius);
 	glClear(GL_COLOR_BUFFER_BIT);
 
 	glColor3f(1.5, 0.0, 0.0);  
@@ -215,5 +219,20 @@ void drawPoints(Point2 p, double R, double startangle, double sweep)
 		snR += T * csR;
 		circlePoint[i].set(p.getX() + csR, p.getY() + snR);
 		circlePoint[i].draw();
+	}
+}
+
+void myMouse(int button, int state, int mouseX, int mouseY)
+{
+	GLfloat flip = windowHeight - mouseY;			//flips the y coordinate
+	
+	GLfloat x = ((((float)mouseX)/windowWidth)*(coor*2)) - coor;		//converts the x value to the right position in the world window
+	GLfloat y = ((flip/windowHeight)*(coor*2)) - coor;				//converts the y value to the right position in the world window
+	
+	if(button == GLUT_LEFT_BUTTON && state==GLUT_DOWN)			//if left button on mouse is pressed
+	{
+		radius = sqrt((pow(x,2))+(pow(y,2)));
+
+		glutPostRedisplay();			
 	}
 }
