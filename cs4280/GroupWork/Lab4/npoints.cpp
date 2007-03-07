@@ -11,6 +11,18 @@
 //                      Due: 03/7/07
 //                      Version: 1.0
 // -----------------------------------------------------------------
+// This program is a demonstration of how three shears produce a 
+// rotation.  The program draws a circle and then calculates two
+// points on the circle that are equal distance apart.  The program
+// also displays the coordinates of these points on the command line
+// window.  The user can then use the up arrow key to increase the 
+// number of points while the command line window will continually update 
+// with the new coordinates.  The user can also use the side arrow
+// keys to rotate the points around the circle.  The mouse button
+// can be used to change the size of the circle.  The function that
+// is used to calculate the points is a modified version provided
+// in the text book on page 280.  This function uses the three shear
+// method examined in the case study.
 // -----------------------------------------------------------------
 
 // -----------------------------------------------------------------
@@ -18,22 +30,22 @@
 // -----------------------------------------------------------------
 //		Team Member: Lorin Kartchner
 //		Version 1.0
-//		Date: 
+//		Date: Wrote the documentation for the project
 //
 //
 //		Team Member: Todd William Brown
 //		Version 1.0
-//		Date: 
+//		Date: Completed task number three for the project
 //		
 //
 //		Team Member: Royce Judd
 //		Version 1.0
-//		Date:
+//		Date: Wrote the other program for the project, DrawArc
 //		
 //
 //		Team Member: Josh Braegger
 //		Version 1.0
-//		Date:
+//		Date: Completed task number one and two of the project
 //		
 //
 //		Team Member: Jeremiah Stephenson
@@ -41,7 +53,7 @@
 //		Date: 3/3/2007
 //		Wrote this program for the fourth portion of the group assignment
 
-#include<windows.h>
+#include<windows.h>		//compiler directives
 #include<iostream>
 #include<cmath>
 #include <iomanip>
@@ -49,11 +61,11 @@
 #include<gl/glut.h>
 using namespace std;
 
-const double pi = 3.14159265359;
+const double pi = 3.14159265359;	//definition of pi
 
 
-class Point2
-{
+class Point2						//point class
+{	
 public:
 	Point2() {x = y = 0.0f;} 
 	Point2(float xx, float yy) {x=xx; y=yy;} 
@@ -71,7 +83,7 @@ private:
 	float x, y;
 };
 
-class Circle
+class Circle				//Circle class
 {
 private:
 	float degree;
@@ -82,7 +94,7 @@ public:
 
 	void drawCircle(void)
 	{
-		glBegin(GL_LINE_LOOP);
+		glBegin(GL_LINE_LOOP);		
  
 		for (int i=0; i < 360; i++)
 		{
@@ -95,7 +107,7 @@ public:
 };
 
 static int num_points = 2;
-float radius = 4;
+float radius = 4;			
 float rotate = 0;
 int windowWidth = 500;
 int windowHeight = 500;
@@ -139,20 +151,20 @@ void display(void)
 
 	glColor3f(1.5, 0.0, 0.0);  
 
-	Point2 p(0,0);
+	Point2 p(0,0);					//sets the center of the circle to the points (0,0)
 
-	drawPoints(p, radius, 0, 360);
+	drawPoints(p, radius, 0, 360);		//draws the points depending on how are specified
 
 	glColor3f(0.0, 0.0, 1.5); 
 	glLineWidth(2);
-	circ.drawCircle();
+	circ.drawCircle();					//draws the blue circle
 
 	cout << endl << "Circle is showing " << num_points << " points " << endl << endl;
 
 	
 	glColor3f(0.0, 1.0, 0.0);
 	glLineWidth(1);
-	glBegin(GL_LINE_LOOP);
+	glBegin(GL_LINE_LOOP);					//displays the coordinates of all points
 	for(int j = 0; j < num_points; j++)
 	{
 		cout << "Point " << j + 1 << " is [" << setprecision(3) << circlePoint[j].getX() << ", " << setprecision(3) << circlePoint[j].getY() << "]" << endl;
@@ -166,38 +178,58 @@ void display(void)
 void reshape(int x,int y)
 {
 	if(x<y)
+	{
 		glViewport(0,(y-x)/2,x,x);
+	}
 	else
+	{
 		glViewport((x-y)/2,0,y,y);
+	}
+	windowWidth = x;
+	windowHeight = y;
 }
 
 void keyboard(int key, int x, int y)
 {  
 	switch (key)
 	{
-		case GLUT_KEY_UP:
-			if(num_points < 50)
+		case GLUT_KEY_UP:				//if up arrow is pressed
+			if(num_points < 50)			//limit of 50 points
 			{
-				num_points++;
+				num_points++;			//increases the number of points
 				glutPostRedisplay();
 			}
 			break;
 
-		case GLUT_KEY_DOWN:
-			if(num_points > 2)
+		case GLUT_KEY_DOWN:				//if down arrow is pressed
+			if(num_points > 2)			//can only go down to 2 points
 			{
-				num_points--;
+				num_points--;			//decreases the number of points
 				glutPostRedisplay();
 			}
 			break;
 
-		case GLUT_KEY_LEFT:
-			rotate+=2;
+		case GLUT_KEY_LEFT:				//if the left arrow key is pressed
+			if(rotate < 360)
+			{
+				rotate+=2;					//increases the angle
+			}
+			else
+			{
+				rotate = 0;
+			}
 			glutPostRedisplay();
 			break;
 
-		case GLUT_KEY_RIGHT:
-			rotate-=2;
+		case GLUT_KEY_RIGHT:			//if the right arrow key is pressed
+			if(rotate > -360)
+			{
+				rotate-=2;					//decreases the angle
+			}
+			else
+			{
+				rotate = 0;
+			}
 			glutPostRedisplay();
 			break;
 	}
@@ -207,9 +239,9 @@ void drawPoints(Point2 p, double R, double startangle, double sweep)
 {
 	#define RadPerDeg 0.01745329
 	double delang = (RadPerDeg * sweep / num_points);
-	double T = tan(delang/2);
+	double T = tan(delang/2);							//calculates the three shears
 	double S = 2*T/(1+T*T);
-	double snR = R*sin(RadPerDeg*(startangle + rotate));
+	double snR = R*sin(RadPerDeg*(startangle + rotate));	
 	double csR = R*cos(RadPerDeg*(startangle + rotate));
 	
 	for(int i = 0; i < num_points; i++)
@@ -217,8 +249,8 @@ void drawPoints(Point2 p, double R, double startangle, double sweep)
 		snR += T * csR;
 		csR -= S * snR;
 		snR += T * csR;
-		circlePoint[i].set(p.getX() + csR, p.getY() + snR);
-		circlePoint[i].draw();
+		circlePoint[i].set(p.getX() + csR, p.getY() + snR);		//sets the points into the array
+		circlePoint[i].draw();									//draws the points
 	}
 }
 
@@ -231,7 +263,7 @@ void myMouse(int button, int state, int mouseX, int mouseY)
 	
 	if(button == GLUT_LEFT_BUTTON && state==GLUT_DOWN)			//if left button on mouse is pressed
 	{
-		radius = sqrt((pow(x,2))+(pow(y,2)));
+		radius = sqrt((pow(x,2))+(pow(y,2)));				//changes the radius so the circle will change size
 
 		glutPostRedisplay();			
 	}
