@@ -66,30 +66,30 @@ void myKeyboard(int key, int x,int y)
 {
 	switch (key)
 	{
-		case GLUT_KEY_UP:
+		case GLUT_KEY_UP:	// Grow the arc
 			{
 				radius++;
 				break;
 			}
-		case GLUT_KEY_DOWN:
+		case GLUT_KEY_DOWN:  // Shrink the arc
 			{
 				radius--;
 				break;
 			}
-		case GLUT_KEY_RIGHT:
-			{
-				if(startORsweep == true)
-					sAngle++;
-				else
-					swAngle++;
-				break;
-			}
-		case GLUT_KEY_LEFT:
+		case GLUT_KEY_RIGHT:  //rotate CW
 			{
 				if(startORsweep == true)
 					sAngle--;
 				else
 					swAngle--;
+				break;
+			}
+		case GLUT_KEY_LEFT:  //rotate CCW
+			{
+				if(startORsweep == true)
+					sAngle++;
+				else
+					swAngle++;
 				break;
 			}
 		default:
