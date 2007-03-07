@@ -1,3 +1,50 @@
+//						Learning Team C
+//						Members:
+//							Lorin Kartchner
+//							Todd William Brown
+//							Royce Judd
+//							Josh Braegger
+//							Jeremiah Stephenson
+//                      CS 4280 – 7:30 pm
+//                      Section 4 Learning Team Assignment
+//                      Mr. Rague
+//                      Due: 03/7/07
+//                      Version: 1.0
+// -----------------------------------------------------------------
+//  This program uses the drawArc2 routine as illustrated in the text on page 280, figure 6.68 to 
+//  to draw arcs.
+// -----------------------------------------------------------------
+
+// -----------------------------------------------------------------
+//   Change Control Section
+// -----------------------------------------------------------------
+//		Team Member: Lorin Kartchner
+//		Version 1.0
+//		Date: Wrote the documentation for the project
+//
+//
+//		Team Member: Todd William Brown
+//		Version 1.0
+//		Date: Completed task number three for the project
+//		
+//
+//		Team Member: Royce Judd
+//		Version 1.0
+//		Date: Wrote this program to satisfy portion five of the project, DrawArc
+//		
+//
+//		Team Member: Josh Braegger
+//		Version 1.0
+//		Date: Completed task number one and two of the project
+//		
+//
+//		Team Member: Jeremiah Stephenson
+//		Version 1.0
+//		Date: 3/3/2007
+//		Wrote the program for the fourth portion of the group assignment, npoints
+
+
+
 #include<windows.h>
 #include<gl/gl.h>
 #include<gl/glu.h>
