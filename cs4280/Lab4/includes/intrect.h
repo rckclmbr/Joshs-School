@@ -1,3 +1,8 @@
+#ifndef INTRECT_H
+#define INTRECT_H
+
+#include "header.h"
+
 class IntRect {
 public:
       IntRect() {l = 0; r = 100; b = 0; t = 100;} //constructors
@@ -14,3 +19,5 @@ public:
 private:
       int l,r,b,t;
 };
+
+#endif

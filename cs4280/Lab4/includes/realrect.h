@@ -1,3 +1,8 @@
+#ifndef REALRECT_H
+#define REALRECT_H
+
+#include "header.h"
+
 //world window rectangle class
 class RealRect   
 {
@@ -15,11 +20,4 @@ private:
   float l, r, b, t;
 };
 
-//constructors
-RealRect::RealRect()  { l = 0; r=100; b=0; t=100; }
- 
-RealRect::RealRect(float left, float right, float bottom, float top)
-{ l = left; r=right; b=bottom; t=top; }
-
-void RealRect::set(float left, float right, float bottom, float top)
-{ l=left; r=right; b=bottom; t=top; }
+#endif
