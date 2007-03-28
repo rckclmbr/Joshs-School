@@ -40,9 +40,59 @@
 #include "Camera.h"
 
 Camera cam; // global camera object
-bool toggle = false;
+bool toggle = true;
 float nVal = 7;
 bool fly = false;
+
+void snowman(void);
+void ramp(void);
+void rings(void);
+void cones(void);
+void steps(void);
+
+typedef struct materialStruct{
+	GLfloat ambient[4];
+	GLfloat diffuse[4];
+	GLfloat specular[4];
+	GLfloat shininess;
+} materialStruct;
+
+
+//different materials
+materialStruct brassMaterials = {
+	{0.33,0.22,.03,1.0},
+	{.78,.57,.11,1.0},
+	{.99,.91,.81,1.0},
+	27.8
+};
+materialStruct redPlastic = {
+	{0.3,0,0,1},
+	{0.6,0,0,1},
+	{.8,.6,.6,1},
+	60
+};
+materialStruct whiteShiney = {
+	{1,0,1,1},
+	{1,0,1,1},
+	{1,1,1,1},
+	50
+};
+
+materialStruct crazyShiney = {
+	{0.6,0,.3,1},
+	{.2,0,1.6,1},
+	{1.6,1,.25,1},
+	100
+};
+
+void materials(materialStruct *materials)
+{
+	glMaterialfv(GL_FRONT_AND_BACK,GL_AMBIENT,materials ->ambient);
+	glMaterialfv(GL_FRONT_AND_BACK,GL_DIFFUSE,materials->diffuse);
+	glMaterialfv(GL_FRONT_AND_BACK,GL_SPECULAR,materials->specular);
+	glMaterialf(GL_FRONT_AND_BACK,GL_SHININESS,materials->shininess);
+}
+
 
 bool foward=false;
 bool back=false;
@@ -52,6 +102,7 @@ bool up = false;
 bool down = false;
 bool rollleft = false;
 bool rollright = false;
+
 
 //<<<<<<<<<<<<<<<<<<<<<<<< myKeyboard >>>>>>>>>>>>>>>>>>>>>>
 void myKeyboard(unsigned char key, int x, int y)
@@ -119,9 +170,26 @@ void mySpecialKeys(int key, int x, int y)
 void myDisplay(void)
 {
 	glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
-	glColor3f(0.0f,0.0f,0.0f); // set color of stuff 
-	glutWireTeapot(1.0); // draw the teapot
+
+	
+//make things solid instead of crazy
+	glEnable(GL_DEPTH_TEST);
+	glEnable(GL_NORMALIZE);
+//create light source and position
+	GLfloat light_pos1[] = {5.0,5.0,5.0,0.0};
+	glEnable(GL_LIGHTING);
+	glEnable(GL_LIGHT0);
+	glLightfv(GL_LIGHT0,GL_POSITION,light_pos1);
+		
+	
+	snowman();
+	ramp();
+	rings();
+	cones();
+	steps();
+
 	cam.drawGridLines(toggle);
+
 	glutSwapBuffers(); // display the screen just made
 }
 
@@ -175,7 +243,132 @@ void main(int argc, char **argv)
 	glClearColor(1.0f,1.0f,1.0f,0.0f);  // background is white 
     glViewport(0, 0, 640, 480);
 	cam.setShape(30.0f, 64.0f/48.0f, 0.5f, 50.0f);
-	cam.set(0, 2, 7, 0, 0, 0, 0, 1, 0); // make the initial camera
+	cam.set(0, 1, 15, 0, 0, 0, 0, 1, 0); // make the initial camera
 	glutMainLoop();
 }
 
+void snowman(void)
+{
+	glPushMatrix();
+		materials(&redPlastic);
+		glTranslatef(-10,1,10);
+		glutSolidSphere(1,100,100);
+		glTranslatef(0,1.3,0);
+		glutSolidSphere(.6,100,100);
+		glTranslatef(0,0.75,0);
+		glutSolidSphere(0.4,100,100);
+	glPopMatrix();
+}
+
+void ramp(void)
+{
+	glPushMatrix();
+		materials(&brassMaterials);
+		glTranslatef(0,2,-5);
+		glRotatef(30,1,0,0);
+		glScaled(2, 0.3, 10);
+		glutSolidCube(1.0);
+	glPopMatrix();
+
+}
+
+void rings(void)
+{
+	glPushMatrix();
+		materials(&redPlastic);
+		glTranslatef(0, 5, -6);
+		glutSolidTorus(2,4.8,100,100);
+	glPopMatrix();
+
+	glPushMatrix();
+		materials(&whiteShiney);
+		glTranslatef(0,6.3,-15);
+		glutSolidTorus(0.1, 2.2,100,100);
+		glTranslatef(0,-.5,-10);
+		glutSolidTorus(0.1, 1.5, 100, 100);
+	glPopMatrix();
+
+}
+
+void cones(void)
+{
+	glPushMatrix();
+		materials(&redPlastic);
+		glTranslatef(-10, 0, -6);
+		glRotatef(-90,1,0,0);
+		glutSolidCone(2,6,100,100);
+	glPopMatrix();
+
+	glPushMatrix();
+		materials(&redPlastic);
+		glTranslatef(-20, 0, 9);
+		glRotatef(-90,1,0,0);
+		glutSolidCone(2,6,100,100);
+	glPopMatrix();
+
+	glPushMatrix();
+		materials(&crazyShiney);
+		glTranslatef(10, 0, -15);
+		glRotatef(-90,1,0,0);
+		glutSolidCone(2,6,100,100);
+	glPopMatrix();
+
+	glPushMatrix();
+		materials(&redPlastic);
+		glTranslatef(15, 0, -10);
+		glRotatef(-90,1,0,0);
+		glutSolidCone(2,6,100,100);
+	glPopMatrix();
+
+	glPushMatrix();
+		materials(&brassMaterials);
+		glTranslatef(-5, 0, 16);
+		glRotatef(-90,1,0,0);
+		glutSolidCone(2,6,100,100);
+	glPopMatrix();
+
+}
+
+void steps(void)
+{
+	
+	glPushMatrix();
+		materials(&crazyShiney);
+		glTranslatef(15, 1, 0);
+		glScalef(5,0.3,5);
+		glutSolidCube(1.0);
+	
+		materials(&crazyShiney);
+		glTranslatef(.5, 2, 0);
+		glutSolidCube(1.0);
+	
+		materials(&crazyShiney);
+		glTranslatef(.5, 2, 0);
+		glutSolidCube(1.0);
+	
+		materials(&crazyShiney);
+		glTranslatef(.5, 2, 0);
+		glutSolidCube(1.0);
+	
+		materials(&crazyShiney);
+		glTranslatef(.5, 2, 0);
+		glutSolidCube(1.0);
+	
+		materials(&crazyShiney);
+		glTranslatef(0, -2, -.5);
+		glutSolidCube(1.0);
+	
+		materials(&crazyShiney);
+		glTranslatef(0, -2, -.5);
+		glutSolidCube(1.0);
+	
+		materials(&crazyShiney);
+		glTranslatef(0, -2, -.5);
+		glutSolidCube(1.0);
+	
+		materials(&crazyShiney);
+		glTranslatef(0, -2, -.5);
+		glutSolidCube(1.0);
+	glPopMatrix();
+	
+}
