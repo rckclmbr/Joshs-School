@@ -1,9 +1,57 @@
+//						Learning Team C
+//						Members:
+//							Lorin Kartchner
+//							Todd William Brown
+//							Royce Judd
+//							Josh Braegger
+//							Jeremiah Stephenson
+//                      CS 4280 – 7:30 pm
+//                      Section 4 Learning Team Assignment
+//                      Mr. Rague
+//                      Due: 03/28/06
+//                      Version: 1.0
+// -----------------------------------------------------------------
+// Creates a scene and allows for a camera to move through it.
+// A grid can be turned on and off to help notice movement
+// -----------------------------------------------------------------
+
+// -----------------------------------------------------------------
+//   Change Control Section
+// -----------------------------------------------------------------
+//		Team Member: Lorin Kartchner
+//		Version 1.0
+
+//
+//		Team Member: Todd William Brown
+//		Version 1.0
+
+//
+//		Team Member: Royce Judd
+//		Version 1.0
+
+//
+//		Team Member: Josh Braegger
+//		Version 1.0
+
+//
+//		Team Member: Jeremiah Stephenson
+//		Version 1.0
+/////////////////////////////////////////////////////////////////////////////
 #include "Camera.h"
 
 Camera cam; // global camera object
 bool toggle = false;
 float nVal = 7;
 bool fly = false;
+
+bool foward=false;
+bool back=false;
+bool left1 =false;
+bool right1 = false;
+bool up = false;
+bool down = false;
+bool rollleft = false;
+bool rollright = false;
 
 //<<<<<<<<<<<<<<<<<<<<<<<< myKeyboard >>>>>>>>>>>>>>>>>>>>>>
 void myKeyboard(unsigned char key, int x, int y)
@@ -29,8 +77,43 @@ void myKeyboard(unsigned char key, int x, int y)
 	case 'A'-64: cam.aRatio(-.1);break; // decrease Aspect Ratio 
 	case 'G':    toggle = !toggle;break; //toggles grid lines on and off
 	case 'M':    fly = !fly;break; //To fly the camera--MUST BE DONE AT THE BEGINGING BEFORE MANUAL MOVEMENT
+	//controls for continuous motion camera
+	case 'w':	up = !up;break;
+	case 's':	down = !down;break;
+	case 'a':	rollleft = !rollleft;break;
+	case 'd':	rollright = !rollright;break;
   }
 	glutPostRedisplay(); // draw it again
+}
+//<<<<<<<<<<<<<<<<<<<<<<<< mySpecialKeyboard >>>>>>>>>>>>>>>>>>>>>>
+void mySpecialKeys(int key, int x, int y)
+{
+	switch(key)
+	{
+	case GLUT_KEY_UP:
+		{
+			foward = !foward;
+			break;
+		}
+	case GLUT_KEY_DOWN:
+		{
+			back = !back;
+			break;
+		}
+	case GLUT_KEY_LEFT:
+		{
+			left1 = !left1;
+			break;
+		}
+	case GLUT_KEY_RIGHT:
+		{
+			right1 = !right1;
+			break;
+		}
+	default:
+		{}
+	}
+	glutPostRedisplay();
 }
 //<<<<<<<<<<<<<<<<<<<<<<< myDisplay >>>>>>>>>>>>>>>>>>>>>>>>>>
 void myDisplay(void)
@@ -44,6 +127,7 @@ void myDisplay(void)
 
 void Idle(void)
 {
+	Sleep(25);
 	if (fly == true)
 	{
 		cam.yaw(1.);
@@ -56,6 +140,23 @@ void Idle(void)
 		//cam.pitch(1.0);
 		//cam.slide(0,0.1,0);
 	}
+	//allows for continous motion in the idle state
+	if(foward)
+		cam.slide(0,0,-0.1);
+	if(back)
+		cam.slide(0,0,.1);
+	if(left1)
+		cam.yaw(-.5);
+	if(right1)
+		cam.yaw(.5);
+	if(up)
+		cam.pitch(-.5);
+	if(down)
+		cam.pitch(.5);
+	if(rollleft)
+		cam.roll(.5);
+	if(rollright)
+		cam.roll(-.5);
 	glutPostRedisplay();
 }
 
@@ -68,6 +169,7 @@ void main(int argc, char **argv)
 	glutInitWindowPosition(50, 50);
 	glutCreateWindow("fly a camera around a teapot");
 	glutKeyboardFunc(myKeyboard);
+	glutSpecialFunc(mySpecialKeys);
 	glutDisplayFunc(myDisplay);
 	glutIdleFunc(Idle);
 	glClearColor(1.0f,1.0f,1.0f,0.0f);  // background is white 
