@@ -233,7 +233,7 @@ void main(int argc, char **argv)
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB); // double buffering
 	glutInitWindowSize(640,480);
 	glutInitWindowPosition(50, 50);
-	glutCreateWindow("fly a camera around a teapot");
+	glutCreateWindow("fly a camera around a scene");
 	glutKeyboardFunc(myKeyboard);
 	glutSpecialFunc(mySpecialKeys);
 	glutDisplayFunc(myDisplay);
