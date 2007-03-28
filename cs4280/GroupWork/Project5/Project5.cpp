@@ -127,7 +127,8 @@ void myKeyboard(unsigned char key, int x, int y)
 	case 'A':    cam.aRatio( .1);break; // increase Aspect Ratio 
 	case 'A'-64: cam.aRatio(-.1);break; // decrease Aspect Ratio 
 	case 'G':    toggle = !toggle;break; //toggles grid lines on and off
-	case 'M':    fly = !fly;break; //To fly the camera--MUST BE DONE AT THE BEGINGING BEFORE MANUAL MOVEMENT
+	case 'R':    cam.setShape(30.0f, 64.0f/48.0f, 0.5f, 50.0f);	cam.set(0, 2, 7, 0, 0, 0, 0, 1, 0); fly = false;break;//resets potision
+	case 'M':    fly = !fly;break; //To fly the camera--MUST BE DONE AT THE BEGINGING BEFORE MANUAL MOVEMENT OR AFTER RESET
 	//controls for continuous motion camera
 	case 'w':	up = !up;break;
 	case 's':	down = !down;break;
@@ -202,12 +203,9 @@ void Idle(void)
 		nVal += .02;
 		cam.slide(-(sin(3.14159265/180 * nVal)),0.0,.02);
 		
-		//cam.roll(.1);
-		//cam.slide(-0.01,0,0);
-
-		//cam.pitch(1.0);
-		//cam.slide(0,0.1,0);
 	}
+	else
+		nVal = 7.;
 	//allows for continous motion in the idle state
 	if(foward)
 		cam.slide(0,0,-0.1);
