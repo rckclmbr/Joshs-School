@@ -20,22 +20,23 @@
 // -----------------------------------------------------------------
 //		Team Member: Lorin Kartchner
 //		Version 1.0
-
+//		Provided the report to go with the code
 //
 //		Team Member: Todd William Brown
 //		Version 1.0
-
+//		Wrote most of the camera functionality
 //
 //		Team Member: Royce Judd
 //		Version 1.0
-
+//		Provided some camera functionality, and comments throughout the code
 //
 //		Team Member: Josh Braegger
 //		Version 1.0
-
+//		Gave the presentation of the code
 //
 //		Team Member: Jeremiah Stephenson
 //		Version 1.0
+//		Programmed the scenery
 /////////////////////////////////////////////////////////////////////////////
 #include "Camera.h"
 
