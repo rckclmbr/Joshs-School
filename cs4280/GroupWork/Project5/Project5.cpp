@@ -39,11 +39,25 @@
 /////////////////////////////////////////////////////////////////////////////
 #include "Camera.h"
 
+// Controls the ratio, just to make things faster if we want
+const float RAT = 2.0;
+
+// Variable declarations
 Camera cam; // global camera object
 bool toggle = true;
 float nVal = 7;
 bool fly = false;
 
+bool foward=false;
+bool back=false;
+bool left1 =false;
+bool right1 = false;
+bool up = false;
+bool down = false;
+bool rollleft = false;
+bool rollright = false;
+
+// Function declarations
 void snowman(void);
 void ramp(void);
 void rings(void);
@@ -56,7 +70,6 @@ typedef struct materialStruct{
 	GLfloat specular[4];
 	GLfloat shininess;
 } materialStruct;
-
 
 //different materials
 materialStruct brassMaterials = {
@@ -94,16 +107,6 @@ void materials(materialStruct *materials)
 }
 
 
-bool foward=false;
-bool back=false;
-bool left1 =false;
-bool right1 = false;
-bool up = false;
-bool down = false;
-bool rollleft = false;
-bool rollright = false;
-
-
 //<<<<<<<<<<<<<<<<<<<<<<<< myKeyboard >>>>>>>>>>>>>>>>>>>>>>
 void myKeyboard(unsigned char key, int x, int y)
 {
@@ -127,13 +130,13 @@ void myKeyboard(unsigned char key, int x, int y)
 	case 'A':    cam.aRatio( .1);break; // increase Aspect Ratio 
 	case 'A'-64: cam.aRatio(-.1);break; // decrease Aspect Ratio 
 	case 'G':    toggle = !toggle;break; //toggles grid lines on and off
-	case 'R':    cam.setShape(30.0f, 64.0f/48.0f, 0.5f, 50.0f);	cam.set(0, 2, 7, 0, 0, 0, 0, 1, 0); fly = false;break;//resets potision
+	case 'R':    cam.setShape(30.0f, 64.0f/48.0f, 0.5f, 50.0f);	cam.set(0, 2, 7, 0, 0, 0, 0, 1, 0); fly = false; break;//resets potision
 	case 'M':    fly = !fly;break; //To fly the camera--MUST BE DONE AT THE BEGINGING BEFORE MANUAL MOVEMENT OR AFTER RESET
 	//controls for continuous motion camera
-	case 'w':	up = !up;break;
-	case 's':	down = !down;break;
-	case 'a':	rollleft = !rollleft;break;
-	case 'd':	rollright = !rollright;break;
+	case 'w':	up = !up;				down = false;	break;
+	case 's':	down = !down;			up = false;		break;
+	case 'a':	rollleft = !rollleft;	rollright = false; break;
+	case 'd':	rollright = !rollright;	rollleft = false;break;
   }
 	glutPostRedisplay(); // draw it again
 }
@@ -142,28 +145,10 @@ void mySpecialKeys(int key, int x, int y)
 {
 	switch(key)
 	{
-	case GLUT_KEY_UP:
-		{
-			foward = !foward;
-			break;
-		}
-	case GLUT_KEY_DOWN:
-		{
-			back = !back;
-			break;
-		}
-	case GLUT_KEY_LEFT:
-		{
-			left1 = !left1;
-			break;
-		}
-	case GLUT_KEY_RIGHT:
-		{
-			right1 = !right1;
-			break;
-		}
-	default:
-		{}
+		case GLUT_KEY_UP:		foward	= !foward;	back = false; break;
+		case GLUT_KEY_DOWN:		back	= !back;	foward = false; break;
+		case GLUT_KEY_LEFT:		left1	= !left1;   right1 = false; break;
+		case GLUT_KEY_RIGHT:	right1	= !right1;	left1 = false;
 	}
 	glutPostRedisplay();
 }
@@ -171,7 +156,6 @@ void mySpecialKeys(int key, int x, int y)
 void myDisplay(void)
 {
 	glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
-
 	
 //make things solid instead of crazy
 	glEnable(GL_DEPTH_TEST);
@@ -181,8 +165,8 @@ void myDisplay(void)
 	glEnable(GL_LIGHTING);
 	glEnable(GL_LIGHT0);
 	glLightfv(GL_LIGHT0,GL_POSITION,light_pos1);
-		
-	
+
+//draw different physical objects
 	snowman();
 	ramp();
 	rings();
@@ -207,22 +191,14 @@ void Idle(void)
 	else
 		nVal = 7.;
 	//allows for continous motion in the idle state
-	if(foward)
-		cam.slide(0,0,-0.1);
-	if(back)
-		cam.slide(0,0,.1);
-	if(left1)
-		cam.yaw(-.5);
-	if(right1)
-		cam.yaw(.5);
-	if(up)
-		cam.pitch(-.5);
-	if(down)
-		cam.pitch(.5);
-	if(rollleft)
-		cam.roll(.5);
-	if(rollright)
-		cam.roll(-.5);
+	if(foward)	cam.slide(0,0,-0.1 * RAT);
+	if(back)	cam.slide(0,0,.1 * RAT);
+	if(left1)	cam.yaw(-.5 * RAT);
+	if(right1)	cam.yaw(.5 * RAT);
+	if(up)		cam.pitch(-.5 * RAT);
+	if(down)	cam.pitch(.5 * RAT);
+	if(rollleft)cam.roll(.5 * RAT);
+	if(rollright)cam.roll(-.5 * RAT);
 	glutPostRedisplay();
 }
 
@@ -285,7 +261,6 @@ void rings(void)
 		glTranslatef(0,-.5,-10);
 		glutSolidTorus(0.1, 1.5, 100, 100);
 	glPopMatrix();
-
 }
 
 void cones(void)
