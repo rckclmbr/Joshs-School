@@ -21,6 +21,8 @@
 // Uncomment following
 #include "sod.h"
 #include "ogro.h"
+#include "cow.h"
+#include "mech.h"
 // Phase 15 - End
 // Phase 16 - Uncomment
 #include "rocket.h"

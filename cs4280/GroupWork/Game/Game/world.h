@@ -25,6 +25,8 @@
 // Begin - Phase 15
 #include "sod.h"
 #include "ogro.h"
+#include "cow.h"
+#include "mech.h"
 #include "entity.h"
 #include "md2.h"
 // End - Phase 15
@@ -46,10 +48,12 @@ class CWorld
 {
 private:
 	// Begin - Phase 15
-	int numOgros, numSods;
+	int numOgros, numSods, numCows;
 	// End - Phase 15
 	int screenWidth, screenHeight;
 	bool gameDone;
+	
+	CAudioSystem *audioSys;
 
 protected:
 	void OnAnimate(float deltaTime);
@@ -76,6 +80,8 @@ public:
 	// Begin - Phase 15
 	COgroEnemy *ogroEnemy;
 	CSodEnemy *sodEnemy;
+	CCowEnemy *cowEnemy;
+	CMechEnemy *mechEnemy;
 	// End - Phase 15
 	float timeStart;
 	float timeElapsed;

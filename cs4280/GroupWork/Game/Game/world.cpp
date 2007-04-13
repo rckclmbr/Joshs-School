@@ -1,5 +1,6 @@
 #include "world.h"
 
+
 CWorld::CWorld()
 {
 // Begin - Phase 12
@@ -92,6 +93,10 @@ void CWorld::Animate(float deltaTime)
 	// Phase 15 - Begin
 	const type_info &ogro = typeid(COgroEnemy);  // get ogro typeid
 	const type_info &sod = typeid(CSodEnemy);    // get sod typeid
+	//new cow enemy
+	const type_info &cow = typeid(CCowEnemy);
+	//new mech enemy
+	const type_info &mech = typeid(CMechEnemy);
 
 	numOgros = CountObjectTypes(ogro);           // count ogros
 	numSods = CountObjectTypes(sod);             // count sods
@@ -176,17 +181,37 @@ void CWorld::OnPrepare()
 // desc: initializes the world
 void CWorld::LoadWorld()
 {
+	
 	// Phase 15 - Begin
 	int enemyIdx = 0;
 	int rndInt = 0;
 
 	numOgros = 0;
 	numSods = 0;
+	numCows = 1;
 
 	srand((unsigned int)time(NULL));
 	
 	rndInt = (rand() % (MAX_ENEMIES-4)) + 4;	// random # from 4 to MAX
 	numOgros = numSods = rndInt;
+
+	//generate cows
+	cowEnemy = new CCowEnemy;
+	cowEnemy->AttachTo(terrain);
+	cowEnemy->SetPlayer(player);
+	cowEnemy->SetAudioSystem(audioSystem);
+	cowEnemy->position.x = 100.0;
+	cowEnemy->position.y = 0.0;
+	cowEnemy->position.z = 200.0;
+	
+	//generate mech
+	mechEnemy = new CMechEnemy;
+	mechEnemy->AttachTo(terrain);
+	mechEnemy->SetPlayer(player);
+	mechEnemy->SetAudioSystem(audioSystem);
+	mechEnemy->position.x = 100.0;
+	mechEnemy->position.y = 0.0;
+	mechEnemy->position.z = 100.0;
 
 	// generate ogros
 	for (enemyIdx = 0; enemyIdx < numOgros; enemyIdx++)

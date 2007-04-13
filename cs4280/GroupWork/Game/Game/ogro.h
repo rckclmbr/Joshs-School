@@ -17,6 +17,7 @@
 
 #include "enemy.h"
 #include "sod.h"
+#include "cow.h"
 #include <time.h>
 
 class COgroEnemy : public CEnemy
