@@ -106,7 +106,7 @@ void CMechEnemy::OnPrepare()
 void CMechEnemy::Load()
 {
 	// load model
-	CMD2Model::Load("models\\mech\\tris.md2", "models\\mech\\bwidow.pcx");
+	CMD2Model::Load("models\\mech\\tris.md2", "models\\mech\\tundra.pcx");
 
 }
 
