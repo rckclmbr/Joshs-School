@@ -1,0 +1,40 @@
+<html>
+	<head><title>CS 3100 File System Simulation Project Errata</title></head>
+
+	<body>
+		<h1>CS 3100 File System Simulation Project Errata</h1>
+
+		<h2>April 4</h2>
+
+		<h3>Directory Count Is Incorrect After Entry Removal</h3>
+
+		Add the following statement at the end of the remove function:
+
+		<p><code>current[0].size -= 1;</code>
+
+		<h3>pwd</h3>
+
+		pwd does not print a "/" when executed in the root directory.
+		Replace pwd with the updated function below:
+
+<pre>void FileSystem::pwd(int parent, int child)
+{
+	dir_ent	temp[DIRSIZE];
+	readBlock(parent, (char*)temp);
+
+	if (parent != ROOTBLK)
+		pwd(temp[0].link, parent);
+
+	<b>cout &lt;&lt; "/";</b>
+
+	for (int i = 1; i &lt; DIRSIZE; i++)
+		if (temp[i].link == child)
+		{
+			<b>cout &lt;&lt; temp[i].name;</b>
+			break;
+		}
+}</pre>
+
+	</body>
+</html>
+
