@@ -98,9 +98,12 @@ void CCowEnemy::OnPrepare()
      case AI_DEAD:
           modelState = MODEL_DIE;
           velocity = CVector(0.0, 0.0, 0.0);
-		  //PlaySound();
+		//PlaySound();
+		  if(nextFrame == 178)
+			  PlaySound();
           if (nextFrame == stateStart)
           {
+			  		  
                // time to kill the monster
                isDead = true;
           }

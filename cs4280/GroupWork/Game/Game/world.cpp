@@ -57,7 +57,7 @@ CWorld::CWorld(CCamera *c)
 	player->SetTerrain(terrain);
 	// End - Phase 14
 	// Begin - Phase 19
-	worldSound = audioSystem->Create("ambient.wav", false);
+	worldSound = audioSystem->Create("Quake.wav", false);
 	audioSystem->Play(worldSound, DMUS_SEG_REPEAT_INFINITE, true);
 
 	player->SetAudioSystem(audioSystem);
@@ -200,6 +200,7 @@ void CWorld::LoadWorld()
 	cowEnemy->AttachTo(terrain);
 	cowEnemy->SetPlayer(player);
 	cowEnemy->SetAudioSystem(audioSystem);
+	cowEnemy->LoadAudio(audioSystem, "\\models\\Cow\\cow.wav", false);
 	cowEnemy->position.x = 100.0;
 	cowEnemy->position.y = 0.0;
 	cowEnemy->position.z = 200.0;
