@@ -172,13 +172,13 @@ public:
      // dot product
      const scalar_t DotProduct(const CVector &vec) const // vec1 <dot> vec2
      {
-          return x*vec.x + y*vec.x + z*vec.z;
+          return x*vec.x + y*vec.y + z*vec.z;
      }
 
      // dot product
      const scalar_t operator%(const CVector &vec) const  // vec1 % vec2 is Dot product
      {
-          return x*vec.x + y*vec.x + z*vec.z;
+          return x*vec.x + y*vec.y + z*vec.z;
      }
 
      // length of vector
