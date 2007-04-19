@@ -57,7 +57,7 @@ CWorld::CWorld(CCamera *c)
 	player->SetTerrain(terrain);
 	// End - Phase 14
 	// Begin - Phase 19
-	worldSound = audioSystem->Create("Quake.wav", false);
+	worldSound = audioSystem->Create("\\debug\\Quake.wav", false);
 	audioSystem->Play(worldSound, DMUS_SEG_REPEAT_INFINITE, true);
 
 	player->SetAudioSystem(audioSystem);
@@ -67,7 +67,7 @@ CWorld::CWorld(CCamera *c)
 	timeElapsed = 0.0;
 	// Begin - Phase 18
 	gui->SetCurrentTime(timeStart);
-	gui->SetEnemiesLeft(numOgros + numSods);
+	gui->SetEnemiesLeft(numOgros + numSods + numCows + numMechs);
 	// End - Phase 18
 }
 
@@ -100,10 +100,12 @@ void CWorld::Animate(float deltaTime)
 
 	numOgros = CountObjectTypes(ogro);           // count ogros
 	numSods = CountObjectTypes(sod);             // count sods
+	numCows = CountObjectTypes(cow);			// count sods
+	numMechs = CountObjectTypes(mech);			// count mech
 	// Phase 15 - End
 
 	// Begin - Phase 18
-	gui->SetEnemiesLeft(numOgros + numSods);
+	gui->SetEnemiesLeft(numOgros + numSods + numCows + numMechs);
 	gui->SetCurrentTime(timeStart - timeElapsed);
 	// End - Phase 18
 
@@ -154,7 +156,7 @@ void CWorld::Draw(CCamera *camera)
 	if (gameDone)
 	{
 		FadeScreen();
-		if (numOgros + numSods <=0)
+		if (numOgros + numSods + numCows + numMechs <=0)
 			gui->DrawWinner();
 		else
 			gui->DrawLoser();
@@ -170,7 +172,7 @@ void CWorld::OnPrepare()
 	terrain->Prepare();
 	// End - Phase 12
 	// Phase 15 - Begin
-	if ((numOgros + numSods <= 0) || (timeElapsed >= timeStart))
+	if ((numOgros + numSods + numCows + numMechs <= 0) || (timeElapsed >= timeStart))
 		gameDone = true;
 	// Phase 15 - End
 	
@@ -188,31 +190,38 @@ void CWorld::LoadWorld()
 
 	numOgros = 0;
 	numSods = 0;
-	numCows = 1;
+	numCows = 0;
+	numMechs = 0;
 
 	srand((unsigned int)time(NULL));
 	
 	rndInt = (rand() % (MAX_ENEMIES-4)) + 4;	// random # from 4 to MAX
-	numOgros = numSods = rndInt;
+	numOgros = numSods = numCows = numMechs = rndInt;
 
 	//generate cows
-	cowEnemy = new CCowEnemy;
-	cowEnemy->AttachTo(terrain);
-	cowEnemy->SetPlayer(player);
-	cowEnemy->SetAudioSystem(audioSystem);
-	cowEnemy->LoadAudio(audioSystem, "\\models\\Cow\\cow.wav", false);
-	cowEnemy->position.x = 100.0;
-	cowEnemy->position.y = 0.0;
-	cowEnemy->position.z = 200.0;
+	for (enemyIdx = 0; enemyIdx < numMechs; enemyIdx++)
+	{
+		cowEnemy = new CCowEnemy;
+		cowEnemy->AttachTo(terrain);
+		cowEnemy->SetPlayer(player);
+		cowEnemy->SetAudioSystem(audioSystem);
+		cowEnemy->LoadAudio(audioSystem, "\\models\\Cow\\cow.wav", false);
+		cowEnemy->position.x = (float)(rand() % (int)(terrain->GetWidth() * terrain->GetMul()));
+		cowEnemy->position.y = 0.0f;
+		cowEnemy->position.z = (float)(rand() % (int)(terrain->GetWidth() * terrain->GetMul()));
+	}
 	
-	//generate mech
-	mechEnemy = new CMechEnemy;
-	mechEnemy->AttachTo(terrain);
-	mechEnemy->SetPlayer(player);
-	mechEnemy->SetAudioSystem(audioSystem);
-	mechEnemy->position.x = 100.0;
-	mechEnemy->position.y = 0.0;
-	mechEnemy->position.z = 100.0;
+	//generate mechs
+	for (enemyIdx = 0; enemyIdx < numMechs; enemyIdx++)
+	{
+		mechEnemy = new CMechEnemy;
+		mechEnemy->AttachTo(terrain);
+		mechEnemy->SetPlayer(player);
+		mechEnemy->SetAudioSystem(audioSystem);
+		mechEnemy->position.x = (float)(rand() % (int)(terrain->GetWidth() * terrain->GetMul()));
+		mechEnemy->position.y = 0.0f;
+		mechEnemy->position.z = (float)(rand() % (int)(terrain->GetWidth() * terrain->GetMul()));
+	}
 
 	// generate ogros
 	for (enemyIdx = 0; enemyIdx < numOgros; enemyIdx++)

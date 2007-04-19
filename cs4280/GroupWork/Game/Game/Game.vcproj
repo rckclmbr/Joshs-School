@@ -97,7 +97,7 @@
 			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
 			IntermediateDirectory="$(ConfigurationName)"
 			ConfigurationType="1"
-			CharacterSet="1"
+			CharacterSet="2"
 			WholeProgramOptimization="1"
 			>
 			<Tool
@@ -117,6 +117,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
+				AdditionalIncludeDirectories="&quot;C:\Program Files\Microsoft DirectX SDK (April 2007)\Include&quot;"
 				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS"
 				RuntimeLibrary="2"
 				UsePrecompiledHeader="0"
@@ -135,6 +136,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
+				AdditionalDependencies="opengl32.lib glu32.lib"
 				LinkIncremental="1"
 				GenerateDebugInformation="true"
 				SubSystem="2"
@@ -185,6 +187,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\cow.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\entity.cpp"
 				>
 			</File>
@@ -202,6 +208,10 @@
 			</File>
 			<File
 				RelativePath=".\md2.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\mech.cpp"
 				>
 			</File>
 			<File
@@ -259,6 +269,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\cow.h"
+				>
+			</File>
+			<File
 				RelativePath=".\enemy.h"
 				>
 			</File>
@@ -284,6 +298,10 @@
 			</File>
 			<File
 				RelativePath=".\md2.h"
+				>
+			</File>
+			<File
+				RelativePath=".\mech.h"
 				>
 			</File>
 			<File

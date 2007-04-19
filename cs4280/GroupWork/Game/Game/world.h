@@ -48,7 +48,7 @@ class CWorld
 {
 private:
 	// Begin - Phase 15
-	int numOgros, numSods, numCows;
+	int numOgros, numSods, numCows, numMechs;
 	// End - Phase 15
 	int screenWidth, screenHeight;
 	bool gameDone;
@@ -114,6 +114,8 @@ public:
 	// Begin - Phase 15
 	int GetOgros() { return numOgros; }
 	int GetSods() { return numSods; }
+	int GetCows() { return numCows; }
+	int GetMechs() { return numMechs; }
 	// End - Phase 15
 
 };

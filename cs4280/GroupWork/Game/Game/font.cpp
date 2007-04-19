@@ -39,8 +39,9 @@ void CFont::Build(char *name, int size)
 
 	hDC = wglGetCurrentDC();
 	callList = glGenLists(96);
-
-	if (stricmp(name, "symbol") == 0)
+	
+	//if (stricmp(name, "symbol") == 0)
+	if (_stricmp(name, "symbol") == 0)
 	{
 		hFont = CreateFont(-size, 0,0,0,FW_BOLD, FALSE, FALSE, FALSE, SYMBOL_CHARSET,
 						OUT_TT_PRECIS, CLIP_DEFAULT_PRECIS, ANTIALIASED_QUALITY,
@@ -66,7 +67,8 @@ void CFont::Print(const char *str, ...)
 		return;
 
 	va_start(args, str);
-		vsprintf(text, str, args);
+		vsprintf_s(text, str, args);
+		//vsprintf(text, str, args);
 	va_end(args);
 
 	glPushMatrix();

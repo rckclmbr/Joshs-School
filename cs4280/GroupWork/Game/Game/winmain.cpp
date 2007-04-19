@@ -175,15 +175,15 @@ int WINAPI WinMain (HINSTANCE hInstance, HINSTANCE hPrevious, LPSTR lpCmdString,
 	}
 
 	// Start - Phase 3
-	sprintf(str, "Welcome to Shooter Game!\n\nKeys:\n<Up Arrow> - Forward\n<Down Arrow> - Backward\n<Left Arrow> - Left Strafe\n<Right Arrow> - Right Strafe");
-	strcat(str, "\n\nLeft mouse button fires rockets.\nMove mouse to look around.\n\n");
-	strcat(str, "Numpad '+' - Increase mouse sensitivity\nNumpad '-' - Decrease mouse sensitivity\n\n");
-	strcat(str, "Created for WSU CS4280\nby Brian Rague.\n");
+	sprintf_s(str, "Welcome to Shooter Game!\n\nKeys:\n<Up Arrow> - Forward\n<Down Arrow> - Backward\n<Left Arrow> - Left Strafe\n<Right Arrow> - Right Strafe");
+	strcat_s(str, "\n\nLeft mouse button fires rockets.\nMove mouse to look around.\n\n");
+	strcat_s(str, "Numpad '+' - Increase mouse sensitivity\nNumpad '-' - Decrease mouse sensitivity\n\n");
+	strcat_s(str, "Created for WSU CS4280\nby Brian Rague.\n");
 		
 	MessageBox(NULL, str, "Welcome!", MB_OK);
 
-	sprintf(str, "Shooter Game\n\n\nYou have 5 minutes to shoot all of the enemies on the terrain using your searching skills\n");
-	strcat(str, "and your rockets. Can you do it?");
+	sprintf_s(str, "Shooter Game\n\n\nYou have 5 minutes to shoot all of the enemies on the terrain using your searching skills\n");
+	strcat_s(str, "and your rockets. Can you do it?");
 	MessageBox(NULL, str, "Welcome!", MB_OK);
 
 		
@@ -252,7 +252,7 @@ int WINAPI WinMain (HINSTANCE hInstance, HINSTANCE hPrevious, LPSTR lpCmdString,
 	CHiResTimer * timer = new CHiResTimer;
 	timer->Init();
 	// Phase 17 - End
-
+	ShowCursor(FALSE);
 	g_glRender->Init();
 
 	while (1)
