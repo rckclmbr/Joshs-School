@@ -84,7 +84,7 @@ class FileSystem
 		void	pwd(int parent, int child);
 		int		getByName(dir_ent dir[DIRSIZE], char* name);
 		void 	readBlock(int block, char* buffer);
-		void	writeBlock(int block, char* bufer);
+		void	writeBlock(int block, char* buffer);
 		void	loadFAT();
 		void	saveFAT();
 		int		allocate();
