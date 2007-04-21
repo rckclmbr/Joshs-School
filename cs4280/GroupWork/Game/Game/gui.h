@@ -28,6 +28,11 @@ private:
 	CFont *font;
 	CFont *crosshair;
 	CFont *endText;
+	CFont *player1;
+	CFont *enemy1;
+	CFont *enemy2;
+	CFont *enemy3;
+	CFont *enemy4;
 
 public:
 	CGUI();
