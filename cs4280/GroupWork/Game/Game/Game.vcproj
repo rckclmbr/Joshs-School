@@ -191,6 +191,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\droid.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\entity.cpp"
 				>
 			</File>
@@ -273,6 +277,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\droid.h"
+				>
+			</File>
+			<File
 				RelativePath=".\enemy.h"
 				>
 			</File>
@@ -322,6 +330,10 @@
 			</File>
 			<File
 				RelativePath=".\player.h"
+				>
+			</File>
+			<File
+				RelativePath=".\quake.wav"
 				>
 			</File>
 			<File

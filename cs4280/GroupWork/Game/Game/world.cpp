@@ -57,7 +57,7 @@ CWorld::CWorld(CCamera *c)
 	player->SetTerrain(terrain);
 	// End - Phase 14
 	// Begin - Phase 19
-	worldSound = audioSystem->Create("\\debug\\Quake.wav", false);
+	worldSound = audioSystem->Create("\\Quake.wav", false);
 	audioSystem->Play(worldSound, DMUS_SEG_REPEAT_INFINITE, true);
 
 	player->SetAudioSystem(audioSystem);
@@ -102,15 +102,17 @@ void CWorld::Animate(float deltaTime)
 	const type_info &cow = typeid(CCowEnemy);
 	//new mech enemy
 	const type_info &mech = typeid(CMechEnemy);
+	const type_info &droid = typeid(CDroidEnemy);
 
 	numOgros = CountObjectTypes(ogro);           // count ogros
 	numSods = CountObjectTypes(sod);             // count sods
 	numCows = CountObjectTypes(cow);			// count sods
 	numMechs = CountObjectTypes(mech);			// count mech
+	numDroids = CountObjectTypes(droid);	
 	// Phase 15 - End
 
 	// Begin - Phase 18
-	gui->SetEnemiesLeft(numOgros + numSods + numCows + numMechs);
+	gui->SetEnemiesLeft(numOgros + numSods + numCows + numMechs + numDroids);
 	gui->SetCurrentTime(timeStart - timeElapsed);
 	// End - Phase 18
 
@@ -161,7 +163,7 @@ void CWorld::Draw(CCamera *camera)
 	if (gameDone)
 	{
 		FadeScreen();
-		if (numOgros + numSods + numCows + numMechs <=0)
+		if (numOgros + numSods + numCows + numMechs + numDroids <=0)
 			gui->DrawWinner();
 		else
 			gui->DrawLoser();
@@ -177,7 +179,7 @@ void CWorld::OnPrepare()
 	terrain->Prepare();
 	// End - Phase 12
 	// Phase 15 - Begin
-	if ((numOgros + numSods + numCows + numMechs <= 0) || (timeElapsed >= timeStart))
+	if ((numOgros + numSods + numCows + numMechs +numDroids <= 0) || (timeElapsed >= timeStart))
 		gameDone = true;
 	// Phase 15 - End
 	
@@ -201,7 +203,7 @@ void CWorld::LoadWorld()
 	srand((unsigned int)time(NULL));
 	
 	rndInt = (rand() % (MAX_ENEMIES-4)) + 4;	// random # from 4 to MAX
-	numOgros = numSods = numCows = numMechs = rndInt;
+	numOgros = numSods = numCows = numMechs = numDroids = rndInt;
 
 	//generate cows
 	for (enemyIdx = 0; enemyIdx < numMechs; enemyIdx++)
@@ -254,6 +256,19 @@ void CWorld::LoadWorld()
 		sodEnemy->position.z = (float)(rand() % (int)(terrain->GetWidth() * terrain->GetMul()));
 	}
 
+	for (enemyIdx = 0; enemyIdx < numDroids; enemyIdx++)
+	{
+		droidEnemy = new CDroidEnemy;
+		droidEnemy->AttachTo(terrain);
+		droidEnemy->SetPlayer(player);
+		// Phase 19 - Uncomment
+		droidEnemy->SetAudioSystem(audioSystem);
+		droidEnemy->LoadAudio(audioSystem, "\\models\\Droid\\death1.wav", false);
+		droidEnemy->position.x = (float)(rand() % (int)(terrain->GetWidth() * terrain->GetMul()));
+		droidEnemy->position.y = 0.0f;
+		droidEnemy->position.z = (float)(rand() % (int)(terrain->GetWidth() * terrain->GetMul()));
+	}
+
 		
   // Phase 15 - End
 }
@@ -273,6 +288,7 @@ int CWorld::CountObjectTypes(const type_info &classID)
 	const type_info &sod = typeid(CSodEnemy);    // get sod typeid
 	const type_info &cow = typeid(CCowEnemy);
 	const type_info &mech = typeid(CMechEnemy);
+	const type_info &droid = typeid(CDroidEnemy);
 	int index = 0;
 	if (classID == ogro)
 	{
@@ -293,6 +309,11 @@ int CWorld::CountObjectTypes(const type_info &classID)
 	{
 		for (int x=0; x<MAX_ENEMIES; x++)
 			TB_MechPtr[x]=NULL;
+	}
+	if (classID == droid)
+	{
+		for (int x=0; x<MAX_ENEMIES; x++)
+			TB_DroidPtr[x]=NULL;
 	}
 	//End Todd Brown's Code Modifications
 
@@ -321,6 +342,11 @@ int CWorld::CountObjectTypes(const type_info &classID)
 				if (classID == mech)
 				{
 					TB_MechPtr[index] = static_cast<CMechEnemy *>(c2);
+					index ++;
+				}
+				if (classID == droid)
+				{
+					TB_DroidPtr[index] = static_cast<CDroidEnemy *>(c2);
 					index ++;
 				}
 				count++;

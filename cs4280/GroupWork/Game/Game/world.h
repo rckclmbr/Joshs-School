@@ -27,6 +27,7 @@
 #include "ogro.h"
 #include "cow.h"
 #include "mech.h"
+#include "droid.h"
 #include "entity.h"
 #include "md2.h"
 // End - Phase 15
@@ -56,6 +57,7 @@ __declspec(selectany) COgroEnemy * TB_OgroPtr[MAX_ENEMIES];
 __declspec(selectany) CSodEnemy * TB_SodPtr[MAX_ENEMIES];
 __declspec(selectany) CCowEnemy * TB_CowPtr[MAX_ENEMIES];
 __declspec(selectany) CMechEnemy * TB_MechPtr[MAX_ENEMIES];
+__declspec(selectany) CDroidEnemy * TB_DroidPtr[MAX_ENEMIES];
 __declspec(selectany) bool TB_MapEnable = false;
 //End Todd Brown's Code Modification
 
@@ -63,7 +65,7 @@ class CWorld
 {
 private:
 	// Begin - Phase 15
-	int numOgros, numSods, numCows, numMechs;
+	int numOgros, numSods, numCows, numMechs, numDroids;
 	// End - Phase 15
 	int screenWidth, screenHeight;
 	bool gameDone;
@@ -76,6 +78,7 @@ protected:
 	void OnPrepare();
 
 public:
+	
 	HWND hwnd;
 
 	// Begin - Phase 12
@@ -97,6 +100,7 @@ public:
 	CSodEnemy *sodEnemy;
 	CCowEnemy *cowEnemy;
 	CMechEnemy *mechEnemy;
+	CDroidEnemy *droidEnemy;
 	// End - Phase 15
 	float timeStart;
 	float timeElapsed;
@@ -124,13 +128,18 @@ public:
 	void FadeScreen();
 	void SetScreen(int width, int height);
 
-	bool IsGameDone() { return gameDone; }
+	bool IsGameDone() 
+	{ 
+		
+		return false; 
+	}
 	void QuitGame() { gameDone = true; }
 	// Begin - Phase 15
 	int GetOgros() { return numOgros; }
 	int GetSods() { return numSods; }
 	int GetCows() { return numCows; }
 	int GetMechs() { return numMechs; }
+	int GetDroids() { return numDroids; }
 	// End - Phase 15
 
 };
