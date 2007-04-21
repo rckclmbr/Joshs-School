@@ -178,6 +178,8 @@ void OGLWindow::OnKeyDown(int nVirtKey)
 			if (mouseSensitivity < 0.05)
 				mouseSensitivity = 0.05;
 			break;
+		case 77:
+			TB_MapEnable = !TB_MapEnable;
 		default:
 			break;
 		}
@@ -202,6 +204,33 @@ void OGLWindow::Render(float deltaTime)
 	CWorld *world = OnGetWorld();
 
 	world->Prepare();
+
+	if (TB_MapEnable)
+	{
+		glDisable(GL_TEXTURE_2D);
+		glColor4f(1.f, 1.f, 1.f, 0.f);
+		glPushMatrix();
+		glTranslatef(static_cast<GLfloat>(-1.*((TB_PlayerPosition.x/800.)+2.)), static_cast<GLfloat>((TB_PlayerPosition.y/800.)+1.f), -1.f);
+		glRotatef(-TB_PlayerYaw, 0.0, 0.0, 1.0);
+		glBegin(GL_LINES);
+			glVertex3f(0.0, 0.0, -5.0);
+			glVertex3f(-.2, 0.0, -5.0);
+		glEnd();
+		glPopMatrix();
+		//
+		glPushMatrix();
+		glTranslatef(0.0, 0.0, -5.0f);
+		glColor4f(0.f, 0.f, 0.f, 0.f);
+		glBegin(GL_POLYGON);
+			glVertex3f(-4.f, 3.f, -1.f);
+			glVertex3f(-4.f, 1.f, -1.f);
+			glVertex3f(-2.f, 1.f, -1.f);
+			glVertex3f(-2.f, 3.f, -1.f);
+		glEnd();
+		glEnable(GL_TEXTURE_2D);
+		glPopMatrix();
+	}
+
 	// End - Phase 11
     
 	// Begin - Phase 5
