@@ -80,7 +80,7 @@ void CCowEnemy::OnPrepare()
 		  // -90 to 90 degrees
 		//	modelState = MODEL_RUN;
 		//	velocity = CVector(0.0, 0.0, 15.0);
-			modelState = MODEL_IDLE;
+			modelState = MODEL_JUMP;
           break;
      case AI_UNCARING:
           direction = float(rand() % 360);
