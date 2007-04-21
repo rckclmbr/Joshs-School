@@ -44,6 +44,21 @@
 #define MAX_ENEMIES 10
 // End - Phase 15
 
+//Todd Brown's Code Modification
+struct TB_PositionInfo
+{
+	float x;
+	float y;
+};
+__declspec(selectany) TB_PositionInfo TB_PlayerPosition;
+__declspec(selectany) float TB_PlayerYaw;
+__declspec(selectany) COgroEnemy * TB_OgroPtr[MAX_ENEMIES];
+__declspec(selectany) CSodEnemy * TB_SodPtr[MAX_ENEMIES];
+__declspec(selectany) CCowEnemy * TB_CowPtr[MAX_ENEMIES];
+__declspec(selectany) CMechEnemy * TB_MechPtr[MAX_ENEMIES];
+__declspec(selectany) bool TB_MapEnable = false;
+//End Todd Brown's Code Modification
+
 class CWorld
 {
 private:
