@@ -73,6 +73,11 @@ CWorld::CWorld(CCamera *c)
 
 void CWorld::Animate(float deltaTime)
 {
+	//Todd Brown's Code Modifications
+	TB_PlayerPosition.x = camera->position.x;
+	TB_PlayerPosition.y = camera->position.z;
+	TB_PlayerYaw = camera->yaw;
+	//End Todd Brown's Code Modifications
 	// Phase 12 - Begin
 	// Phase 13 - Add hardwired 7.0f for player size
 	// Phase 14 - Add player-> size back to camera position
@@ -263,13 +268,63 @@ int CWorld::CountObjectTypes(const type_info &classID)
 
 	c1 = (CObject*)terrain->childNode;
 
+	//Todd Brown's Code Modifications
+	const type_info &ogro = typeid(COgroEnemy);  // get ogro typeid
+	const type_info &sod = typeid(CSodEnemy);    // get sod typeid
+	const type_info &cow = typeid(CCowEnemy);
+	const type_info &mech = typeid(CMechEnemy);
+	int index = 0;
+	if (classID == ogro)
+	{
+		for (int x=0; x<MAX_ENEMIES; x++)
+			TB_OgroPtr[x]=NULL;
+	}
+	if (classID == sod)
+	{
+		for (int x=0; x<MAX_ENEMIES; x++)
+			TB_SodPtr[x]=NULL;
+	}
+	if (classID == cow)
+	{
+		for (int x=0; x<MAX_ENEMIES; x++)
+			TB_CowPtr[x]=NULL;
+	}
+	if (classID == mech)
+	{
+		for (int x=0; x<MAX_ENEMIES; x++)
+			TB_MechPtr[x]=NULL;
+	}
+	//End Todd Brown's Code Modifications
+
 	while (c1 != NULL)
 	{
 		c2 = c1;
 		do
 		{
 			if (typeid(*c2) == classID)
+			{
+				if (classID == ogro)
+				{
+					TB_OgroPtr[index] = static_cast<COgroEnemy *>(c2);
+					index ++;
+				}
+				if (classID == sod)
+				{
+					TB_SodPtr[index] = static_cast<CSodEnemy *>(c2);
+					index ++;
+				}
+				if (classID == cow)
+				{
+					TB_CowPtr[index] = static_cast<CCowEnemy *>(c2);
+					index ++;
+				}
+				if (classID == mech)
+				{
+					TB_MechPtr[index] = static_cast<CMechEnemy *>(c2);
+					index ++;
+				}
 				count++;
+			}
 			c2 = (CObject*)c2->nextNode;
 		} while (!c2->IsFirstChild());
 //      Phase 19 - Remove the following
