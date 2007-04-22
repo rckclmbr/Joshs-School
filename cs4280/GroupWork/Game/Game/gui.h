@@ -26,6 +26,7 @@ private:
 	int enemiesLeft;
 
 	CFont *font;
+	CFont *keyFont;
 	CFont *crosshair;
 	CFont *endText;
 	CFont *player1;
@@ -33,6 +34,7 @@ private:
 	CFont *enemy2;
 	CFont *enemy3;
 	CFont *enemy4;
+	CFont *enemy5;
 
 public:
 	CGUI();
