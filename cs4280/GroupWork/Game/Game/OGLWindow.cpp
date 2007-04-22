@@ -180,6 +180,10 @@ void OGLWindow::OnKeyDown(int nVirtKey)
 			break;
 		case 77:
 			TB_MapEnable = !TB_MapEnable;
+			break;
+		case 75:
+			TB_KeyEnable = !TB_KeyEnable;
+			break;
 		default:
 			break;
 		}
