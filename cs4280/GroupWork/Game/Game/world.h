@@ -42,7 +42,7 @@
 #include "tree.h"
 
 // Begin - Phase 15
-#define MAX_ENEMIES 10
+#define MAX_ENEMIES 5
 // End - Phase 15
 
 //Todd Brown's Code Modification
@@ -59,6 +59,12 @@ __declspec(selectany) CCowEnemy * TB_CowPtr[MAX_ENEMIES];
 __declspec(selectany) CMechEnemy * TB_MechPtr[MAX_ENEMIES];
 __declspec(selectany) CDroidEnemy * TB_DroidPtr[MAX_ENEMIES];
 __declspec(selectany) bool TB_MapEnable = false;
+__declspec(selectany) bool TB_KeyEnable = false;
+__declspec(selectany) int TB_NumOgros;
+__declspec(selectany) int TB_NumSods;
+__declspec(selectany) int TB_NumCows;
+__declspec(selectany) int TB_NumMechs;
+__declspec(selectany) int TB_NumDroids;
 //End Todd Brown's Code Modification
 
 class CWorld
