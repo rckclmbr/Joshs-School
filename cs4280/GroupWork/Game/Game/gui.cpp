@@ -12,7 +12,9 @@ CGUI::CGUI()
 	enemy2 = new CFont("Courier New", 22);
 	enemy3 = new CFont("Courier New", 22);
 	enemy4 = new CFont("Courier New", 22);
+	enemy5 = new CFont("Courier New", 22);
 	player1 = new CFont("Courier New", 22);
+	keyFont = new CFont("Courier New", 20);
 }
 
 CGUI::~CGUI()
@@ -30,6 +32,7 @@ CGUI::~CGUI()
 	delete enemy2;
 	delete enemy3;
 	delete enemy4;
+	delete enemy5;
 	delete player1;
 }
 
@@ -119,7 +122,7 @@ void CGUI::Draw()
 		player1->Print("+");
 		//
 		enemy1->SetRGBA(0.14f, 0.89f, 0.04f, 0.8f);
-		for (int x=0; x<10; x++)
+		for (int x=0; x<MAX_ENEMIES; x++)
 		{
 			if (TB_OgroPtr[x] != NULL)
 			{
@@ -129,7 +132,7 @@ void CGUI::Draw()
 		}
 		//
 		enemy2->SetRGBA(0.02f, 0.07f, 0.92f, 0.8f);
-		for (int x=0; x<10; x++)
+		for (int x=0; x<MAX_ENEMIES; x++)
 		{
 			if (TB_SodPtr[x] != NULL)
 			{
@@ -139,7 +142,7 @@ void CGUI::Draw()
 		}
 		//
 		enemy3->SetRGBA(0.93f, 0.16f, 0.01f, 0.8f);
-		for (int x=0; x<10; x++)
+		for (int x=0; x<MAX_ENEMIES; x++)
 		{
 			if (TB_CowPtr[x] != NULL)
 			{
@@ -149,7 +152,7 @@ void CGUI::Draw()
 		}
 		//
 		enemy4->SetRGBA(0.93f, 0.89f, 0.0f, 0.8f);
-		for (int x=0; x<10; x++)
+		for (int x=0; x<MAX_ENEMIES; x++)
 		{
 			if (TB_MechPtr[x] != NULL)
 			{
@@ -157,6 +160,39 @@ void CGUI::Draw()
 				enemy4->Print("+");
 			}
 		}
+		//
+		enemy5->SetRGBA(1.00f, 0.50f, 0.0f, 0.8f);
+		for (int x=0; x<MAX_ENEMIES; x++)
+		{
+			if (TB_DroidPtr[x] != NULL)
+			{
+				enemy5->SetPos3D(static_cast<GLfloat>(-1.*((TB_DroidPtr[x]->position.x/800.)+2.+0.03)), static_cast<GLfloat>((TB_DroidPtr[x]->position.z/800.)+1.-0.06), -5.f);
+				enemy5->Print("+");
+			}
+		}
+	}
+
+	if (TB_KeyEnable)
+	{
+		keyFont->SetRGBA(0.14f, 0.89f, 0.04f, 0.8f);
+		keyFont->SetPos3D(-2.f, 2.75f, -5.f);
+		keyFont->Print("Num Ogros Left : %d", TB_NumOgros);
+		//
+		keyFont->SetRGBA(0.02f, 0.07f, 0.92f, 0.8f);
+		keyFont->SetPos3D(-2.f, 2.55f, -5.f);
+		keyFont->Print("Num Sods Left  : %d", TB_NumSods);
+		//
+		keyFont->SetRGBA(0.93f, 0.16f, 0.01f, 0.8f);
+		keyFont->SetPos3D(-2.f, 2.35f, -5.f);
+		keyFont->Print("Num Cows Left  : %d", TB_NumCows);
+		//
+		keyFont->SetRGBA(0.93f, 0.89f, 0.0f, 0.8f);
+		keyFont->SetPos3D(-2.f, 2.15f, -5.f);
+		keyFont->Print("Num Mechs Left : %d", TB_NumMechs);
+		//
+		keyFont->SetRGBA(1.00f, 0.50f, 0.0f, 0.8f);
+		keyFont->SetPos3D(-2.f, 1.95f, -5.f);
+		keyFont->Print("Num Droids Left: %d", TB_NumDroids);
 	}
 	
 	glDisable(GL_BLEND);
