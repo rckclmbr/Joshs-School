@@ -105,10 +105,15 @@ void CWorld::Animate(float deltaTime)
 	const type_info &droid = typeid(CDroidEnemy);
 
 	numOgros = CountObjectTypes(ogro);           // count ogros
+	TB_NumOgros = numOgros;
 	numSods = CountObjectTypes(sod);             // count sods
+	TB_NumSods = numSods;
 	numCows = CountObjectTypes(cow);			// count sods
+	TB_NumCows = numCows;
 	numMechs = CountObjectTypes(mech);			// count mech
+	TB_NumMechs = numMechs;
 	numDroids = CountObjectTypes(droid);	
+	TB_NumDroids = numDroids;
 	// Phase 15 - End
 
 	// Begin - Phase 18
