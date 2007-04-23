@@ -57,7 +57,7 @@ CWorld::CWorld(CCamera *c)
 	player->SetTerrain(terrain);
 	// End - Phase 14
 	// Begin - Phase 19
-	worldSound = audioSystem->Create("\\Quake.wav", false);
+	worldSound = audioSystem->Create("Quake.wav", false);
 	audioSystem->Play(worldSound, DMUS_SEG_REPEAT_INFINITE, true);
 
 	player->SetAudioSystem(audioSystem);
@@ -217,7 +217,7 @@ void CWorld::LoadWorld()
 		cowEnemy->AttachTo(terrain);
 		cowEnemy->SetPlayer(player);
 		cowEnemy->SetAudioSystem(audioSystem);
-		cowEnemy->LoadAudio(audioSystem, "\\models\\Cow\\cow.wav", false);
+		cowEnemy->LoadAudio(audioSystem, "models\\Cow\\cow.wav", false);
 		cowEnemy->position.x = (float)(rand() % (int)(terrain->GetWidth() * terrain->GetMul()));
 		cowEnemy->position.y = 0.0f;
 		cowEnemy->position.z = (float)(rand() % (int)(terrain->GetWidth() * terrain->GetMul()));
@@ -268,7 +268,7 @@ void CWorld::LoadWorld()
 		droidEnemy->SetPlayer(player);
 		// Phase 19 - Uncomment
 		droidEnemy->SetAudioSystem(audioSystem);
-		droidEnemy->LoadAudio(audioSystem, "\\models\\Droid\\death1.wav", false);
+		droidEnemy->LoadAudio(audioSystem, "models\\Droid\\death1.wav", false);
 		droidEnemy->position.x = (float)(rand() % (int)(terrain->GetWidth() * terrain->GetMul()));
 		droidEnemy->position.y = 0.0f;
 		droidEnemy->position.z = (float)(rand() % (int)(terrain->GetWidth() * terrain->GetMul()));

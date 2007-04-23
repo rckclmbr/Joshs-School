@@ -21,6 +21,7 @@
 #include <dmusici.h>
 //#include <d3d8types.h>             // for D3DVECTOR
 #include <cguid.h>                 // for GUID_NULL
+#include <iostream>
 
 /*
 	The CAudio class

@@ -156,9 +156,11 @@ void CAudioSystem::PlaySegment(IDirectMusicSegment8 *dmSeg, bool is3DSound, DWOR
 // desc: play a CAudio object
 void CAudioSystem::Play(CAudio *audio, DWORD numRepeats, bool primary)
 {
+	if(!audio->GetSegment()) return;
+
 	// set number of repeats
 	audio->GetSegment()->SetRepeats(numRepeats);
-	
+
 	if (audio->Is3DSound())
 	{
 		audio->GetSegment()->Download(dmusic3DAudioPath);
@@ -266,9 +268,10 @@ IDirectMusicSegment8 *CAudioSystem::CreateSegment(char *filename, bool is3DSound
                                                  wcharStr,
                                                  (void**)&seg)))
      {
-          MessageBox(NULL, "Audio file not found! Press OK to exit",
+		  char errorBuffer[64];
+		  sprintf_s(errorBuffer, "Audio file \"%s\" not found!", filename);
+          MessageBox(NULL, errorBuffer,
                      "ERROR!", MB_OK);
-
           return NULL;
      }
 
