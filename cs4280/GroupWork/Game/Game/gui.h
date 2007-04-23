@@ -24,6 +24,9 @@ class CGUI
 private:
 	int minutesLeft, secondsLeft, millisecondsLeft;
 	int enemiesLeft;
+	float lastTime, FPS;
+	int frames;
+	bool showFPS;
 
 	CFont *font;
 	CFont *keyFont;
@@ -43,6 +46,7 @@ public:
 	void SetCurrentTime(float timeLeft);
 	void SetEnemiesLeft(int eLeft);
 	void Draw();
+	void ToggleFPS();
 	void Animate(float deltaTime);
 
 	void DrawWinner();

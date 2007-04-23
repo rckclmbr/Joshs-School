@@ -23,7 +23,7 @@ bool OGLWindow::Init()
     // clear to black background
     glClearColor(0.0, 0.0, 0.0, 0.0);
 	// Begin - Phase 6
-	mouseSensitivity = 2.0f;
+	mouseSensitivity = 8.0f;
 	// End - Phase 6
     m_angle = 0.0f;
 	// Begin - Phase 5
@@ -187,6 +187,9 @@ void OGLWindow::OnKeyDown(int nVirtKey)
 			break;
 		case 75:
 			TB_KeyEnable = !TB_KeyEnable;
+			break;
+		case 70: // F Pressed
+			gameWorld->gui->ToggleFPS();
 			break;
 		default:
 			break;

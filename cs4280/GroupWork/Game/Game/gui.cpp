@@ -15,6 +15,11 @@ CGUI::CGUI()
 	enemy5 = new CFont("Courier New", 22);
 	player1 = new CFont("Courier New", 22);
 	keyFont = new CFont("Courier New", 20);
+
+	frames = 0;
+	lastTime = 0;
+	FPS = 0;
+	showFPS = false;
 }
 
 CGUI::~CGUI()
@@ -43,6 +48,13 @@ void CGUI::SetCurrentTime(float timeLeft)
 	minutesLeft = (int)(timeLeft / 60.0);	// 60 seconds in 1 minute
 	secondsLeft = (int)floor(timeLeft) % 60;
 	millisecondsLeft = static_cast<int>((timeLeft - (float)floor(timeLeft)) * 1000);
+
+	if(frames > 30) {	// Gets a larger portion, for more accurate results
+		float secondsPassed = lastTime - timeLeft;
+		lastTime = timeLeft;
+		FPS = (float)frames / secondsPassed;
+		frames = 0;
+	}
 }
 
 void CGUI::SetEnemiesLeft(int eLeft)
@@ -107,6 +119,13 @@ void CGUI::Draw()
 
 	font->SetPos3D(2.5f, 2.5f, -5.0f);
 	font->Print("Enemies: %d", enemiesLeft);
+
+	frames++;	// Update frames for FPS
+
+	if(showFPS) {
+		font->SetPos3D(2.5f, 2.3f, -5.0f);
+		font->Print("FPS: %.2f", FPS);
+	}
 
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -197,4 +216,8 @@ void CGUI::Draw()
 	
 	glDisable(GL_BLEND);
 	glEnable(GL_TEXTURE_2D);
+}
+
+void CGUI::ToggleFPS() {
+	showFPS = !showFPS;
 }
