@@ -88,16 +88,16 @@ void CMechEnemy::OnPrepare()
      case AI_DEAD:
           modelState = MODEL_DIE;
           velocity = CVector(0.0, 0.0, 0.0);
-		  //PlaySound();
           if (nextFrame == stateStart)
           {
+			  PlaySound();
                // time to kill the monster
                isDead = true;
           }
           break;
      default:
           break;
-     }
+	 }
 
      // do prep for MD2 Model states
      CEntity::OnPrepare();

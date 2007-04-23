@@ -59,8 +59,10 @@ CWorld::CWorld(CCamera *c)
 	// Begin - Phase 19
 	worldSound = audioSystem->Create("Quake.wav", false);
 	audioSystem->Play(worldSound, DMUS_SEG_REPEAT_INFINITE, true);
-
+	
 	player->SetAudioSystem(audioSystem);
+	player->LoadAudio(audioSystem, "gunshot.wav", false);
+
 	// End - Phase 19
 	LoadWorld();
 	timeStart = 300.0;			// 300 seconds = 5 minutes
@@ -78,9 +80,9 @@ void CWorld::Animate(float deltaTime)
 	TB_PlayerPosition.y = camera->position.z;
 	TB_PlayerYaw = camera->yaw;
 	//End Todd Brown's Code Modifications
-	// Phase 12 - Begin
-	// Phase 13 - Add hardwired 7.0f for player size
-	// Phase 14 - Add player-> size back to camera position
+	
+	// Add hardwired 7.0f for player size
+	//  Add player-> size back to camera position
 	// set camera height based on player position on terrain
 	camera->position.y = terrain->GetHeight(camera->position.x, camera->position.z) + player->size;	
 	
@@ -159,10 +161,7 @@ void CWorld::SetScreen(int width, int height)
 
 void CWorld::Draw(CCamera *camera)
 {
-	// Begin - Phase 12
 	terrain->Draw(camera);
-	// End - Phase 12
-	// Begin - Phase 18
 	gui->Draw();
 
 	if (gameDone)
@@ -173,21 +172,15 @@ void CWorld::Draw(CCamera *camera)
 		else
 			gui->DrawLoser();
 	}
-// End - Phase 18
-
 }
 
 void CWorld::OnPrepare()
 {
-	// Begin - Phase 12
 	glClearColor(terrain->fogColor[0], terrain->fogColor[1], terrain->fogColor[2], terrain->fogColor[3]);
 	terrain->Prepare();
-	// End - Phase 12
-	// Phase 15 - Begin
+
 	if ((numOgros + numSods + numCows + numMechs +numDroids <= 0) || (timeElapsed >= timeStart))
-		gameDone = true;
-	// Phase 15 - End
-	
+		gameDone = true;	
 }
 
 
@@ -195,8 +188,6 @@ void CWorld::OnPrepare()
 // desc: initializes the world
 void CWorld::LoadWorld()
 {
-	
-	// Phase 15 - Begin
 	int enemyIdx = 0;
 	int rndInt = 0;
 
@@ -230,6 +221,7 @@ void CWorld::LoadWorld()
 		mechEnemy->AttachTo(terrain);
 		mechEnemy->SetPlayer(player);
 		mechEnemy->SetAudioSystem(audioSystem);
+		mechEnemy->LoadAudio(audioSystem, "models\\mech\\enemy.wav", false);
 		mechEnemy->position.x = (float)(rand() % (int)(terrain->GetWidth() * terrain->GetMul()));
 		mechEnemy->position.y = 0.0f;
 		mechEnemy->position.z = (float)(rand() % (int)(terrain->GetWidth() * terrain->GetMul()));
@@ -243,6 +235,7 @@ void CWorld::LoadWorld()
 		ogroEnemy->SetPlayer(player);
 		// Phase 19 - Uncomment
 		ogroEnemy->SetAudioSystem(audioSystem);
+		ogroEnemy->LoadAudio(audioSystem, "models\\ogro\\creaturehit.wav", false);
 		ogroEnemy->position.x = (float)(rand() % (int)(terrain->GetWidth() * terrain->GetMul()));
 		ogroEnemy->position.y = 0.0f;
 		ogroEnemy->position.z = (float)(rand() % (int)(terrain->GetWidth() * terrain->GetMul()));
@@ -256,6 +249,7 @@ void CWorld::LoadWorld()
 		sodEnemy->SetPlayer(player);
 		// Phase 19 - Uncomment
 		sodEnemy->SetAudioSystem(audioSystem);
+		sodEnemy->LoadAudio(audioSystem, "models\\sodf8\\ddeath.wav", false);
 		sodEnemy->position.x = (float)(rand() % (int)(terrain->GetWidth() * terrain->GetMul()));
 		sodEnemy->position.y = 0.0f;
 		sodEnemy->position.z = (float)(rand() % (int)(terrain->GetWidth() * terrain->GetMul()));

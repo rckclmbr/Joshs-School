@@ -12,7 +12,7 @@ void CPlayer::FireWeapon()
 
 	CRocket *newRocket = new CRocket;
 
-	newRocket->pitch = camera->pitch;
+	newRocket->pitch = (camera->pitch - 10);
 	newRocket->direction = direction;
 	newRocket->position = position;
 	newRocket->forward = camera->lookAt.UnitVector();
@@ -21,3 +21,21 @@ void CPlayer::FireWeapon()
 	newRocket->LoadAudio(audioSys, "explode.wav", false);
 	newRocket->AttachTo(terrain);
 }
+
+void CPlayer::LoadAudio(CAudioSystem *audioSystem, char *filename, bool is3DSound)
+{
+	if (rocketSound != NULL)
+	{
+		delete [] rocketSound;
+		rocketSound = new CAudio;
+	}
+
+	if (audioSystem != NULL)
+		rocketSound = audioSystem->Create(filename, is3DSound);
+	else
+	{
+		delete [] rocketSound;
+		rocketSound = NULL;
+	}
+}
+

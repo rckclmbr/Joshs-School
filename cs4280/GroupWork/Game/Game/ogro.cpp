@@ -99,6 +99,7 @@ void COgroEnemy::OnPrepare()
           velocity = CVector(0.0, 0.0, 0.0);
           if (nextFrame == stateStart)
           {
+			  PlaySound();
                // time to kill the monster
                isDead = true;
           }

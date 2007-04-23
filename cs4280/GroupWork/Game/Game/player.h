@@ -15,33 +15,26 @@
 */
 
 #include <typeinfo.h>
-// Phase 19 - Uncomment the following
 #include "audiosystem.h"
-// Phase 15 - Begin
-// Uncomment following
 #include "sod.h"
 #include "ogro.h"
 #include "cow.h"
 #include "mech.h"
-// Phase 15 - End
-// Phase 16 - Uncomment
+#include "droid.h"
 #include "rocket.h"
 #include "camera.h"
 #include "object.h"
 #include "terrain.h"
 
-class CPlayer : public CObject
-{
+class CPlayer : public CObject{
 private:
 	CCamera *camera;
 	CTerrain *terrain;
-	// Phase 19 - Uncomment the following
 	CAudioSystem *audioSys;
 	CAudio *rocketSound;
 
 protected:
-	// Phase 14 - Take out until enemies are introduced
-	// Phase 15 - Uncomment because enemies exist now
+	
 void OnCollision(CObject *collisionObject)
 	{
 		if (typeid(*collisionObject) == typeid(CTerrain))
@@ -57,6 +50,30 @@ void OnCollision(CObject *collisionObject)
 			}
 		}
 		else if (typeid(*collisionObject) == typeid(CSodEnemy))
+		{
+			if (camera)
+			{
+				if (camera->velocity.z > 0.0)
+					camera->velocity = CVector(0.0, 0.0, 0.0);
+			}
+		}
+		else if (typeid(*collisionObject) == typeid(CMechEnemy))	// Added by Lorin
+		{
+			if (camera)
+			{
+				if (camera->velocity.z > 0.0)
+					camera->velocity = CVector(0.0, 0.0, 0.0);
+			}
+		}
+		else if (typeid(*collisionObject) == typeid(CCowEnemy))		// Added by Lorin
+		{
+			if (camera)
+			{
+				if (camera->velocity.z > 0.0)
+					camera->velocity = CVector(0.0, 0.0, 0.0);
+			}
+		}
+		else if (typeid(*collisionObject) == typeid(CDroidEnemy))  // Added by Lorin
 		{
 			if (camera)
 			{
@@ -84,21 +101,17 @@ public:
 	float pitch;		// pitch of player's lookAt vector
 
 	CPlayer() { size = 7.0f; camera = NULL; terrain = NULL; 
-	// Phase 14 - Take these out for now
-	// Phase 19 - Uncomment the following
-	audioSys = NULL; rocketSound = NULL; }
+	audioSys = NULL; rocketSound = NULL;}
+	
 	~CPlayer() {}
 
 	void SetCamera(CCamera *c) { camera = c; }
 	void DetachCamera() { camera = NULL; }
 
 	void SetTerrain(CTerrain *t) { terrain = t; }
-// Phase 14 - Take out until Rocket is introduced
-// Phase 16 - Uncomment
 	void FireWeapon();
-// Phase 14 - Take out until AudioSystem in introduced
-// Phase 19 - Uncomment the following	
-	void SetAudioSystem(CAudioSystem *aSys) { audioSys = aSys; }
+	void LoadAudio(CAudioSystem *audioSystem, char *filename, bool is3DSound);
+	void SetAudioSystem(CAudioSystem *asys) { audioSys = asys; }
 };
 
 #endif

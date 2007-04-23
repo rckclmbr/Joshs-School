@@ -104,9 +104,14 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 		switch(fwKeys)
 		{
 		case VK_ESCAPE:
-			wglMakeCurrent(hDC, NULL);
-			wglDeleteContext(hRC);
-			PostQuitMessage(0);
+			if (MessageBox(NULL, "Do you want to quit?", "Quit?", MB_ICONQUESTION|MB_YESNO)==IDYES) 
+			{	
+				wglMakeCurrent(hDC, NULL);
+				wglDeleteContext(hRC);
+				PostQuitMessage(0);
+				exit(0);  //kill game
+			}
+			
 			break;
 		default:
 			// Begin - Phase 9

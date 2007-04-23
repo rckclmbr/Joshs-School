@@ -7,8 +7,6 @@ CEntity::CEntity()
 	stateEnd = 39;
 	animSpeed = 7.0f;
 	direction = 0.0f;
-	// Phase 15 - Comment out the following
-// Phase 19 - Uncomment the following
 	entitySound = NULL;
 
 	position = CVector(0,0,0);
@@ -19,9 +17,6 @@ CEntity::CEntity()
 
 CEntity::~CEntity()
 {
-	// Phase 15 - Comment out the following
-// Phase 19 - Uncomment the following
-	//
 	if (entitySound != NULL)
 	{
 		delete entitySound;

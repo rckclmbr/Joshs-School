@@ -100,6 +100,7 @@ void CSodEnemy::OnPrepare()
 		if (nextFrame == stateStart)
 			// time to kill the monster
 		{
+			PlaySound();
 			isDead = true;
 		}
 		break;

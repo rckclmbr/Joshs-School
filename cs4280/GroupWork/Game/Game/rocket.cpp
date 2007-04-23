@@ -84,7 +84,6 @@ void CRocket::OnCollision(CObject *collisionObject)
 				isExplosion = true;
 				velocity = CVector(0.0, 0.0, 0.0);
 				explosion = new CExplosion(500, position, 8.0, explosionTex->texID);
-// Phase 19 - Uncomment the following
 				PlaySound();
 			}
 		
@@ -95,31 +94,34 @@ void CRocket::OnCollision(CObject *collisionObject)
 			isExplosion = true;
 			velocity = CVector(0.0, 0.0, 0.0);
 			explosion = new CExplosion(500, position, 8.0, explosionTex->texID);
-// Phase 19 - Uncomment the following
 			PlaySound();
 		}
 		if (typeid(*collisionObject) == typeid(CSodEnemy))
 		{
 			isExplosion = true;
 			velocity = CVector(0.0, 0.0, 0.0);
-			explosion = new CExplosion(500, position, 8.0, explosionTex->texID);
-// Phase 19 - Uncomment the following		
+			explosion = new CExplosion(500, position, 8.0, explosionTex->texID);	
 			PlaySound();
 		}
 		if (typeid(*collisionObject) == typeid(CCowEnemy))
 		{
 			isExplosion = true;
 			velocity = CVector(0.0, 0.0, 0.0);
-			explosion = new CExplosion(500, position, 8.0, explosionTex->texID);
-// Phase 19 - Uncomment the following		
+			explosion = new CExplosion(500, position, 8.0, explosionTex->texID);		
 			PlaySound();
 		}
 		if (typeid(*collisionObject) == typeid(CMechEnemy))
 		{
 			isExplosion = true;
 			velocity = CVector(0.0, 0.0, 0.0);
-			explosion = new CExplosion(500, position, 8.0, explosionTex->texID);
-// Phase 19 - Uncomment the following		
+			explosion = new CExplosion(500, position, 8.0, explosionTex->texID);	
+			PlaySound();
+		}
+		if (typeid(*collisionObject) == typeid(CDroidEnemy))	 // Added by Lorin
+		{
+			isExplosion = true;
+			velocity = CVector(0.0, 0.0, 0.0);
+			explosion = new CExplosion(500, position, 8.0, explosionTex->texID);	
 			PlaySound();
 		}
 	}
