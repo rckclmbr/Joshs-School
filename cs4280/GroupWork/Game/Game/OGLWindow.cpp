@@ -155,15 +155,19 @@ void OGLWindow::OnKeyDown(int nVirtKey)
 		{
 			//Begin - Phase 10
 		case VK_UP:
+		case 87:
 			gameCamera->velocity += CVector(0,0,2.0);
 			break;
 		case VK_DOWN:
+		case 83:
 			gameCamera->velocity += CVector(0,0,-2.0);
 			break;
 		case VK_RIGHT:
+		case 68:
 			gameCamera->velocity += CVector(1.0, 0.0, 0.0);
 			break;
 		case VK_LEFT:
+		case 65:
 			gameCamera->velocity += CVector(-1.0, 0.0, 0.0);
 			break;
 //		case VK_ESCAPE:
