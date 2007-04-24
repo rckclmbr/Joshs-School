@@ -200,10 +200,10 @@ void OGLWindow::OnMouseDownL(int x, int y)
 {
 	
 	if (!gameWorld->IsGameDone())
-	{
+	{	
+		gameWorld->player->audioSys->Play(gameWorld->player->rocketSound, 0, false);
 		gameWorld->camera->pitch += 10;
-		gameWorld->player->FireWeapon();
-		
+		gameWorld->player->FireWeapon();		
 	}
 }
 

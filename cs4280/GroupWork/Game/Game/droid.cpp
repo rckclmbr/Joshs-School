@@ -43,11 +43,10 @@ void CDroidEnemy::OnCollision(CObject *collisionObject)
 			if (position.z >= ((CTerrain*)collisionObject)->GetWidth()*((CTerrain*)collisionObject)->GetMul() - ((CTerrain*)collisionObject)->GetScanDepth())
 				position.z = ((CTerrain*)collisionObject)->GetWidth()*((CTerrain*)collisionObject)->GetMul() - ((CTerrain*)collisionObject)->GetScanDepth();
 		}
-		// Phase 15 - Comment out the following
-		// Phase 16 - Uncomment
+		
 		else if (typeid(*collisionObject) == typeid(CRocket))
 		{
-			// kill the ogre
+			// kill the Droid
 			aiState = AI_DEAD;
 			velocity = CVector(0.0, 0.0, 0.0);
 		}
@@ -119,7 +118,6 @@ void CDroidEnemy::Load()
 {
 	// load model
 	CMD2Model::Load("models\\droid\\tris.md2", "models\\droid\\pilot.pcx");
-
 }
 
 void CDroidEnemy::OnProcessAI()

@@ -30,9 +30,7 @@ class CPlayer : public CObject{
 private:
 	CCamera *camera;
 	CTerrain *terrain;
-	CAudioSystem *audioSys;
-	CAudio *rocketSound;
-
+	
 protected:
 	
 void OnCollision(CObject *collisionObject)
@@ -99,9 +97,17 @@ void OnCollision(CObject *collisionObject)
 public:
 	float direction;	// direction player is facing (same as camera)
 	float pitch;		// pitch of player's lookAt vector
+	CAudioSystem *audioSys;
+	CAudio *rocketSound;
 
-	CPlayer() { size = 7.0f; camera = NULL; terrain = NULL; 
-	audioSys = NULL; rocketSound = NULL;}
+	CPlayer() 
+	{ 
+		size = 7.0f; 
+		camera = NULL; 
+		terrain = NULL; 
+		audioSys = NULL; 
+		rocketSound = NULL;
+	}
 	
 	~CPlayer() {}
 
@@ -110,8 +116,10 @@ public:
 
 	void SetTerrain(CTerrain *t) { terrain = t; }
 	void FireWeapon();
-	void LoadAudio(CAudioSystem *audioSystem, char *filename, bool is3DSound);
 	void SetAudioSystem(CAudioSystem *asys) { audioSys = asys; }
+	void LoadAudio(CAudioSystem *audioSystem, char *filename, bool is3DSound);  //added by Lorin
+	
+	void PlaySound() { audioSys->Play(rocketSound, 0, false); }					//added by Lorin
 };
 
 #endif

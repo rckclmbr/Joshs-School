@@ -38,7 +38,7 @@ public:
 	float distanceTravel;	// distance rocket has travelled
 	CVector forward;		// forward vector of rocket (for pitch/dir)
 	bool isExplosion;
-
+	
 	CTexture *explosionTex;
 	CExplosion *explosion;
 

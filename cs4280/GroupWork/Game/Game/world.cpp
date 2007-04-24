@@ -3,27 +3,18 @@
 
 CWorld::CWorld()
 {
-// Begin - Phase 12
 	terrain = new CTerrain(32, 0.5);
-// End - Phase 12
 }
 
 CWorld::~CWorld()
 {
-	// Begin - Phase 19
 	audioSystem->Shutdown();
-	// End - Phase 19
-	// Begin - Phase 18
 	delete gui;
-	// End - Phase 18
-	// Begin - Phase 12
 	delete terrain;
 	terrain = NULL;
-    // End - Phase 12
-	// Begin - Phase 18
+
 	gui = NULL;
-	// End - Phase 18
-	// Begin - Phase 19
+
 	delete audioSystem;
 	delete worldSound;
 	audioSystem = NULL;
@@ -33,44 +24,34 @@ CWorld::~CWorld()
 CWorld::CWorld(CCamera *c)
 {
 	camera = c;
-	// Begin - Phase 12
 	terrain = new CTerrain(32, 1.0f);
-	// End - Phase 12
-	// Begin - Phase 14
 	player = new CPlayer;
-	// End - Phase 14
-	// Begin - Phase 19
+
 	audioSystem = new CAudioSystem;
-	// End - Phase 19
-	// Begin - Phase 18
+
 	gui = new CGUI;
-	// End - Phase 18
-	// Begin - Phase 16
+
 	gameDone = false;
-	// End - Phase 16
-	// Begin - Phase 19
+
 	audioSystem->InitDirectXAudio(NULL); 
-	// End - Phase 19
-	// Begin - Phase 14
+
 	player->AttachTo(terrain);
 	player->SetCamera(camera);
 	player->SetTerrain(terrain);
-	// End - Phase 14
-	// Begin - Phase 19
+
 	worldSound = audioSystem->Create("Quake.wav", false);
 	audioSystem->Play(worldSound, DMUS_SEG_REPEAT_INFINITE, true);
 	
 	player->SetAudioSystem(audioSystem);
-	player->LoadAudio(audioSystem, "gunshot.wav", false);
+	player->SetAudioSystem(player->audioSys);							// added by Lorin
+	player->LoadAudio(player->audioSys, ".\\gunshot.wav", false);		// load rocket launcher sound. added by Lorin
 
-	// End - Phase 19
 	LoadWorld();
 	timeStart = 300.0;			// 300 seconds = 5 minutes
 	timeElapsed = 0.0;
-	// Begin - Phase 18
+
 	gui->SetCurrentTime(timeStart);
 	gui->SetEnemiesLeft(numOgros + numSods + numCows + numMechs);
-	// End - Phase 18
 }
 
 void CWorld::Animate(float deltaTime)
@@ -96,8 +77,7 @@ void CWorld::Animate(float deltaTime)
 		camera->position.z = terrain->GetWidth()*terrain->GetMul() - terrain->GetScanDepth();
 
 	terrain->Animate(deltaTime);   // animate terrain
-	// Phase 12 - End
-	// Phase 15 - Begin
+	
 	const type_info &ogro = typeid(COgroEnemy);  // get ogro typeid
 	const type_info &sod = typeid(CSodEnemy);    // get sod typeid
 	//new cow enemy
@@ -110,25 +90,21 @@ void CWorld::Animate(float deltaTime)
 	TB_NumOgros = numOgros;
 	numSods = CountObjectTypes(sod);             // count sods
 	TB_NumSods = numSods;
-	numCows = CountObjectTypes(cow);			// count sods
+	numCows = CountObjectTypes(cow);			// count cows
 	TB_NumCows = numCows;
 	numMechs = CountObjectTypes(mech);			// count mech
 	TB_NumMechs = numMechs;
-	numDroids = CountObjectTypes(droid);	
+	numDroids = CountObjectTypes(droid);		// count droid
 	TB_NumDroids = numDroids;
-	// Phase 15 - End
-
-	// Begin - Phase 18
+	
 	gui->SetEnemiesLeft(numOgros + numSods + numCows + numMechs + numDroids);
 	gui->SetCurrentTime(timeStart - timeElapsed);
-	// End - Phase 18
 
-	// Phase 16 - Begin
 	if (!gameDone)
 		timeElapsed += deltaTime;
 	else
 		timeElapsed = timeStart;
-    // Phase 16 - End
+ 
 
 
 }
@@ -194,7 +170,7 @@ void CWorld::LoadWorld()
 	numOgros = 0;
 	numSods = 0;
 	numCows = 0;
-	numMechs = 0;
+	numMechs = 10;
 
 	srand((unsigned int)time(NULL));
 	
@@ -235,7 +211,7 @@ void CWorld::LoadWorld()
 		ogroEnemy->SetPlayer(player);
 		// Phase 19 - Uncomment
 		ogroEnemy->SetAudioSystem(audioSystem);
-		ogroEnemy->LoadAudio(audioSystem, "models\\ogro\\creaturehit.wav", false);
+		ogroEnemy->LoadAudio(audioSystem, "models\\ogro\\ddeath.wav", false);
 		ogroEnemy->position.x = (float)(rand() % (int)(terrain->GetWidth() * terrain->GetMul()));
 		ogroEnemy->position.y = 0.0f;
 		ogroEnemy->position.z = (float)(rand() % (int)(terrain->GetWidth() * terrain->GetMul()));
@@ -249,7 +225,7 @@ void CWorld::LoadWorld()
 		sodEnemy->SetPlayer(player);
 		// Phase 19 - Uncomment
 		sodEnemy->SetAudioSystem(audioSystem);
-		sodEnemy->LoadAudio(audioSystem, "models\\sodf8\\ddeath.wav", false);
+		sodEnemy->LoadAudio(audioSystem, "models\\sodf8\\creaturehit.wav", false);
 		sodEnemy->position.x = (float)(rand() % (int)(terrain->GetWidth() * terrain->GetMul()));
 		sodEnemy->position.y = 0.0f;
 		sodEnemy->position.z = (float)(rand() % (int)(terrain->GetWidth() * terrain->GetMul()));
