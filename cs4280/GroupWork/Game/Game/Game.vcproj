@@ -117,7 +117,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="&quot;C:\Program Files\Microsoft DirectX SDK (April 2007)\Include&quot;"
+				AdditionalIncludeDirectories="&quot;F:\Program Files\Microsoft DirectX SDK (April 2007)\Include&quot;"
 				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS"
 				RuntimeLibrary="2"
 				UsePrecompiledHeader="0"
@@ -188,6 +188,10 @@
 			</File>
 			<File
 				RelativePath=".\cow.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\dragon.cpp"
 				>
 			</File>
 			<File
@@ -274,6 +278,10 @@
 			</File>
 			<File
 				RelativePath=".\cow.h"
+				>
+			</File>
+			<File
+				RelativePath=".\dragon.h"
 				>
 			</File>
 			<File

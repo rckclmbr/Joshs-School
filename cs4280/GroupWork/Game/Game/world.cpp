@@ -98,7 +98,7 @@ void CWorld::Animate(float deltaTime)
 	numDroids = CountObjectTypes(droid);		// count droid
 	TB_NumDroids = numDroids;
 
-	numDragons = CountObjectTypes(droid);		// count droid
+	numDragons = CountObjectTypes(dragon);		// count droid
 	TB_NumDragons = numDragons;
 	
 	gui->SetEnemiesLeft(numOgros + numSods + numCows + numMechs + numDroids + numDragons);
@@ -231,13 +231,13 @@ void CWorld::LoadWorld()
 		sodEnemy->position.y = 0.0f;
 		sodEnemy->position.z = (float)(rand() % (int)(terrain->GetWidth() * terrain->GetMul()));
 	}
-
+	
+	// generate Droids
 	for (enemyIdx = 0; enemyIdx < numDroids; enemyIdx++)
 	{
 		droidEnemy = new CDroidEnemy;
 		droidEnemy->AttachTo(terrain);
 		droidEnemy->SetPlayer(player);
-		// Phase 19 - Uncomment
 		droidEnemy->SetAudioSystem(audioSystem);
 		droidEnemy->LoadAudio(audioSystem, "models\\Droid\\death1.wav", false);
 		droidEnemy->position.x = (float)(rand() % (int)(terrain->GetWidth() * terrain->GetMul()));
@@ -245,12 +245,12 @@ void CWorld::LoadWorld()
 		droidEnemy->position.z = (float)(rand() % (int)(terrain->GetWidth() * terrain->GetMul()));
 	}
 
+	// generate Dragons
 	for (enemyIdx = 0; enemyIdx < numDragons; enemyIdx++)
 	{
 		dragonEnemy = new CDragonEnemy;
 		dragonEnemy->AttachTo(terrain);
 		dragonEnemy->SetPlayer(player);
-		// Phase 19 - Uncomment
 		dragonEnemy->SetAudioSystem(audioSystem);
 		dragonEnemy->LoadAudio(audioSystem, "models\\Dragon\\death1.wav", false);
 		dragonEnemy->position.x = (float)(rand() % (int)(terrain->GetWidth() * terrain->GetMul()));

@@ -124,6 +124,13 @@ void CRocket::OnCollision(CObject *collisionObject)
 			explosion = new CExplosion(500, position, 8.0, explosionTex->texID);	
 			PlaySound();
 		}
+		if (typeid(*collisionObject) == typeid(CDragonEnemy))	 // Added by Lorin
+		{
+			isExplosion = true;
+			velocity = CVector(0.0, 0.0, 0.0);
+			explosion = new CExplosion(500, position, 8.0, explosionTex->texID);	
+			PlaySound();
+		}
 	}
 }
 

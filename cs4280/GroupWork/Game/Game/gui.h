@@ -38,6 +38,7 @@ private:
 	CFont *enemy3;
 	CFont *enemy4;
 	CFont *enemy5;
+	CFont *enemy6;
 
 public:
 	CGUI();

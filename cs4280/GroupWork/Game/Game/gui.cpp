@@ -13,6 +13,7 @@ CGUI::CGUI()
 	enemy3 = new CFont("Courier New", 22);
 	enemy4 = new CFont("Courier New", 22);
 	enemy5 = new CFont("Courier New", 22);
+	enemy6 = new CFont("Courier New", 22);
 	player1 = new CFont("Courier New", 22);
 	keyFont = new CFont("Courier New", 20);
 
@@ -38,6 +39,7 @@ CGUI::~CGUI()
 	delete enemy3;
 	delete enemy4;
 	delete enemy5;
+	delete enemy6;
 	delete player1;
 }
 
@@ -189,6 +191,16 @@ void CGUI::Draw()
 				enemy5->Print("+");
 			}
 		}
+		//
+		enemy6->SetRGBA(1.0f, 0.0f, 1.0f, 0.8f);
+		for (int x=0; x<MAX_ENEMIES; x++)
+		{
+			if (TB_DragonPtr[x] != NULL)
+			{
+				enemy5->SetPos3D(static_cast<GLfloat>(-1.*((TB_DragonPtr[x]->position.x/800.)+2.+0.03)), static_cast<GLfloat>((TB_DragonPtr[x]->position.z/800.)+1.-0.06), -5.f);
+				enemy5->Print("+");
+			}
+		}
 	}
 
 	if (TB_KeyEnable)
@@ -212,6 +224,10 @@ void CGUI::Draw()
 		keyFont->SetRGBA(1.00f, 0.50f, 0.0f, 0.8f);
 		keyFont->SetPos3D(-2.f, 1.95f, -5.f);
 		keyFont->Print("Num Droids Left: %d", TB_NumDroids);
+		//
+		keyFont->SetRGBA(1.00f, 0.0f, 1.0f, 0.8f);
+		keyFont->SetPos3D(-2.f, 1.75f, -5.f);
+		keyFont->Print("Num Dragons Left: %d", TB_NumDragons);
 	}
 	
 	glDisable(GL_BLEND);

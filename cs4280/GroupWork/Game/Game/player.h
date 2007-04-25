@@ -21,6 +21,7 @@
 #include "cow.h"
 #include "mech.h"
 #include "droid.h"
+#include "dragon.h"
 #include "rocket.h"
 #include "camera.h"
 #include "object.h"
@@ -72,6 +73,14 @@ void OnCollision(CObject *collisionObject)
 			}
 		}
 		else if (typeid(*collisionObject) == typeid(CDroidEnemy))  // Added by Lorin
+		{
+			if (camera)
+			{
+				if (camera->velocity.z > 0.0)
+					camera->velocity = CVector(0.0, 0.0, 0.0);
+			}
+		}
+		else if (typeid(*collisionObject) == typeid(CDragonEnemy))  // Added by Lorin
 		{
 			if (camera)
 			{

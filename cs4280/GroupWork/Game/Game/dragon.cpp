@@ -43,11 +43,9 @@ void CDragonEnemy::OnCollision(CObject *collisionObject)
 			if (position.z >= ((CTerrain*)collisionObject)->GetWidth()*((CTerrain*)collisionObject)->GetMul() - ((CTerrain*)collisionObject)->GetScanDepth())
 				position.z = ((CTerrain*)collisionObject)->GetWidth()*((CTerrain*)collisionObject)->GetMul() - ((CTerrain*)collisionObject)->GetScanDepth();
 		}
-		// Phase 15 - Comment out the following
-		// Phase 16 - Uncomment
 		else if (typeid(*collisionObject) == typeid(CRocket))
 		{
-			// kill the ogre
+			// kill the dragon
 			aiState = AI_DEAD;
 			velocity = CVector(0.0, 0.0, 0.0);
 		}
