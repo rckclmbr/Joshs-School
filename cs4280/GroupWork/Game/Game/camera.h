@@ -4,7 +4,7 @@
 #define WIN32_LEAN_AND_MEAN
 #define WIN32_EXTRA_LEAN
 
-/*
+ /*
 	CAMERA.H
 
 	The interface for CCamera - the camera system
