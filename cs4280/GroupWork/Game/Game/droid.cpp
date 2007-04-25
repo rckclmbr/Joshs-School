@@ -24,9 +24,10 @@ void CDroidEnemy::OnCollision(CObject *collisionObject)
 	{
 		// if this enemy collides with another enemy
 		if ((typeid(*collisionObject) == typeid(CSodEnemy)) ||
-			(typeid(*collisionObject) == typeid(COgroEnemy)))
+			(typeid(*collisionObject) == typeid(COgroEnemy)) ||
+			(typeid(*collisionObject) == typeid(CCowEnemy)))
 		{
-			aiState = AI_UNCARING;
+			aiState = AI_SCARED;
 		}
 
 		// if this enemy collides with the terrain (always)
@@ -79,7 +80,7 @@ void CDroidEnemy::OnPrepare()
 		  // -90 to 90 degrees
 		//	modelState = MODEL_RUN;
 		//	velocity = CVector(0.0, 0.0, 15.0);
-			modelState = MODEL_JUMP;
+			modelState = MODEL_RUN;
           break;
      case AI_UNCARING:
           direction = float(rand() % 360);
@@ -117,7 +118,7 @@ void CDroidEnemy::OnPrepare()
 void CDroidEnemy::Load()
 {
 	// load model
-	CMD2Model::Load("models\\droid\\tris.md2", "models\\droid\\pilot.pcx");
+	CMD2Model::Load("models\\Droid\\tris.md2", "models\\Droid\\pilot.pcx");
 }
 
 void CDroidEnemy::OnProcessAI()

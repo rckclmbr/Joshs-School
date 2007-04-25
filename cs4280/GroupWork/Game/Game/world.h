@@ -22,6 +22,7 @@
 #include "cow.h"
 #include "mech.h"
 #include "droid.h"
+#include "dragon.h"
 #include "entity.h"
 #include "md2.h"
 #include "object.h"
@@ -30,7 +31,8 @@
 #include "audiosystem.h"
 #include "tree.h"
 
-#define MAX_ENEMIES 5
+
+#define MAX_ENEMIES 4
 
 //Todd Brown's Code Modification
 struct TB_PositionInfo
@@ -45,6 +47,7 @@ __declspec(selectany) CSodEnemy * TB_SodPtr[MAX_ENEMIES];
 __declspec(selectany) CCowEnemy * TB_CowPtr[MAX_ENEMIES];
 __declspec(selectany) CMechEnemy * TB_MechPtr[MAX_ENEMIES];
 __declspec(selectany) CDroidEnemy * TB_DroidPtr[MAX_ENEMIES];
+__declspec(selectany) CDragonEnemy * TB_DragonPtr[MAX_ENEMIES];
 __declspec(selectany) bool TB_MapEnable = false;
 __declspec(selectany) bool TB_KeyEnable = false;
 __declspec(selectany) int TB_NumOgros;
@@ -52,13 +55,14 @@ __declspec(selectany) int TB_NumSods;
 __declspec(selectany) int TB_NumCows;
 __declspec(selectany) int TB_NumMechs;
 __declspec(selectany) int TB_NumDroids;
+__declspec(selectany) int TB_NumDragons;
 //End Todd Brown's Code Modification
 
 class CWorld
 {
 private:
 	// Begin - Phase 15
-	int numOgros, numSods, numCows, numMechs, numDroids;
+	int numOgros, numSods, numCows, numMechs, numDroids, numDragons;
 	// End - Phase 15
 	int screenWidth, screenHeight;
 	bool gameDone;
@@ -85,6 +89,7 @@ public:
 	CCowEnemy *cowEnemy;
 	CMechEnemy *mechEnemy;
 	CDroidEnemy *droidEnemy;
+	CDragonEnemy *dragonEnemy;
 	float timeStart;
 	float timeElapsed;
 
@@ -120,6 +125,7 @@ public:
 	int GetCows() { return numCows; }
 	int GetMechs() { return numMechs; }
 	int GetDroids() { return numDroids; }
+	int GetDragons() { return numDragons; }
 };
 
 

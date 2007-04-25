@@ -51,7 +51,7 @@ CWorld::CWorld(CCamera *c)
 	timeElapsed = 0.0;
 
 	gui->SetCurrentTime(timeStart);
-	gui->SetEnemiesLeft(numOgros + numSods + numCows + numMechs);
+	gui->SetEnemiesLeft(numOgros + numSods + numCows + numMechs + numDragons + numDroids);
 }
 
 void CWorld::Animate(float deltaTime)
@@ -85,6 +85,7 @@ void CWorld::Animate(float deltaTime)
 	//new mech enemy
 	const type_info &mech = typeid(CMechEnemy);
 	const type_info &droid = typeid(CDroidEnemy);
+	const type_info &dragon = typeid(CDragonEnemy);
 
 	numOgros = CountObjectTypes(ogro);           // count ogros
 	TB_NumOgros = numOgros;
@@ -96,8 +97,11 @@ void CWorld::Animate(float deltaTime)
 	TB_NumMechs = numMechs;
 	numDroids = CountObjectTypes(droid);		// count droid
 	TB_NumDroids = numDroids;
+
+	numDragons = CountObjectTypes(droid);		// count droid
+	TB_NumDragons = numDragons;
 	
-	gui->SetEnemiesLeft(numOgros + numSods + numCows + numMechs + numDroids);
+	gui->SetEnemiesLeft(numOgros + numSods + numCows + numMechs + numDroids + numDragons);
 	gui->SetCurrentTime(timeStart - timeElapsed);
 
 	if (!gameDone)
@@ -143,7 +147,7 @@ void CWorld::Draw(CCamera *camera)
 	if (gameDone)
 	{
 		FadeScreen();
-		if (numOgros + numSods + numCows + numMechs + numDroids <=0)
+		if (numOgros + numSods + numCows + numMechs + numDroids + numDragons <= 0)
 			gui->DrawWinner();
 		else
 			gui->DrawLoser();
@@ -155,7 +159,7 @@ void CWorld::OnPrepare()
 	glClearColor(terrain->fogColor[0], terrain->fogColor[1], terrain->fogColor[2], terrain->fogColor[3]);
 	terrain->Prepare();
 
-	if ((numOgros + numSods + numCows + numMechs +numDroids <= 0) || (timeElapsed >= timeStart))
+	if ((numOgros + numSods + numCows + numMechs + numDroids + numDragons<= 0) || (timeElapsed >= timeStart))
 		gameDone = true;	
 }
 
@@ -167,18 +171,15 @@ void CWorld::LoadWorld()
 	int enemyIdx = 0;
 	int rndInt = 0;
 
-	numOgros = 0;
-	numSods = 0;
-	numCows = 0;
-	numMechs = 10;
-
+	
 	srand((unsigned int)time(NULL));
 	
-	rndInt = (rand() % (MAX_ENEMIES-4)) + 4;	// random # from 4 to MAX
-	numOgros = numSods = numCows = numMechs = numDroids = rndInt;
+	rndInt = (rand() % (MAX_ENEMIES-3)) + 3;	// random # from 4 to MAX
+	numOgros = numSods = numCows = numMechs = numDroids = numDragons = rndInt;
+	
 
 	//generate cows
-	for (enemyIdx = 0; enemyIdx < numMechs; enemyIdx++)
+	for (enemyIdx = 0; enemyIdx < numCows; enemyIdx++)
 	{
 		cowEnemy = new CCowEnemy;
 		cowEnemy->AttachTo(terrain);
@@ -244,6 +245,19 @@ void CWorld::LoadWorld()
 		droidEnemy->position.z = (float)(rand() % (int)(terrain->GetWidth() * terrain->GetMul()));
 	}
 
+	for (enemyIdx = 0; enemyIdx < numDragons; enemyIdx++)
+	{
+		dragonEnemy = new CDragonEnemy;
+		dragonEnemy->AttachTo(terrain);
+		dragonEnemy->SetPlayer(player);
+		// Phase 19 - Uncomment
+		dragonEnemy->SetAudioSystem(audioSystem);
+		dragonEnemy->LoadAudio(audioSystem, "models\\Dragon\\death1.wav", false);
+		dragonEnemy->position.x = (float)(rand() % (int)(terrain->GetWidth() * terrain->GetMul()));
+		dragonEnemy->position.y = 0.0f;
+		dragonEnemy->position.z = (float)(rand() % (int)(terrain->GetWidth() * terrain->GetMul()));
+	}
+
 		
   // Phase 15 - End
 }
@@ -264,6 +278,7 @@ int CWorld::CountObjectTypes(const type_info &classID)
 	const type_info &cow = typeid(CCowEnemy);
 	const type_info &mech = typeid(CMechEnemy);
 	const type_info &droid = typeid(CDroidEnemy);
+	const type_info &dragon = typeid(CDragonEnemy);
 	int index = 0;
 	if (classID == ogro)
 	{
@@ -289,6 +304,11 @@ int CWorld::CountObjectTypes(const type_info &classID)
 	{
 		for (int x=0; x<MAX_ENEMIES; x++)
 			TB_DroidPtr[x]=NULL;
+	}
+	if (classID == dragon)
+	{
+		for (int x=0; x<MAX_ENEMIES; x++)
+			TB_DragonPtr[x]=NULL;
 	}
 	//End Todd Brown's Code Modifications
 
@@ -322,6 +342,11 @@ int CWorld::CountObjectTypes(const type_info &classID)
 				if (classID == droid)
 				{
 					TB_DroidPtr[index] = static_cast<CDroidEnemy *>(c2);
+					index ++;
+				}
+				if (classID == dragon)
+				{
+					TB_DragonPtr[index] = static_cast<CDragonEnemy *>(c2);
 					index ++;
 				}
 				count++;

@@ -191,6 +191,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\dragon.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\droid.cpp"
 				>
 			</File>
@@ -274,6 +278,10 @@
 			</File>
 			<File
 				RelativePath=".\cow.h"
+				>
+			</File>
+			<File
+				RelativePath=".\dragon.h"
 				>
 			</File>
 			<File
