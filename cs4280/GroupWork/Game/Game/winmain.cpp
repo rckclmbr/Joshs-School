@@ -181,7 +181,8 @@ int WINAPI WinMain (HINSTANCE hInstance, HINSTANCE hPrevious, LPSTR lpCmdString,
 
 	// Start - Phase 3
 	sprintf_s(str, "Welcome to Shooter Game!\n\nKeys:\n<Up Arrow> - Forward\n<Down Arrow> - Backward\n<Left Arrow> - Left Strafe\n<Right Arrow> - Right Strafe");
-	strcat_s(str, "\n\nOr you can use W,S,A,D.\n Numbers 1-5 change the terrain\nM toggles the minimap");
+	strcat_s(str, "\nOr you can use W,S,A,D.\n\nNumbers 1-5 change the terrain\n\nNumbers 6-8 change the background music");
+	strcat_s(str, "\n\nM toggles the minimap");
 	strcat_s(str, "\n\nLeft mouse button fires rockets.\nMove mouse to look around.\n\n");
 	strcat_s(str, "Numpad '+' - Increase mouse sensitivity\nNumpad '-' - Decrease mouse sensitivity\n\n");
 	strcat_s(str, "Created for WSU CS4280\nby Brian Rague.\nVersion 1.5 done by Group C");

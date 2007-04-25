@@ -163,6 +163,19 @@ void OGLWindow::OnKeyDown(int nVirtKey)
 			gameWorld->terrain->iTex = 4;
 			gameWorld->terrain->BuildTerrain(256, .5f);
 			break;
+		// buttons 1-8 change the background sound.  added by Lorin
+		case '6':
+			gameWorld->worldSound = gameWorld->audioSystem->Create("Ambient.wav", false);
+			gameWorld->audioSystem->Play(gameWorld->worldSound, DMUS_SEG_REPEAT_INFINITE, true);
+			break;
+		case '7':
+			gameWorld->worldSound = gameWorld->audioSystem->Create("Quake.wav", false);
+			gameWorld->audioSystem->Play(gameWorld->worldSound, DMUS_SEG_REPEAT_INFINITE, true);
+			break;
+		case '8':
+			gameWorld->worldSound = gameWorld->audioSystem->Create("rock.wav", false);
+			gameWorld->audioSystem->Play(gameWorld->worldSound, DMUS_SEG_REPEAT_INFINITE, true);
+			break;
 		case 87:
 			gameCamera->velocity += CVector(0,0,2.0);
 			break;
