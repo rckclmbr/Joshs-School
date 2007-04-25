@@ -141,6 +141,28 @@ void OGLWindow::OnKeyDown(int nVirtKey)
 		switch (nVirtKey)
 		{
 		case VK_UP:
+
+		// buttons 1 - 5 change the terrain texture.  added by Lorin
+		case '1':	// green terrain
+			gameWorld->terrain->iTex = 0;
+			gameWorld->terrain->BuildTerrain(256, .5f);
+			break;
+		case '2':	// dessert terrain
+			gameWorld->terrain->iTex = 1;
+			gameWorld->terrain->BuildTerrain(256, .5f);
+			break;
+		case '3':	// snow terrain
+			gameWorld->terrain->iTex = 2;
+			gameWorld->terrain->BuildTerrain(256, .5f);
+			break;
+		case '4':	// snow terrain
+			gameWorld->terrain->iTex = 3;
+			gameWorld->terrain->BuildTerrain(256, .5f);
+			break;
+		case '5':	// snow terrain
+			gameWorld->terrain->iTex = 4;
+			gameWorld->terrain->BuildTerrain(256, .5f);
+			break;
 		case 87:
 			gameCamera->velocity += CVector(0,0,2.0);
 			break;
@@ -158,7 +180,7 @@ void OGLWindow::OnKeyDown(int nVirtKey)
 			break;
 		case VK_ESCAPE:
 			PostQuitMessage(0);
-			if (MessageBox(NULL, "Do you want to quit?", "Quit?", MB_ICONQUESTION|MB_YESNO)==IDYES) 
+			if (MessageBox(NULL, "Do you want to quit?", "Quit?", MB_ICONQUESTION|MB_YESNO)==IDYES) // added by Lorin
 			{
 				exit(0);  //kill game
 			}
@@ -188,7 +210,7 @@ void OGLWindow::OnKeyDown(int nVirtKey)
 	{
 		if (nVirtKey == VK_ESCAPE)
 		{
-			if (MessageBox(NULL, "Do you want to quit?", "Quit?", MB_ICONQUESTION|MB_YESNO)==IDYES) 
+			if (MessageBox(NULL, "Do you want to quit?", "Quit?", MB_ICONQUESTION|MB_YESNO)==IDYES) // added by Lorin
 			{
 				exit(0);  //kill game
 			}
@@ -201,8 +223,8 @@ void OGLWindow::OnMouseDownL(int x, int y)
 	
 	if (!gameWorld->IsGameDone())
 	{	
-		gameWorld->player->audioSys->Play(gameWorld->player->rocketSound, 0, false);
-		gameWorld->camera->pitch += 10;
+		gameWorld->player->audioSys->Play(gameWorld->player->rocketSound, 0, false);	// play rocket launcher fire sound.  Added by Lorin
+		gameWorld->camera->pitch += 10;		//simulate recoil.  added by Lorin
 		gameWorld->player->FireWeapon();		
 	}
 }

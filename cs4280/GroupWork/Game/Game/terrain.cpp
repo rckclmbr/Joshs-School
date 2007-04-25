@@ -11,7 +11,7 @@ CTerrain::CTerrain()
 	fogColor[1] = 0.9f;
 	fogColor[2] = 1.0f;
 	fogColor[3] = 1.0f;
-
+	iTex = 0;
 	// CObject attributes
 	position = CVector(0,0,0);
 	velocity = CVector(0,0,0);
@@ -32,7 +32,7 @@ CTerrain::CTerrain(int w, float rFactor)
 	fogColor[1] = 0.9f;
 	fogColor[2] = 1.0f;
 	fogColor[3] = 1.0f;
-
+	iTex = 0;
 	heightMap = NULL;
 
 	// CObject attributes
@@ -50,30 +50,34 @@ void CTerrain::BuildTerrain(int w, float rFactor)
 	width = w;
 	heightMap = new float[width*width];
 	MakeTerrainPlasma(heightMap, width, rFactor);
-	// Phase 13 - Uncomment the following
-	// load texture
-	terrainTex[0].LoadTexture("ground.tga");
-	glGenTextures(1, &terrainTex[0].texID);
-	glBindTexture(GL_TEXTURE_2D, terrainTex[0].texID);
+
+	// load texture array
+	terrainTex[0].LoadTexture(T_GREEN);		//load orignal texture
+	terrainTex[1].LoadTexture(T_DESERT);	//load sand texture
+	terrainTex[2].LoadTexture(T_SNOW);		//load snow texture
+	terrainTex[3].LoadTexture(T_ALIEN1);	//load alien 1 texture
+	terrainTex[4].LoadTexture(T_ALIEN2);	//load alien 2 texture
+	glGenTextures(1, &terrainTex[iTex].texID);
+	glBindTexture(GL_TEXTURE_2D, terrainTex[iTex].texID);
 
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);	//or GL_CLAMP
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);	//or GL_CLAMP
 
-	switch (terrainTex[0].textureType)
+	switch (terrainTex[iTex].textureType)
 	{
 	case BMP:
-		gluBuild2DMipmaps(GL_TEXTURE_2D, GL_RGB, terrainTex[0].width, terrainTex[0].height,
-					GL_RGB, GL_UNSIGNED_BYTE, terrainTex[0].data);
+		gluBuild2DMipmaps(GL_TEXTURE_2D, GL_RGB, terrainTex[iTex].width, terrainTex[iTex].height,
+					GL_RGB, GL_UNSIGNED_BYTE, terrainTex[iTex].data);
 		break;
 	case PCX:
-		gluBuild2DMipmaps(GL_TEXTURE_2D, GL_RGBA, terrainTex[0].width, terrainTex[0].height,
-					GL_RGBA, GL_UNSIGNED_BYTE, terrainTex[0].data);
+		gluBuild2DMipmaps(GL_TEXTURE_2D, GL_RGBA, terrainTex[iTex].width, terrainTex[iTex].height,
+					GL_RGBA, GL_UNSIGNED_BYTE, terrainTex[iTex].data);
 		break;
 	case TGA:
-		gluBuild2DMipmaps(GL_TEXTURE_2D, GL_RGB, terrainTex[0].width, terrainTex[0].height,
-					GL_RGB, GL_UNSIGNED_BYTE, terrainTex[0].data);
+		gluBuild2DMipmaps(GL_TEXTURE_2D, GL_RGB, terrainTex[iTex].width, terrainTex[iTex].height,
+					GL_RGB, GL_UNSIGNED_BYTE, terrainTex[iTex].data);
 		break;
 	default:
 		break;
@@ -109,7 +113,7 @@ void CTerrain::OnDraw(CCamera *camera)
 
 	// Phase 13 - Uncomment
 	glEnable(GL_TEXTURE_2D);
-	glBindTexture(GL_TEXTURE_2D, terrainTex[0].texID);
+	glBindTexture(GL_TEXTURE_2D, terrainTex[iTex].texID);
 	glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 // Phase 13 - Uncomment calls to glTexCoord2f

@@ -22,7 +22,11 @@
 	Random terrain generation Copyright (C) Jason Shankel, 2000
 
 */
-
+#define T_DESERT "sand.tga"				// added by Lorin
+#define T_GREEN	"ground.tga"			// added by Lorin
+#define T_SNOW "snowfloor.tga"			// added by Lorin
+#define T_ALIEN1 "alienterrain1.tga"	// added by Lorin
+#define T_ALIEN2 "alienterrain2.tga"	// added by Lorin
 #include <windows.h>
 #include <gl/gl.h>
 #include <gl/glu.h>
@@ -62,7 +66,7 @@ public:
 	// Phase 13 - Uncomment the following
 	CTexture terrainTex[5];	// for multiple textures on the terrain
 	float fogColor[4];		// color of the fog/sky
-
+	int iTex;				// added by Lorin to change the terrain index
 	CTerrain();
 	CTerrain(int width, float rFactor);
 	~CTerrain() { delete [] heightMap; }

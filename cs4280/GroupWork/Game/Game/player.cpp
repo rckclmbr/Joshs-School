@@ -17,6 +17,8 @@ void CPlayer::FireWeapon()
 	newRocket->AttachTo(terrain);
 }
 
+
+//added by Lorin to load the rocket launcher shooting sound effect
 void CPlayer::LoadAudio(CAudioSystem *audioSystem, char *filename, bool is3DSound)
 {
 	if (rocketSound != NULL)
