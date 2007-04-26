@@ -19,6 +19,7 @@ protected:
 	void OnProcessAI();
 	void OnCollision(CObject *collisionObject);
 	void OnPrepare();
+	int hitpoints;
 
 public:
 	CAudioSystem *audioSys;

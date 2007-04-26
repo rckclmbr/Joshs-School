@@ -48,8 +48,14 @@ void CCowEnemy::OnCollision(CObject *collisionObject)
 		else if (typeid(*collisionObject) == typeid(CRocket))
 		{
 			// kill the ogre
-			aiState = AI_DEAD;
-			velocity = CVector(0.0, 0.0, 0.0);
+			hitpoints -= 5;
+			if(hitpoints < 0)
+			{
+				aiState = AI_DEAD;
+				velocity = CVector(0.0, 0.0, 0.0);
+			}
+			//else
+//				PlaySound();
 		}
 	}
 }
@@ -57,7 +63,7 @@ void CCowEnemy::OnCollision(CObject *collisionObject)
 void CCowEnemy::OnPrepare() 
 {
      float dirToPlayer;  // the angle of the enemy-player vector
-
+	
      CVector diff;       // the vector from the enemy to the player
      diff.x = position.x - player->position.x;
      diff.z = position.z - player->position.z;
@@ -119,6 +125,7 @@ void CCowEnemy::Load()
 {
 	// load model
 	CMD2Model::Load("models\\cow\\tris.md2", "models\\cow\\moobull.pcx");
+	hitpoints = 250;
 
 }
 
