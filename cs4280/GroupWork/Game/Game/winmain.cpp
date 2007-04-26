@@ -1,3 +1,50 @@
+//						Learning Team C
+//						Members:
+//							Lorin Kartchner
+//							Todd William Brown
+//							Royce Judd
+//							Josh Braegger
+//							Jeremiah Stephenson
+//                      CS 4280 – 7:30 pm
+//                      Section 4 Learning Team Assignment
+//                      Mr. Rague
+//                      Due: 03/28/06
+//                      Version: 1.0
+// -----------------------------------------------------------------
+// Creates a scene and allows for a camera to move through it.
+// A grid can be turned on and off to help notice movement
+// -----------------------------------------------------------------
+
+// -----------------------------------------------------------------
+//   Change Control Section
+// -----------------------------------------------------------------
+
+//		Team Member: Lorin Kartchner
+//		Version 1.0
+//		Terrain texture changes, background music changes, rocket recoil, rocket sfx,
+//			fixed escape/quit issue, fixed collision issues
+//
+//		Team Member: Todd William Brown
+//		Version 1.0
+//		Radar map, enemy list
+//
+//		Team Member: Royce Judd
+//		Version 1.0
+//		Enemy models, "wasd" keys, "plasma" effect on explosion, added sounds
+//
+//		Team Member: Josh Braegger
+//		Version 1.0
+//		Frames per second, repaired audio importing issues, a few minor bug fixes
+//
+//		Team Member: Jeremiah Stephenson
+//		Version 1.0
+//		Enemy models
+
+
+
+/////////////////////////////////////////////////////////////////////////////
+
+
 /*****************************************************************************************************************
 **
 **	OpenGL Game Development
