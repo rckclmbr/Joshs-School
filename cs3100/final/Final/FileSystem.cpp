@@ -43,7 +43,7 @@ void FileSystem::list()
 		if(! strcmp(current[i].name,"")) continue;
 
 		char df;
-		if(current[i].modes & FS_FILE)
+		if(! (current[i].modes & FS_DIR)) // It's a directory
 			df = 'f';
 		else
 			df = 'd';
@@ -71,6 +71,7 @@ void FileSystem::remove(char* name)
 
 	int	index = getByName(current, name);
 
+
 	if (index == NIL)
 		return;
 
@@ -78,8 +79,13 @@ void FileSystem::remove(char* name)
 
 	if (!(current[index].modes & FS_DIR))		// it's a file
 	{
-		// unlink FAT and return all blocks to free list
-		// ********************************* must complete *************************************
+		current[index].link = NIL;
+		while(block != 0) {
+			int temp = FAT[block];
+			FAT[block] = 0;
+			block = temp;
+		}
+
 	}
 	else						// it's a directory
 	{
@@ -89,6 +95,7 @@ void FileSystem::remove(char* name)
 		dir_ent temp_dir[DIRSIZE];
 
 		readBlock(block, (char *)temp_dir);
+
 		if (temp_dir[0].size != 1)		// can't delete a non-empty directory
 			return;
 
@@ -100,6 +107,7 @@ void FileSystem::remove(char* name)
 	// remove entry from current directory
 	current[index].name[0] = '\0';
 	writeBlock(dir_block, (char*)current);
+
 }
 
 
@@ -254,27 +262,36 @@ int FileSystem::create(char* name)
 
 int FileSystem::open(char* name, int mode)
 {
-	cout << "Opening file " << name << endl;
-	int index = getByName(current, name);
+	int dir = getByName(current, name);
 
-	if (index == NIL || (current[index].modes & FS_DIR))		// it's a directory
+	if (dir == NIL)		// it's a directory
 		return NIL;
-
-	int block = current[index].link;	// List is the block the first data is
 
 	// Check to see if any slots are open
 	for(int i = 0; i < MAXOPEN; i++)
 	{
-		if(open_files[i].block <= 0) {	// If it's available for us to grab
-			open_files[i].block = block;
-			open_files[i].bufp = (mode == READ) ? block : 0;
-			open_files[i].buffer = (char*)malloc(sizeof(char) * BLOCK);
-			memset(open_files[i].buffer, 0, BLOCK);
-			open_files[i].pointer = NIL;
-			open_files[i].dir = &current[index];
-			return i;
+		dir_ent* dp = open_files[i].dir;
+		if(dp && dp->name == name)
+			return NIL;	// File already open
+	}
+
+	for(int index = 0; index < MAXOPEN; index++) {
+		if(!open_files[index].dir) {	// If it's available for us to grab
+			open_files[index].dir = &current[dir];
+			open_files[index].buffer = (char*)malloc(sizeof(char) * BLOCK);
+			memset(open_files[index].buffer, 0, BLOCK);
+			open_files[index].block = current[dir].link;
+			open_files[index].pointer = 0;
+
+			if(mode == READ)
+				open_files[index].bufp = BLOCK;
+			else
+				open_files[index].bufp = 0;
+			
+			return index;
 		}
 	}
+
 	return NIL;// number of open files exceeded
 		// must complete
 }
@@ -286,16 +303,12 @@ int FileSystem::open(char* name, int mode)
 
 void FileSystem::close(int fd)
 {
-	cout << "Closing file " << open_files[fd].dir->name << endl;
+	if(fd == NIL) return; // Shouldn't happen anyways, but just in case
+
 	writeBlock(dir_block, (char*)current);
 
-	if(fd == NIL) return;
-	open_files[fd].bufp = 0;
-	open_files[fd].pointer = NIL;
-	open_files[fd].block = NIL;
 	delete open_files[fd].buffer;
-	delete open_files[fd].dir;
-	// must complete
+	open_files[fd].dir = NULL;
 }
 
 
@@ -306,25 +319,30 @@ void FileSystem::close(int fd)
 
 int FileSystem::read(int fd, char* abuffer, int count)
 {
-	if(open_files[fd].pointer == 0) return 0;
-	if(open_files[fd].pointer == NIL) open_files[fd].pointer = open_files[fd].dir->link;
+	int abufp = 0;
+	int block;
 
-	if(fd == NIL) return NIL;
-	if(open_files[fd].block == NIL) return NIL;			// File descriptor doesn't exist
-	if(open_files[fd].bufp == 0 || open_files[fd].bufp == NIL) 
-		return NIL;	 // File was not opened for reading
-
-	//readBlock(open_files[fd].dir->link, (char*)abuffer);
-	readBlock(open_files[fd].pointer, (char*)abuffer);
-
-	cout << "Count: " << count << endl;
-	cout << "abuffer: " << strlen(abuffer) << endl;
-
-	if(strlen(abuffer) != count) // If we've reached teh end
-		open_files[fd].pointer = 0;
-	else
-		open_files[fd].pointer += 1;
-	return strlen(abuffer);
+	for(;;) {
+		if(abufp < count && open_files[fd].pointer < open_files[fd].dir->size) {
+			block = open_files[fd].block;
+			open_files[fd].block = FAT[block];
+			if(open_files[fd].bufp == BLOCK) {	// Buffer is empty
+				if(block == NIL)
+					return abufp;	// No more blocks in file
+				readBlock(block, open_files[fd].buffer);
+			}
+			int avail = BLOCK - abufp;
+			int trans = min(avail, count);
+			trans = min(trans, open_files[fd].dir->size - open_files[fd].pointer);
+			memcpy(abuffer + abufp, open_files[fd].buffer, trans);
+			open_files[fd].bufp = 0;
+			abufp += trans;
+			open_files[fd].pointer += trans;
+			open_files[fd].bufp += trans;
+		} else {
+			return abufp;
+		}
+	}
 }
 
 
@@ -377,11 +395,11 @@ void FileSystem::flush(int fd)
 	else
 		FAT[open_files[fd].block] = block;	// block in FAT
 
-	FAT[block] = NIL;								// Reset our 
+	FAT[block] = NIL;								// EOF
 	open_files[fd].bufp = 0;						// Reset our buffer pointer to 0
 	open_files[fd].block = block;					// Set our block to the block we just wrote
 	memset(open_files[fd].buffer, 0, BLOCK);		// Reset the buffer to all nulls
-	open_files[fd].dir->size += open_files[fd].bufp;	// Update the dir size
+	open_files[fd].dir->size += open_files[fd].bufp;	// Update the size
 
 }
 
@@ -428,7 +446,6 @@ int FileSystem::getByName(dir_ent dir[DIRSIZE], char* name)
 			return index;
 	}
 	return NIL;
-	// must complete
 }
 
 
@@ -436,7 +453,6 @@ int FileSystem::getByName(dir_ent dir[DIRSIZE], char* name)
 // into the application provided buffer.
 void FileSystem::readBlock(int block, char* buffer)
 {
-	cout << "Reading block: " << block << endl;
 	file.seekp(block * BLOCK);
 	file.read(buffer, BLOCK);
 	buffer[BLOCK] = '\0';
@@ -449,7 +465,6 @@ void FileSystem::readBlock(int block, char* buffer)
 
 void FileSystem::writeBlock(int block, char* buffer)
 {
-	cout << "Block written to: " << block << endl;
 	file.seekg(block * BLOCK);
 	file.write(buffer, BLOCK);
 }
@@ -461,7 +476,7 @@ void FileSystem::writeBlock(int block, char* buffer)
 void FileSystem::loadFAT()
 {
 	// move to the start of the file for reading
-	file.seekp(FATBLK * BLOCK);
+	file.seekg(FATBLK * BLOCK);
 	file.read((char*)FAT, 4 * BLOCK);
 	
 }
@@ -483,14 +498,11 @@ void FileSystem::saveFAT()
 
 int FileSystem::allocate()
 {
-	cout << "Starting to allocate" << endl;
-	// 0 is free space, -1 is in use but not linked to anything yet.
-	// must complete
-	char temp[BLOCK];
 	for(int i = DATABLK; i < NBLOCKS; i++) {
-		readBlock(i, (char*)temp);
-		if(temp[0] == '\0') return i;
+		if(FAT[i] == 0)
+			return i;
 	}
+
 	cout << "Error in allocate!" << endl;
 	return NIL; // Memory was full?
 }

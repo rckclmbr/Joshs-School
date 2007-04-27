@@ -207,6 +207,13 @@ void Shell::view(char* file)
 
 	char	buffer[BLOCK + 1];
 	int	fd = fs.open(file, READ);
+	
+	if(fd == NIL)
+	{
+		cerr << file << " not found\n";
+		return;
+	}
+	
 	int	count;
 
 	while ((count = fs.read(fd, buffer, BLOCK)) > 0)
