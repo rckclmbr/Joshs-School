@@ -40,7 +40,7 @@ void FileSystem::list()
 {
 	// must complete
 	for(int i = 0; i < DIRSIZE; i++) {
-		if(! strcmp(current[i].name,"")) continue;
+		if(strcmp(current[i].name,"") == 0) continue;
 
 		char df;
 		if(! (current[i].modes & FS_DIR)) // It's a directory
@@ -48,7 +48,7 @@ void FileSystem::list()
 		else
 			df = 'd';
 
-		cout << df << "\t" << (char*)current[i].name << "\t\t" << current[i].size << endl;
+		cout << df << "\t" << current[i].name << "\t\t" << current[i].size << endl;
 
 	}
 }
@@ -72,15 +72,17 @@ void FileSystem::remove(char* name)
 	int	index = getByName(current, name);
 
 
-	if (index == NIL)
+	if (index == NIL) {
+		cerr << "No file by that name" << endl;
 		return;
+	}
 
 	int block = current[index].link;
 
 	if (!(current[index].modes & FS_DIR))		// it's a file
 	{
 		current[index].link = NIL;
-		while(block != 0) {
+		while(block != -1) {
 			int temp = FAT[block];
 			FAT[block] = 0;
 			block = temp;
@@ -89,15 +91,17 @@ void FileSystem::remove(char* name)
 	}
 	else						// it's a directory
 	{
-		if (!strcmp(name, "/"))			// can't remove current directory
+		if ( strcmp(name, "/") == 0)			// can't remove root directory
 			return;
 
 		dir_ent temp_dir[DIRSIZE];
 
 		readBlock(block, (char *)temp_dir);
 
-		if (temp_dir[0].size != 1)		// can't delete a non-empty directory
+		if (temp_dir[0].size != 1) {		// can't delete a non-empty directory
+			cerr << "Cannot delete:  directory is not empty" << endl;
 			return;
+		}
 
 		// remove ".." name from deleted directory and return block to free list (FAT)
 		FAT[block] = 0;
@@ -107,7 +111,6 @@ void FileSystem::remove(char* name)
 	// remove entry from current directory
 	current[index].name[0] = '\0';
 	writeBlock(dir_block, (char*)current);
-
 }
 
 
@@ -119,9 +122,15 @@ void FileSystem::remove(char* name)
 
 void FileSystem::rename(char* old_name, char* new_name)
 {
-	if(strlen(old_name) == 0 || strlen(new_name) == 0)
+	if(strlen(old_name) == 0 || strlen(new_name) == 0) {
 		cerr << "USAGE: rename <old_name> <new_name>\n";
-	// must complete
+		return;
+	}
+
+	int index = getByName(current, old_name);
+	strcpy(current[index].name, new_name);
+
+	writeBlock(dir_block, (char*)current);
 }
 
 
@@ -176,7 +185,7 @@ void FileSystem::mkdir(char* dir)
 
 
 	// save both directories to the "disk drive"
-
+	FAT[block] = -1;
 	writeBlock(dir_block, (char*)current);
 	writeBlock(block, (char*)new_dir);
 }
@@ -453,9 +462,9 @@ int FileSystem::getByName(dir_ent dir[DIRSIZE], char* name)
 // into the application provided buffer.
 void FileSystem::readBlock(int block, char* buffer)
 {
-	file.seekp(block * BLOCK);
+	file.seekg(block * BLOCK);
 	file.read(buffer, BLOCK);
-	buffer[BLOCK] = '\0';
+	//buffer[BLOCK] = '\0';
 }
 
 
@@ -465,7 +474,7 @@ void FileSystem::readBlock(int block, char* buffer)
 
 void FileSystem::writeBlock(int block, char* buffer)
 {
-	file.seekg(block * BLOCK);
+	file.seekp(block * BLOCK);
 	file.write(buffer, BLOCK);
 }
 
@@ -503,7 +512,7 @@ int FileSystem::allocate()
 			return i;
 	}
 
-	cout << "Error in allocate!" << endl;
+	cerr << "Error in allocate!" << endl;
 	return NIL; // Memory was full?
 }
 
