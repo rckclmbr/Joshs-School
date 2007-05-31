@@ -1,0 +1,66 @@
+CS2650 – PC Architecture
+Interrupt Vector Decoding Worksheet
+
+ 
+
+ 
+
+NAME _______________________________________
+ 
+
+ 
+
+Practice IVT decoding by completing the exercises below using the following dump of the beginning of an Interrupt Vector Table
+
+
+
+Copy and paste this into an Email and send it to rhilton@weber.edu
+
+ 
+
+ 
+
+0000:0000  68 10 A7 00 8B 01 70 00-16 00 9D 03 8B 01 70 00   h.....p.......p.
+
+0000:0010  8B 01 70 00 B9 06 10 02-40 07 10 02 FF 03 10 02   ..p.....@.......
+
+0000:0020  46 07 10 02 0A 04 10 02-3A 00 9D 03 54 00 9D 03   F.......:...T...
+
+0000:0030  6E 00 9D 03 88 00 9D 03-A2 00 9D 03 FF 03 10 02   n...............
+
+0000:0040  A9 08 10 02 99 09 10 02-9F 09 10 02 5D 04 10 02   ............]...
+
+0000:0050  A5 09 10 02 0D 02 DE 02-B8 09 10 02 8B 05 10 02   ................
+
+0000:0060  02 0C 10 02 08 0C 10 02-13 0C 10 02 AD 06 10 02   ................
+
+0000:0070  AD 06 10 02 A4 F0 00 F0-37 05 10 02 37 23 00 C0   ........7...7#..
+
+INTERRUPT                     SEGMENT: OFFSET                  20-bit
+
+03H                            06B9:0070                        06C00
+   0CH
+   06B9:0070
+   6B90 + 0070 = 06C00
+  
+   
+09H
+   
+  
+ 
+0FH
+  
+  
+ 
+13H
+  
+  
+ 
+1AH
+  
+  
+ 
+
+
+
+ 
