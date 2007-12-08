@@ -1,0 +1,70 @@
+Breakpoint 1 at 0x80485d9: file debug3.c, line 38.
+Starting program: /home/user2/unix/lab10/debug3 
+
+Breakpoint 1, main () at debug3.c:38
+38	        sort(array,5); 
+1	
+2	#include <stdio.h> 
+3	typedef struct {
+4	    char data[4096];
+5	    int key;
+6	} item;
+7	item array[] = {
+8	    {"bill", 3},
+9	    {"neil", 4},
+10	    {"john", 2},
+11	    {"rick", 5},
+12	    {"alex", 1},
+13	};
+14	
+15	void sort(a,n)
+16	item *a; 
+17	{ 
+18	    int i = 0, j = 0;
+19	    int s = 1;
+20	
+21	    for(; i < n && s != 0; i++) {
+22	            s = 0;
+23	            for(j = 0; j < n; j++) {
+24	                    if(a[j].key > a[j+1].key) {
+25	                            item t = a[j];
+26	                            a[j] = a[j+1];
+27	                            a[j+1] = t;
+28	                            s++;
+29	                    }
+30	            }
+Breakpoint 2 at 0x8048416: file debug3.c, line 17.
+Continuing.
+
+Breakpoint 2, sort (a=0x8049860, n=5) at debug3.c:17
+17	{ 
+#0  sort (a=0x8049860, n=5) at debug3.c:17
+#1  0x080485ed in main () at debug3.c:38
+Num Type           Disp Enb Address    What
+1   breakpoint     keep y   0x080485d9 in main at debug3.c:38
+	breakpoint already hit 1 time
+2   breakpoint     keep y   0x08048416 in sort at debug3.c:17
+	breakpoint already hit 1 time
+Breakpoint 3 at 0x804843f: file debug3.c, line 21.
+$1 = 5
+Num Type           Disp Enb Address    What
+2   breakpoint     keep y   0x08048416 in sort at debug3.c:17
+	breakpoint already hit 1 time
+3   breakpoint     keep y   0x0804843f in sort at debug3.c:21
+Type commands for when breakpoint 3 is hit, one per line.
+End with a line saying just "end".
+Continuing.
+
+Breakpoint 3, sort (a=0x8049860, n=5) at debug3.c:21
+21	    for(; i < n && s != 0; i++) {
+$2 = {{data = "bill", '\0' <repeats 4091 times>, key = 3}, {data = "neil", '\0' <repeats 4091 times>, key = 4}, {
+    data = "john", '\0' <repeats 4091 times>, key = 2}, {data = "rick", '\0' <repeats 4091 times>, key = 5}, {
+    data = "alex", '\0' <repeats 4091 times>, key = 1}}
+$3 = 0
+
+Program received signal SIGSEGV, Segmentation fault.
+0x0804849e in sort (a=0x8049860, n=5) at debug3.c:24
+24	                    if(a[j].key > a[j+1].key) {
+#0  0x0804849e in sort (a=0x8049860, n=5) at debug3.c:24
+#1  0x080485ed in main () at debug3.c:38
+The program is running.  Exit anyway? (y or n) 

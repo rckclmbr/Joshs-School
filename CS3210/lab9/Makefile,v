@@ -1,0 +1,57 @@
+head	1.2;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.2
+date	2007.10.11.02.45.45;	author user2;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2007.10.11.02.43.07;	author user2;	state Exp;
+branches;
+next	;
+
+
+desc
+@Makefile for Lab 9
+@
+
+
+1.2
+log
+@added clean rule
+@
+text
+@# Josh Braegger
+# Lab 9
+# User 2
+
+CFLAGS = -Wall -ggdb
+CC = gcc
+
+all : addr
+
+addr: addr.o screen.o db.o
+
+addr.o : addr.c addr.h
+
+clean :
+	-rm db.o
+	-rm addr.o
+	-rm screen.o
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d15 3
+a17 1
+	@@rm *.o;
+@
