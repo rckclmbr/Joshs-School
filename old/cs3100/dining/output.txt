@@ -1,0 +1,76 @@
+# Joshua Braegger
+# CS3100
+# Dining Philosophers -- output
+
+
+# Attempt 1
+
+Time each philosopher waited:
+Philosopher 0 wait time: 42.41 seconds
+Philosopher 1 wait time: 37.11 seconds
+Philosopher 2 wait time: 43.59 seconds
+Philosopher 3 wait time: 41.99 seconds
+Philosopher 4 wait time: 48.65 seconds
+
+Total time: 61.02 seconds
+
+Number of times eaten: 
+Philosopher 0 ate 15 times
+Philosopher 1 ate 15 times
+Philosopher 2 ate 18 times
+Philosopher 3 ate 15 times
+Philosopher 4 ate 13 times
+
+# Attempt 2
+
+Time each philosopher waited:
+Philosopher 0 wait time: 45.76 seconds
+Philosopher 1 wait time: 48.55 seconds
+Philosopher 2 wait time: 42.22 seconds
+Philosopher 3 wait time: 44.17 seconds
+Philosopher 4 wait time: 45.13 seconds
+
+Total time: 61.53 seconds
+
+Number of times eaten: 
+Philosopher 0 ate 15 times
+Philosopher 1 ate 16 times
+Philosopher 2 ate 17 times
+Philosopher 3 ate 13 times
+Philosopher 4 ate 14 times
+
+# Attempt 3
+
+Time each philosopher waited:
+Philosopher 0 wait time: 41.75 seconds
+Philosopher 1 wait time: 41.85 seconds
+Philosopher 2 wait time: 42.45 seconds
+Philosopher 3 wait time: 45.40 seconds
+Philosopher 4 wait time: 42.40 seconds
+
+Total time: 62.56 seconds
+
+Number of times eaten: 
+Philosopher 0 ate 13 times
+Philosopher 1 ate 16 times
+Philosopher 2 ate 15 times
+Philosopher 3 ate 14 times
+Philosopher 4 ate 15 times
+
+# Attempt 4
+
+Time each philosopher waited:
+Philosopher 0 wait time: 42.20 seconds
+Philosopher 1 wait time: 43.60 seconds
+Philosopher 2 wait time: 45.28 seconds
+Philosopher 3 wait time: 41.69 seconds
+Philosopher 4 wait time: 42.86 seconds
+
+Total time: 61.09 seconds
+
+Number of times eaten: 
+Philosopher 0 ate 19 times
+Philosopher 1 ate 14 times
+Philosopher 2 ate 15 times
+Philosopher 3 ate 12 times
+Philosopher 4 ate 15 times

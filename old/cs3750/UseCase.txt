@@ -1,0 +1,28 @@
+Actors
+
+Students  +
+Professor -
+Billing System *
+Registrar	% (student only interacts with this)
+
+Use Cases
+
+Add Course		+
+Drop Course		+
+Create Course
+Cancel Course
+View Course		+
+
+Search			+
+Send billing information
+Request catalog
+
+
+
+Register for course
+select course to teach
+Req course to teach
+Maintain Course
+Maintain Prof
+Maintain Student Info
+Create Course Cat
