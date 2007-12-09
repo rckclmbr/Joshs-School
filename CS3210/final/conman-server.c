@@ -1,16 +1,4 @@
-#include <sys/types.h>
-#include <sys/socket.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <sys/un.h>
-#include <arpa/inet.h>
-#include <unistd.h>
-#include <signal.h>
-#include <string.h>
-#include <sys/stat.h>
-#include <dirent.h>
-#include <fcntl.h>        // For O_WRONLY
-#include <sys/sendfile.h> // For sendfile
+#include <dirent.h>       // For dealing with directories
 #include "shared.h"
 
 #define TEMP_DIR "temp"
@@ -21,6 +9,12 @@ int server_sockfd, client_sockfd;
 
 int make_socket(unsigned short int);
 
+void usage() {
+	printf("Usage:\n");
+	printf("conman-server <directive>\n");
+	printf("  \"start\" is currently the only <directive> implemented\n");
+}
+
 void int_handler(int sig) {
 	printf("Interrupt caught\n");
 	close(client_sockfd);
@@ -29,19 +23,29 @@ void int_handler(int sig) {
 }
 
 int main (int argc, char** argv) {
-	int client_len;   // Used for accepting a connection from client
-	int i;            // General variable used for storing read/write results
+	int client_len;                    // Used for accepting a connection from client
+	int i;                             // General variable used for storing read/write results
 	struct sockaddr_in client_address; // Stores client information
-	char   validator_buff[4];  // Used for validation string
+	char   validator_buff[4];          // Used for validation string
+
+	if (argc < 2) {
+		usage();
+		return 1;
+	}
+
+	if (strcmp(argv[1], "start") != 0) {
+		usage();
+		return 1;
+	}
 
 	signal(SIGCHLD, SIG_IGN); 
 
 	server_sockfd = make_socket(PORT);
 
+	// Set a bunch of sockopts to handle connections more gracefully
 	set_socket(server_sockfd);
 
-// Create connection, wait for clients
-
+	// Create connection, wait for clients
 	listen(server_sockfd, 5);
 	while(1) {
 		printf("Waiting for new connection\n");
@@ -65,6 +69,7 @@ int main (int argc, char** argv) {
 		}
 		validator_buff[i] = '\0';
 
+		// Terminate connection if it's not a client or listener
 		if(!strcmp(validator_buff, "clnt") && !strcmp(validator_buff, "lsnr")) {
 			printf("Invalid packet header\n");
 			close(client_sockfd);
@@ -73,7 +78,7 @@ int main (int argc, char** argv) {
 
 		// Handles client connections
 		if(strcmp(validator_buff, "clnt") == 0) {
-			// Clients just send a file
+			// Clients just send a file, so we receive it
 			if(!get_file(client_sockfd, TEMP_DIR)) {
 				perror("Error getting file!");
 				close(client_sockfd);
@@ -94,7 +99,7 @@ int main (int argc, char** argv) {
 				continue;
 			}
 
-			// No files to send, tell the user
+			// If there aren't any files to send, tell the user
 			if ((dit = readdir(dip)) == NULL) {
 				write(client_sockfd, "0", sizeof("0"));
 			}
@@ -117,8 +122,8 @@ int main (int argc, char** argv) {
 
 					// Remove file after it's sent
 					unlink(filename);
+
 				} while ((dit = readdir(dip)) != NULL);
-				// Delete the file after sent
 			}
 
 			// Close directory
@@ -135,7 +140,6 @@ int main (int argc, char** argv) {
 	return 0;
 }
 
-// Used http://www.cs.utah.edu/dept/old/texinfo/glibc-manual-0.02/library_15.html#SEC238
 // Creates and binds to a socket
 int make_socket (unsigned short int port) {
 	int sock;

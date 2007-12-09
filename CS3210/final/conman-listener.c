@@ -1,22 +1,14 @@
-#include <sys/types.h>
-#include <sys/socket.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <sys/un.h>
-#include <sys/sendfile.h>
-#include <arpa/inet.h>
-#include <unistd.h>
-#include <signal.h>
-#include <sys/stat.h> // For stat()
-#include <fcntl.h>    // For open()
-#include <string.h>
 #include "shared.h"
 
 int client_sockfd;
 
 void usage() {
+	printf("\n");
 	printf("Usage:\n");
-	printf("conman <filename>\n");
+	printf("conman-listener <directive> --server=<hostname> --save_to=<dir>\n");
+	printf("  \"start\" is currently the only <directive> implemented\n");
+	printf("  <hostname> is the server to connect to\n");
+	printf("  <dir> is the directory to store saved files to\n");
 	printf("\n");
 }
 
@@ -33,12 +25,52 @@ int main (int argc, char** argv) {
 	//char filename[MAX_PATH];
 	char buff[BUFSIZ];
 
-	signal(SIGINT, int_handler); 
+	// From http://www.gnu.org/software/libc/manual/html_node/Getopt-Long-Option-Example.html
+	int option_index;
+	char server[128];
+	char save_to[MAX_PATH];
+	struct hostent *hostinfo;
+
+	// Check all arguments, make sure they're good
+	static struct option long_options[] = {
+		{"server", required_argument, NULL, 's'},
+		{"save_to", required_argument, NULL, 'd'}
+	};
+
+	int c;
+	while ((c = getopt_long(argc, argv, "sd", long_options, &option_index)) != -1) {
+		switch(c) {
+			case 's':
+				strcpy(server, optarg);
+				break;
+			case 'd':
+				strcpy(save_to, optarg);
+				break;
+			default:
+				printf("C is %d\n", c);
+				printf("Optarg is %s\n", optarg);
+				usage();
+				exit(1);
+		}
+
+	}
+
+	if (strcmp(argv[5], "start") != 0) {
+		usage();
+		exit(1);
+	}
+
+	signal(SIGINT, int_handler);
 
 	// Set up our server to connect to
+	hostinfo = gethostbyname(server);
+	if (!hostinfo) {
+		perror("Couldn't get host information");
+		exit(1);
+	}
 	server_address.sin_family = PF_INET;
 	server_address.sin_port = htons(PORT);
-	server_address.sin_addr.s_addr = inet_addr("127.0.0.1");
+	server_address.sin_addr = *(struct in_addr *)*hostinfo->h_addr_list;
 	server_len = sizeof(server_address);
 
 	// Periodically connect to see if there's any files
@@ -82,7 +114,7 @@ int main (int argc, char** argv) {
 		// Indicates there are files, so get them!
 		if (buff[0] == '1') {
 			write(client_sockfd, "1", sizeof("1")); // Write that we're ok to send the file
-			while( get_file(client_sockfd, "listener_files") > 0 ) { }
+			while( get_file(client_sockfd, save_to) > 0 ) { }
 		}
 
 		if (close(client_sockfd) == -1) {

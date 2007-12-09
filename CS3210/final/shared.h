@@ -2,7 +2,6 @@
 #include <sys/socket.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <sys/un.h>
 #include <arpa/inet.h>
 #include <unistd.h>
 #include <signal.h>
@@ -10,10 +9,12 @@
 #include <sys/stat.h>
 #include <fcntl.h>        // For O_WRONLY
 #include <sys/sendfile.h> // For sendfile
+#include <getopt.h>
+#include <netdb.h>
 
 #define MAX_PATH 256
 #define PORT 3333
 
-int get_file(int, char*);
-int send_file(int, char*);
-void set_socket(int);
+int get_file(int, char*);  // Gets a file
+int send_file(int, char*); // Sends a file
+void set_socket(int);      // Sets better handling for a socket
