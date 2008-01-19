@@ -1,0 +1,25 @@
+The Weber Baseball League (WBL) wants to maintain information about its teams, their coaches, players, and bats.
+
+  
+x The information about players is historic.  
+
+x For each team, the league wants to keep track of all of the players who have ever played on the team, including the current players.  
+x For each player, it wants to know about every team the player ever played for.  
+x On the other hand, coach affiliation and bat information is current, only.
+
+x WCL wants to keep track of each team’s team number, which is unique, its name, the city in which it is based, and the name of its manager.  
+X Coaches have a name (which is only assumed to be unique within its team) and a telephone number.  
+X Coaches have units of work experience, which are described by the type of experience and the number of years of that type of experience.  
+
+x Bats are described by their serial numbers (which are only unique within a team) and their manufacturer’s name.  
+
+x Players have a player number that is unique across the league, a name, and an age.
+
+x A team has at least one and usually several coaches.  
+x A coach works for only one team.  
+x Each coach has several units of work experience or may have none.  
+x Each unit of work experience is associated with the coach to whom it belongs.  
+x Each team owns at least one and generally many bats.  
+x Currently and historically, each team has and has had many players.  
+x To be of interest to the league, a player must have played on at least one and possibly many teams during his career.  
+x Further, the league wants to keep track of the number of years that a player has played on a team and the batting average that he compiled on that team.

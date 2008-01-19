@@ -1,0 +1,42 @@
+Rich’s Cruise Lines (RCL) has several ships and a variety of cruise itineraries, each involving several ports-of-call.  
+The company wants to maintain information on the employees who currently work on each of its ships.  
+It also wants to keep track of both its past and future cruises and of the passengers who sailed on the former and are booked on the latter.
+
+Ships
+
+x Each ship has at least one and, of course, normally many employees on it.  
+x The unique identifier of each ship is its ship number.  
+x Other ship attributes include ship name, weight, year built, and passenger capacity.  
+
+
+Employee
+
+x Each employee has a unique employee identification number, as well as a name, date-of-birth, and nationality.  
+x Some of the employees are in supervisory positions, supervising several other employees.  
+x Each employee reports to just one supervisor.  
+
+Cruise
+
+x A cruise is identified by a unique cruise serial number.  
+x Other cruise descriptors include a sailing date, a return date, and a departure port (which is also the cruise’s ending point.)  
+
+
+x Clearly, a cruise involves exactly one ship; over time a ship sails on many cruises, but there is a requirement to be able to list a 
+x new ship that has not as yet sailed on any cruises, at all.  
+X Each cruise docks at least one and usually several ports-of-call, each of which is normally host to many cruises, over time.  
+X In addition, the company wants to maintain information about ports that it has not as yet used in its cruises but may use in the future.  
+
+Port
+
+x A port is identified by its name and the country that it is in.  
+x Other information about a port includes its population, whether a passport is required for the passengers to disembark there, 
+x and its current docking fee, which is assumed to be the same for all ships.  
+
+Passenger
+
+x Passenger information includes a unique passenger number, name, home address, nationality, and date-of-birth.  
+A cruise typically has many passengers on it (certainly at least one).  
+Hoping for return business, RCL assumes that each passenger may have sailed on several of its cruises (and/or may be booked for a future cruise.) 
+For a person to be of interest to the company, he or she must have sailed on or be booked on at least one of the company’s cruises.  
+The company wants to keep track of how much money each passenger paid for (or will pay for) each of their cruises, 
+as well as their satisfaction rating of the cruise, if it has been completed.
