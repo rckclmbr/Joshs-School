@@ -1,0 +1,84 @@
+Hotel
+  HotelID
+  Name
+  Location
+  Rating
+  Image
+  CountyID
+
+Room
+  RoomID
+  Description
+
+RoomType
+  TypeID
+  Type
+  Smoking
+  RackRate
+  BedConfigurationID
+
+BedConfiguration
+  BedConfigurationID
+  Description
+
+Guest
+  GuestNumber
+  FirstName
+  LastName
+  Address
+  Phone
+  Email
+  Comments
+
+ReservationMaster
+  ReservationMasterID
+  CreditCardID
+  HotelID
+  BookedDate
+  Status "A"ctive "B"illed "C"ancelled
+  Comment
+
+ReservationDetail
+  ReservationDetailID
+  ReservationMasterID
+  StartDate
+  EndDate
+  CheckinDate
+  CheckoutDate
+  RoomID
+  GuestID
+  RackRate
+  Status "A"ctive "B"illed "C"ancelled
+
+CreditCard
+  CreditCardID
+  GuestID
+  CreditCardNumber
+  ExpirationDate
+  CreditCardType
+  
+
+Comment
+  CommentID
+  CommentType ('guest','reservation_detail')
+  CommentTypeID
+  Date
+  Comment
+
+Discount
+  DiscountID
+  DiscountType ('percent', 'amount')
+  Amount
+  ExpirationDate
+  Comments (restrictions)
+
+County
+  CountyID
+  TaxRate
+
+Revenue
+  RevenueID (begins with 8000)
+  ReservationID
+  Date
+  Type ('room', 'tax','room_service', etc)
+  Amount
