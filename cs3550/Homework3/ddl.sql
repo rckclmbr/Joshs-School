@@ -11,27 +11,28 @@ IF  EXISTS (
 DROP Database Braegger_Hotel
 GO
 
-Create Database Braegger_Hotel
+CREATE DATABASE Braegger_Hotel
 ON Primary
 (NAME = 'Braegger_Hotel', -- Virtual Internal Name
- FILENAME = 'C:\Program Files\Microsoft SQL Server\MSSQL.1\MSSQL\Data\Braegger_Hotel.mdf',
+ FILENAME = 'O:\SQLDB\Braegger_Hotel.mdf',
  SIZE = 2MB,
  MAXSIZE = 4MB, 
- FILEGROWTH = 500k
+ FILEGROWTH = 500KB
 )
- 
+
 LOG ON
-(NAME = 'Braegger_Hotel', -- Virtual Internal Name
- FILENAME = 'C:\Program Files\Microsoft SQL Server\MSSQL.1\MSSQL\Data\Braegger_Hotel.mdf',
+(NAME = 'Braegger_Hotel_Log', -- Virtual Internal Name
+ FILENAME = 'O:\SQLDB\Braegger_Hotel.ldf',
  SIZE = 2MB,
  MAXSIZE = 4MB, 
- FILEGROWTH = 500k
+ FILEGROWTH = 500KB
 )
+GO
 
 USE Braegger_Hotel
 
 CREATE TABLE CreditCard
-( CreditCardID	smallint	IDENTIFY(1,1) NOT NULL	PRIMARY KEY,
+( CreditCardID	smallint	IDENTITY(1,1) NOT NULL	PRIMARY KEY,
   GuestID	smallint NOT NULL,
   CCType	varchar(5)	NOT NULL,
   CCNumber	varchar(16)	NOT NULL,
@@ -41,7 +42,7 @@ CREATE TABLE CreditCard
 )
 
 CREATE TABLE Guest
-( GuestID	smallint	IDENTITY(1,1) NOT NULL	PRIMARY KEY,
+( GuestID	smallint	IDENTITY(1500,1) NOT NULL	PRIMARY KEY,
   GuestFirst	varchar(20)	NOT NULL,
   GuestLast	varchar(20)	NOT NULL,
   GuestAddress1	varchar(30)	NOT NULL,
@@ -61,20 +62,20 @@ CREATE TABLE Reservation
   ReservationDate	smalldatetime	NOT NULL,
   ReservationStatus	char(1)	NOT NULL
 		DEFAULT 'A'
-		CONSTRAINT DC_ReservationStatus CHECK (ReservationStatus IN ('A','B','C') ,
+		CONSTRAINT DC_ReservationStatus CHECK (ReservationStatus IN ('A','B','C')) ,
   ReservationComments	varchar(200)
 )
 
 CREATE TABLE ReservationDetail
 ( ReservationDetailID	smallint	IDENTITY(1,1)	NOT NULL	PRIMARY KEY,
-  RoomID	smallint	NOT NULL
+  RoomID	smallint	NOT NULL,
   ReservationID	smallint	NOT NULL,
   QuotedRate	smallmoney	NOT NULL,
-  CheckinDate	smalldatetime	NOT NULL
+  CheckinDate	smalldatetime	NOT NULL,
   Nights	tinyint	NOT NULL,
-  Status	char(1)	NOT NULL
+  [Status]	char(1)	NOT NULL
 		DEFAULT 'A'
-		CONSTRAINT DC_ReservationDetailStatus CHECK (Status IN ('A','B','C') ,  
+		CONSTRAINT DC_ReservationDetailStatus CHECK ([Status] IN ('A','B','C')),  
   Comments	varchar(200),
   DiscountID	smallint	NOT NULL
 )
@@ -98,11 +99,11 @@ CREATE TABLE HotelRoomType
 
 CREATE TABLE ReservationDetailBilling
 ( RevenueDetailsID	smallint	IDENTITY(1,1) NOT NULL	PRIMARY KEY,
-  ReservationDetailsID	smallint	NOT NULL,
+  ReservationDetailID	smallint	NOT NULL,
   ItemCategory	varchar(15)	NOT NULL,
   ItemAmount	smallmoney	NOT NULL,
   ItemDate	smalldatetime	NOT NULL,
-  ItemComments	varchar(200)
+  ItemComments	varchar(200),
   RevenueID	smallint	NOT NULL,
 )
 
@@ -180,4 +181,4 @@ FOREIGN KEY (TaxLocationID) REFERENCES TaxRate(TaxLocationID)
 
 ALTER TABLE ReservationDetailBilling
 ADD CONSTRAINT FK_ReservationDetailBillingMustHaveReservationDetail
-FOREIGN KEY (ReservationDetailsID) REFERENCES ReservationDetails(ReservationDetailsID)
+FOREIGN KEY (ReservationDetailID) REFERENCES ReservationDetail(ReservationDetailID)
