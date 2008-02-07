@@ -59,7 +59,7 @@ CREATE TABLE Guest
 CREATE TABLE Reservation
 ( ReservationID	smallint IDENTITY(5000,1) NOT NULL	PRIMARY KEY,
   CreditCardID	smallint	NOT NULL,
-  ReservationDate	smalldatetime	NOT NULL,
+  ReservationDate	smalldatetime	NOT NULL DEFAULT GetDate(),
   ReservationStatus	char(1)	NOT NULL
 		DEFAULT 'A'
 		CONSTRAINT DC_ReservationStatus CHECK (ReservationStatus IN ('A','B','C')) ,
