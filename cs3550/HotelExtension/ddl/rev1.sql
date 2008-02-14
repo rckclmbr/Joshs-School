@@ -41,7 +41,7 @@ CREATE TABLE Booking
 ( BookingID	smallint	IDENTITY(1,1)	NOT NULL,
   PerformerID	smallint	NOT NULL,
   EventID	smallint	NOT NULL,
-  StageID	smallint
+  StageID	smallint,
   BookingDate	smalldatetime	NOT NULL
 )
 
@@ -79,6 +79,7 @@ CREATE TABLE EventStaff
 CREATE TABLE StaffType
 ( StaffTypeID	smallint	IDENTITY(1,1)	NOT NULL,
   StaffTypeDescription	varchar(64)	NOT NULL
+)
 
 CREATE TABLE Ticket
 ( TicketID	smallint	IDENTITY(1,1)	NOT NULL,
