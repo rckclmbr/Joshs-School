@@ -1,0 +1,4 @@
+#!/bin/bash
+
+javac Chapter_3.java
+java Chapter_3
