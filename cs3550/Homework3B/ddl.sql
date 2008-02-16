@@ -147,12 +147,12 @@ CREATE TABLE Hotel
 )
 
 CREATE TABLE BillingCategory
-( BillingCategoryID	smallint	NOT NULL	PRIMARY KEY,
+( BillingCategoryID	smallint	NOT NULL    IDENTITY(1,1)   PRIMARY KEY,
   BillingCategoryDescription	varchar(30)	NOT NULL
 )
 
 CREATE TABLE RevenueCategory
-( RevenueCategoryID	smallint	NOT NULL	PRIMARY KEY,
+( RevenueCategoryID	smallint	NOT NULL	IDENTITY(1,1)   PRIMARY KEY,
   RevenueCategoryDescription	varchar(30)	NOT NULL
 )
 
