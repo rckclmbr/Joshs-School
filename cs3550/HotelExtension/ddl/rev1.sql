@@ -34,7 +34,7 @@ USE Braegger_HotelEvents
 CREATE TABLE Performer
 ( PerformerID	smallint	IDENTITY(1,1) NOT NULL,
   PerformerName	varchar(64)	NOT NULL,
-  PerformerWebsite varchar(128)	NOT NULL
+  PerformerWebsite varchar(128)
 )
 
 CREATE TABLE Booking
@@ -42,7 +42,8 @@ CREATE TABLE Booking
   PerformerID	smallint	NOT NULL,
   EventID	smallint	NOT NULL,
   StageID	smallint,
-  BookingDate	smalldatetime	NOT NULL
+  BookingDate	smalldatetime	NOT NULL DEFAULT GetDate(),
+  BookingComments   varchar(256)
 )
 
 CREATE TABLE Stage
@@ -85,7 +86,9 @@ CREATE TABLE Ticket
 ( TicketID	smallint	IDENTITY(1,1)	NOT NULL,
   EventID	smallint	NOT NULL,
   ViewerID	smallint	NOT NULL,
-  TicketPrice	smallmoney	NOT NULL
+  TicketPrice	smallmoney	NOT NULL,
+  TicketPurchaseDate    smalldatetime   NOT NULL,
+  TicketScannedDate smalldatetime
 )
 
 CREATE TABLE Viewer
