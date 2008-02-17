@@ -32,7 +32,7 @@ GO
 USE Braegger_Hotel
 
 CREATE TABLE CreditCard
-( CreditCardID	smallint	IDENTITY(1,1) NOT NULL	PRIMARY KEY,
+( CreditCardID	smallint	IDENTITY(1,1) NOT NULL,
   GuestID	smallint NOT NULL,
   CCType	varchar(5)	NOT NULL,
   CCNumber	varchar(16)	NOT NULL,
@@ -42,7 +42,7 @@ CREATE TABLE CreditCard
 )
 
 CREATE TABLE Guest
-( GuestID	smallint	IDENTITY(1500,1) NOT NULL	PRIMARY KEY,
+( GuestID	smallint	IDENTITY(1500,1) NOT NULL,
   GuestFirst	varchar(20)	NOT NULL,
   GuestLast	varchar(20)	NOT NULL,
   GuestAddress1	varchar(30)	NOT NULL,
@@ -57,7 +57,7 @@ CREATE TABLE Guest
 )
 
 CREATE TABLE Reservation
-( ReservationID	smallint IDENTITY(5000,1) NOT NULL	PRIMARY KEY,
+( ReservationID	smallint IDENTITY(5000,1) NOT NULL,
   CreditCardID	smallint	NOT NULL,
   ReservationDate	smalldatetime	NOT NULL DEFAULT GetDate(),
   ReservationStatus	char(1)	NOT NULL
@@ -67,7 +67,7 @@ CREATE TABLE Reservation
 )
 
 CREATE TABLE ReservationDetail
-( ReservationDetailID	smallint	IDENTITY(1,1)	NOT NULL	PRIMARY KEY,
+( ReservationDetailID	smallint	IDENTITY(1,1)	NOT NULL,
   RoomID	smallint	NOT NULL,
   ReservationID	smallint	NOT NULL,
   QuotedRate	smallmoney	NOT NULL,
@@ -81,7 +81,7 @@ CREATE TABLE ReservationDetail
 )
 
 CREATE TABLE Room
-( RoomID	smallint	IDENTITY(1,1)	NOT NULL	PRIMARY KEY,
+( RoomID	smallint	IDENTITY(1,1)	NOT NULL,
   HotelRoomTypeID	smallint	NOT NULL,
   RoomNumber	varchar(5)	NOT NULL,
   RoomDescription	varchar(200)	NOT NULL,
@@ -91,7 +91,7 @@ CREATE TABLE Room
 )
 
 CREATE TABLE HotelRoomType
-( HotelRoomTypeID	smallint	IDENTITY(1,1)	NOT NULL	PRIMARY KEY,
+( HotelRoomTypeID	smallint	IDENTITY(1,1)	NOT NULL,
   HotelID	smallint	NOT NULL,
   RoomType	varchar(20)	NOT NULL,
   RoomTypeRackRate smallmoney	NOT NULL,
@@ -99,7 +99,7 @@ CREATE TABLE HotelRoomType
 )
 
 CREATE TABLE ReservationDetailBilling
-( ReservationBillingID	smallint	IDENTITY(1,1) NOT NULL	PRIMARY KEY,
+( ReservationBillingID	smallint	IDENTITY(1,1) NOT NULL,
   ReservationDetailID	smallint	NOT NULL,
   BillingCategoryID	smallint NOT NULL,
   BillingDescription	varchar(30)	NOT NULL,
@@ -109,7 +109,7 @@ CREATE TABLE ReservationDetailBilling
 )
 
 CREATE TABLE Discount
-( DiscountID	smallint	IDENTITY(1,1)	NOT NULL	PRIMARY KEY,
+( DiscountID	smallint	IDENTITY(1,1)	NOT NULL,
   DiscountDescription	varchar(50)	NOT NULL,
   DiscountExpiration	smalldatetime	NOT NULL,
   DiscountRules	varchar(100),
@@ -118,7 +118,7 @@ CREATE TABLE Discount
 )
 
 CREATE TABLE Revenue
-( RevenueID smallint IDENTITY(1,1)	NOT NULL	PRIMARY KEY,
+( RevenueID smallint IDENTITY(1,1)	NOT NULL,
   RevenueDate	smalldatetime	NOT NULL,
   RevenueAmount	smallmoney	NOT NULL,
   RevenueComments	varchar(200),
@@ -127,14 +127,14 @@ CREATE TABLE Revenue
 )
 
 CREATE TABLE TaxRate
-( TaxLocationID	smallint	IDENTITY(1,1)	NOT NULL	PRIMARY KEY,
+( TaxLocationID	smallint	IDENTITY(1,1)	NOT NULL,
   TaxDescription	varchar(30)	NOT NULL,
   RoomTaxRate	decimal(6,4)	NOT NULL,
   SalesTaxRate	decimal(6,4)	NOT NULL
 )
 
 CREATE TABLE Hotel
-( HotelID	smallint	NOT NULL	PRIMARY KEY,
+( HotelID	smallint	NOT NULL,
   HotelName	varchar(30)	NOT NULL,
   HotelAddress	varchar(30)	NOT NULL,
   HotelCity	varchar(20)	NOT NULL,
@@ -147,14 +147,66 @@ CREATE TABLE Hotel
 )
 
 CREATE TABLE BillingCategory
-( BillingCategoryID	smallint	NOT NULL    IDENTITY(1,1)   PRIMARY KEY,
+( BillingCategoryID	smallint	NOT NULL    IDENTITY(1,1),
   BillingCategoryDescription	varchar(30)	NOT NULL
 )
 
 CREATE TABLE RevenueCategory
-( RevenueCategoryID	smallint	NOT NULL	IDENTITY(1,1)   PRIMARY KEY,
+( RevenueCategoryID	smallint	NOT NULL	IDENTITY(1,1),
   RevenueCategoryDescription	varchar(30)	NOT NULL
 )
+
+ALTER TABLE CreditCard
+ADD CONSTRAINT PK_CreditCardID
+PRIMARY KEY (CreditCardID)
+
+ALTER TABLE Guest
+ADD CONSTRAINT PK_GuestID
+PRIMARY KEY (GuestID)
+
+ALTER TABLE Reservation
+ADD CONSTRAINT PK_ReservationID
+PRIMARY KEY (ReservationID)
+
+ALTER TABLE ReservationDetail
+ADD CONSTRAINT PK_ReservationDetailID
+PRIMARY KEY (ReservationDetailID)
+
+ALTER TABLE Room
+ADD CONSTRAINT PK_RoomID
+PRIMARY KEY (RoomID)
+
+ALTER TABLE HotelRoomType
+ADD CONSTRAINT PK_HotelRoomTypeID
+PRIMARY KEY (HotelRoomTypeID)
+
+ALTER TABLE ReservationDetailBilling
+ADD CONSTRAINT PK_ReservationBillingID
+PRIMARY KEY (ReservationBillingID)
+
+ALTER TABLE Discount
+ADD CONSTRAINT PK_DiscountID
+PRIMARY KEY (DiscountID)
+
+ALTER TABLE Revenue
+ADD CONSTRAINT PK_RevenueID
+PRIMARY KEY (RevenueID)
+
+ALTER TABLE TaxRate
+ADD CONSTRAINT PK_TaxLocationID
+PRIMARY KEY (TaxLocationID)
+
+ALTER TABLE Hotel
+ADD CONSTRAINT PK_HotelID
+PRIMARY KEY (HotelID)
+
+ALTER TABLE BillingCategory
+ADD CONSTRAINT PK_BillingCategoryID
+PRIMARY KEY (BillingCategoryID)
+
+ALTER TABLE RevenueCategory
+ADD CONSTRAINT PK_RevenueCategoryID
+PRIMARY KEY (RevenueCategoryID)
 
 ALTER TABLE CreditCard
 ADD CONSTRAINT FK_CreditCardMustHaveGuest
