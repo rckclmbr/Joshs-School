@@ -1,3 +1,6 @@
+/* Josh Braegger CS3550
+ Hotel Events Drop Tables Script */
+
 USE Braegger_HotelEvents
 
 ALTER TABLE Booking 

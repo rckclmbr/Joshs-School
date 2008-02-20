@@ -1,3 +1,6 @@
+/* Josh Braegger CS3550
+ Hotel Events Test Data Script */
+
 USE Braegger_HotelEvents
 
 INSERT INTO Event(EventName, EventDate, EventMaxTickets, EventNumStaffReq, EventTicketPrice) VALUES ('Three Kings Performing', '2008-03-03', 100, 10, 75.50);
