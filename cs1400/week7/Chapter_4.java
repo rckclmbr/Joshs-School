@@ -1,3 +1,7 @@
+// Josh Braegger
+// CS1400
+// Greg Anderson
+
 import java.util.Scanner;
 
 public class Chapter_4 {
