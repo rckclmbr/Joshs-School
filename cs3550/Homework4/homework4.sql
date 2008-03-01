@@ -53,6 +53,7 @@ SET
 		ELSE
 			CEILING(.95 * RoomTypeRackRate)
 		END
+WHERE HotelID = 2100 -- Rich's Bed and Breakfast
 
 PRINT 'Updated Room Rates, Here are the results:'
 PRINT ''
@@ -66,7 +67,7 @@ INSERT INTO Discount (
 	DiscountAmount
 )
 VALUES (
-	'New student coupon - $5', '12/31/2008', 'For enrolled CS 3550 students only', NULL, 
+	'New student coupon - $5', '12/31/2008', 'For enrolled CS 3550 students only', 0.00, 
 	5.00
 )
 
@@ -95,21 +96,25 @@ SET @RESERVATION = @@IDENTITY
 
 PRINT 'Inserting first ReservationDetail'
 
-DECLARE @ROOMID smallint
-
-SELECT RoomID
-FROM Hotel h
-	JOIN Room r ON r.HotelID = h.HotelID
-WHERE r.RoomNumber = 302
-	AND h.HotelName = 'Rich''s Bed and Breakfast'
-
 INSERT INTO ReservationDetail(RoomID, ReservationID, QuotedRate, CheckinDate, Nights, DiscountID)
-VALUES (@ROOMID, @RESERVATION, 29.00, '02-26-2008', 3, @DISCOUNT)
+(
+	SELECT RoomID, @RESERVATION, 29.00, '02-26-2008', 3, @DISCOUNT
+	FROM Hotel h
+		JOIN Room r ON r.HotelID = h.HotelID
+	WHERE r.RoomNumber = 302
+		AND h.HotelName = 'Rich''s Bed and Breakfast'
+)
 
 PRINT 'Inserting second ReservationDetail'
 
 INSERT INTO ReservationDetail(RoomID, ReservationID, QuotedRate, CheckinDate, Nights, DiscountID)
-VALUES (@ROOMID, @RESERVATION, 29.00, '03-06-2008', 3, @DISCOUNT)
+(
+	SELECT RoomID, @RESERVATION, 29.00, '03-06-2008', 3, @DISCOUNT
+	FROM Hotel h
+		JOIN Room r ON r.HotelID = h.HotelID
+	WHERE r.RoomNumber = 302
+		AND h.HotelName = 'Rich''s Bed and Breakfast'
+)
 
 PRINT 'ReservationDetail results'
 PRINT ''
@@ -131,26 +136,15 @@ PRINT ''
 
 SELECT * FROM ReservationDetail
 
-PRINT 'Beginning #6 - Updating University Guest House to HotelID 3300'
+PRINT 'Beginning #6 - Updating University Guest House to HotelID 3300 (Removed from assignment)'
+PRINT ''
 
 -- The University Guest House would like to UPDATE their Hotel ID to 3300. Make sure the HotelRoomType 
 -- data automatically reflects this change, by changing the Hotel ID once in the Hotel Table only. 
 -- Hint: This will require a CASCADE UPDATE to be turned on in your foreign key constraint, (ALTER TABLE) 
 -- if you haven't already done so.
 
-UPDATE Hotel
-SET HotelID = 3300
-WHERE HotelName = 'University Guest House'
-
-PRINT 'Updated The HotelID, here are the results from Hotel:'
-PRINT ''
-
-SELECT * FROM Hotel
-
-PRINT '... and making sure it updated HotelRoomType'
-PRINT ''
-
-SELECT * FROM HotelRoomType
+-- DONT NEED TO DO!
 
 PRINT 'Beginning Number 7 - SQL Select Statements'
 
@@ -165,12 +159,13 @@ PRINT ''
 -- double and family rooms (all types) with a price at or below $199.00 per night, 
 -- in ascending order by formatted price.
 
-SELECT h.HotelName, r.RoomID, r.RoomDescription, rt.RoomTypeRackRate
+SELECT h.HotelName, r.RoomID, r.RoomDescription, 
+	'$' + CONVERT(varchar(12), rt.RoomTypeRackRate,1 ) AS RackRate
 FROM Hotel h
 	JOIN HotelRoomType rt ON h.HotelID = rt.HotelID
 	JOIN Room r ON r.HotelRoomTypeID = rt.HotelRoomTypeID
 WHERE rt.RoomTypeRackRate <= 199.00
-ORDER BY rt.RoomTypeRackRate ASC -- TODO: formatted price
+ORDER BY '$' + CONVERT(varchar(12), rt.RoomTypeRackRate,1)  ASC
 
 PRINT 'Beginning 7b'
 PRINT ''
@@ -179,10 +174,11 @@ PRINT ''
 -- by floor, and formatted average room rental rate for all rooms at the property. 
 -- Hint: Use Substring/Len/PatIndex Function(s).
 
-SELECT h.HotelName,
-	SUBSTRING(r.RoomNumber, 1, 1) AS Floor, 
-	COUNT(r.RoomNumber) AS RoomsPerFloor, 
-	AVG(rt.RoomTypeRackRate) AS AvgRoomRate
+SELECT h.HotelName, -- TODO: First word only
+	SUBSTRING(r.RoomNumber, 1, 1) AS [Floor], 
+	COUNT(r.RoomNumber) AS RoomsOnFloor, 
+	'$' + CONVERT(varchar(12), 
+		AVG(rt.RoomTypeRackRate), 1) AS AvgRoomRate
 FROM Hotel h
 	JOIN HotelRoomType rt ON h.HotelID = rt.HotelID
 	JOIN Room r ON r.HotelRoomTypeID = rt.HotelRoomTypeID
@@ -200,7 +196,7 @@ FROM Hotel h
 	JOIN Room r ON h.HotelID = r.HotelID
 	JOIN ReservationDetail rd ON rd.RoomID = r.RoomID
 WHERE DatePart("M", rd.CheckinDate) = 2 -- Only in February
-GROUP BY h.HotelName, rd.CheckinDate
+GROUP BY h.HotelName
 
 PRINT 'Beginning 7d'
 PRINT ''
@@ -229,7 +225,7 @@ FROM Hotel h
 	JOIN ReservationDetail rd ON rd.RoomID = r.RoomID
 	JOIN Reservation res ON res.ReservationID = rd.ReservationID
 	JOIN CreditCard cc ON cc.CreditCardID = res.CreditCardID
---WHERE DatePart("M", rd.CheckinDate) IN (1,2) -- TODO: include nights?
+WHERE DatePart("M", rd.CheckinDate) IN (1,2)
 GROUP BY h.HotelName,
 	DatePart(M, rd.CheckinDate)
 
@@ -240,6 +236,21 @@ PRINT ''
 -- room number, arrival date, and departure date for all bookings in which the arrival 
 -- date is a Monday-Thursday. The date format should be like FEB 29 2008. Hint: Use 
 -- DatePart Function.
+
+SELECT g.GuestLast + ', ' + g.GuestFirst, h.HotelName, r.RoomNumber, 
+	UPPER(
+		SUBSTRING( CONVERT(varchar, rd.CheckinDate, 9), 1, 11)
+	) AS ArrivalDate, 
+	UPPER( 
+		SUBSTRING( CONVERT(varchar, (rd.CheckinDate + nights), 9), 1, 11)
+	) AS DepartureDate
+FROM Hotel h
+	JOIN Room r ON h.HotelID = r.HotelID
+	JOIN ReservationDetail rd ON rd.RoomID = r.RoomID
+	JOIN Reservation res ON res.ReservationID = rd.ReservationID
+	JOIN CreditCard cc ON cc.CreditCardID = res.CreditCardID
+	JOIN Guest g ON g.GuestID = cc.GuestID
+WHERE DatePart(dw, rd.CheckinDate) IN (2,3,4,5) -- Mon-Thurs
 
 PRINT 'Beginning 8'
 PRINT ''
@@ -252,15 +263,33 @@ PRINT ''
 -- Reservation Table to 'C', Cancelled, as well. Then, add the reservationdetailbilling 
 -- and revenue entries as well.
 
-PRINT 'Beginning 8a'
+PRINT 'Beginning 8a - Updating all "A" statuses to "C" statuses in ReservationDetail'
 PRINT ''
 
 -- Change the "A" status in the Reservations Details Table to a "C" status for cancelled
 
-PRINT 'Beginning 8b'
+UPDATE ReservationDetail
+SET Status = 'A'
+WHERE Status = 'C'
+
+PRINT 'Updated, here are the results:'
+PRINT ''
+
+SELECT * FROM ReservationDetail
+
+PRINT 'Beginning 8b - Updating all "A" statuses to "C" statuses in Reservation'
 PRINT ''
 
 -- Change the "A" status in the Reservations Table to a "C" status for cancelled, as well.
+
+UPDATE Reservation
+SET ReservationStatus = 'A'
+WHERE ReservationStatus = 'C'
+
+PRINT 'Updated, here are the results:'
+PRINT ''
+
+SELECT * FROM Reservation
 
 PRINT 'Beginning 8c'
 PRINT ''
@@ -283,6 +312,26 @@ PRINT ''
 -- times quoted rate times length of stay (with a Checkout date in February). The 
 -- formatted result should be displayed as money. Again, if the query is too complex for 
 -- a single select statement, define one or more views, and then query the views.
+
+SELECT h.HotelName,
+	'$' + CONVERT(varchar(24), 
+		CAST(
+			SUM(
+				CASE 
+					WHEN d.DiscountID IS NOT NULL
+						THEN( (100 - d.DiscountPercentage) / 100 * rd.QuotedRate)
+					ELSE  -- Looks like this doesn't happen, but *shrug*
+						rd.QuotedRate
+				END * Nights
+			)
+		AS smallmoney)
+	, 1) AS AnticipatedRevenue
+FROM Hotel h
+	JOIN Room r ON h.HotelID = r.HotelID
+	JOIN ReservationDetail rd ON rd.RoomID = r.RoomID
+	LEFT JOIN Discount d ON rd.DiscountID = d.DiscountID
+WHERE DatePart(M, rd.CheckinDate + rd.nights) = 2 -- February only
+GROUP BY h.HotelName
 
 PRINT 'Beginning 10'
 PRINT ''
