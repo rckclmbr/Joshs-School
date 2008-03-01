@@ -113,7 +113,7 @@ CREATE TABLE Discount
   DiscountDescription	varchar(50)	NOT NULL,
   DiscountExpiration	smalldatetime	NOT NULL,
   DiscountRules	varchar(100),
-  DiscountPercentage	decimal(4,2),
+  DiscountPercent	decimal(4,2),
   DiscountAmount	smallmoney
 )
 

@@ -1,3 +1,7 @@
+-- Josh Braegger
+-- CS3550
+-- Assignment 4
+
 USE Braegger_Hotel
 
 DECLARE @GUEST  smallint
@@ -63,7 +67,7 @@ SELECT * FROM HotelRoomType
 PRINT 'Introducing new student coupon'
 
 INSERT INTO Discount (
-	DiscountDescription, DiscountExpiration, DiscountRules, DiscountPercentage, 
+	DiscountDescription, DiscountExpiration, DiscountRules, DiscountPercent, 
 	DiscountAmount
 )
 VALUES (
@@ -174,7 +178,8 @@ PRINT ''
 -- by floor, and formatted average room rental rate for all rooms at the property. 
 -- Hint: Use Substring/Len/PatIndex Function(s).
 
-SELECT h.HotelName, -- TODO: First word only
+SELECT 
+	LEFT(h.HotelName, CHARINDEX(' ', h.HotelName) -1) AS HotelNameFirstWord,
 	SUBSTRING(r.RoomNumber, 1, 1) AS [Floor], 
 	COUNT(r.RoomNumber) AS RoomsOnFloor, 
 	'$' + CONVERT(varchar(12), 
@@ -269,8 +274,9 @@ PRINT ''
 -- Change the "A" status in the Reservations Details Table to a "C" status for cancelled
 
 UPDATE ReservationDetail
-SET Status = 'A'
-WHERE Status = 'C'
+SET Status = 'C'
+WHERE Status = 'A'
+	AND ReservationID = @RESERVATION
 
 PRINT 'Updated, here are the results:'
 PRINT ''
@@ -283,8 +289,9 @@ PRINT ''
 -- Change the "A" status in the Reservations Table to a "C" status for cancelled, as well.
 
 UPDATE Reservation
-SET ReservationStatus = 'A'
-WHERE ReservationStatus = 'C'
+SET ReservationStatus = 'C'
+WHERE ReservationStatus = 'A'
+	AND ReservationID = @RESERVATION
 
 PRINT 'Updated, here are the results:'
 PRINT ''
@@ -298,13 +305,83 @@ PRINT ''
 -- room revenue (1 night less any discounts) and calculated tax revenue (room revenue * 
 -- tax rate) with appropriate comments.
 
+PRINT 'Inserting Room Revenue into ReservationDetailBilling for both ReservationDetails'
+
+INSERT INTO ReservationDetailBilling 
+	(ReservationDetailID, BillingCategoryID, BillingDescription, BillingAmount,
+		BillingItemQty, BillingItemDate)
+SELECT rd.ReservationDetailID, 
+	1, -- Lodging
+	'Only one night',
+	CASE WHEN
+		d.DiscountAmount > 0 THEN d.DiscountAmount + rd.QuotedRate
+		ELSE (100 - d.DiscountPercent) / 100 * rd.QuotedRate
+	END * 1 AS BillingAmount, 
+	1, -- Only one night
+	GetDate()
+FROM Hotel h
+	JOIN Room r ON r.HotelID = h.HotelID
+	JOIN TaxRate tr ON h.TaxLocationID = tr.TaxLocationID
+	JOIN ReservationDetail rd ON rd.RoomID = r.RoomID
+	JOIN Discount d ON rd.DiscountID = d.DiscountID
+WHERE rd.ReservationID = 5016 -- @RESERVATION
+
+PRINT 'Inserting Room Tax Revenue into ReservationDetailBilling for both ReservationDetails'
+
+INSERT INTO ReservationDetailBilling 
+	(ReservationDetailID, BillingCategoryID, BillingDescription, BillingAmount,
+		BillingItemQty, BillingItemDate)
+SELECT rd.ReservationDetailID, 
+	2 AS BillingCategoryID, -- Lodging Tax
+	'Only one night (tax)' AS BillingDescription,
+	CASE WHEN
+		d.DiscountAmount > 0 THEN d.DiscountAmount + rd.QuotedRate
+		ELSE (100 - d.DiscountPercent) / 100 * rd.QuotedRate
+	END * 1 * (tr.RoomTaxRate / 100) AS TaxRate, 
+	1 AS BillingItemQty, -- Only one night
+	GetDate() AS BillingItemDate
+FROM Hotel h
+	JOIN Room r ON r.HotelID = h.HotelID
+	JOIN TaxRate tr ON h.TaxLocationID = tr.TaxLocationID
+	JOIN ReservationDetail rd ON rd.RoomID = r.RoomID
+	JOIN Discount d ON rd.DiscountID = d.DiscountID
+WHERE rd.ReservationID = @RESERVATION
+
+PRINT 'Done, here are the results:'
+
+SELECT * FROM ReservationDetailBilling
+
 PRINT 'Beginning 8d'
 PRINT ''
 
 -- Insert the master Revenue entry for these two items. Specifying the Revenue Type 
 -- as "Cancellation", Today's Date, and "AMEX" as the payment type.
 
-PRINT 'Beginning 9'
+PRINT 'Creating "Cancellation" RevenueCategory'
+
+INSERT INTO RevenueCategory (RevenueCategoryDescription) VALUES ('Cancellation')
+
+PRINT 'Inserting ReservationDetailBilling values into the revenue'
+
+INSERT INTO Revenue (RevenueDate, RevenueAmount, RevenueComments, HotelID, RevenueCategoryID)
+SELECT 
+	GetDate(),
+	SUM(BillingAmount) AS RevenueAmount,
+	'1 nights stay -- Payed by AMEX' AS RevenueComments,
+	h.HotelID,
+	@@IDENTITY AS RevenueCategoryID -- Cancellation
+FROM Hotel h
+	JOIN Room r ON r.HotelID = h.HotelID
+	JOIN ReservationDetail rd ON rd.RoomID = r.RoomID
+	LEFT JOIN ReservationDetailBilling rdb ON rd.ReservationDetailID = rdb.ReservationDetailID
+WHERE rd.ReservationID = @RESERVATION
+GROUP BY h.HotelID
+
+PRINT 'Done inserting, here are the results: '
+
+SELECT * FROM RevenueCategory
+
+PRINT 'Beginning 9 -- Generate a "room revenue" report'
 PRINT ''
 
 -- Generate a report showing anticipated room revenue (and tax) for each hotel, for the 
@@ -318,18 +395,31 @@ SELECT h.HotelName,
 		CAST(
 			SUM(
 				CASE 
-					WHEN d.DiscountID IS NOT NULL
-						THEN( (100 - d.DiscountPercentage) / 100 * rd.QuotedRate)
-					ELSE  -- Looks like this doesn't happen, but *shrug*
-						rd.QuotedRate
+					WHEN d.DiscountAmount > 0
+						THEN rd.QuotedRate - d.DiscountAmount
+						ELSE
+							( (100 - d.DiscountPercent) / 100 * rd.QuotedRate)
 				END * Nights
 			)
 		AS smallmoney)
-	, 1) AS AnticipatedRevenue
+	, 1) AS AnticipatedRevenue,
+	'$' + CONVERT(varchar(24), 
+		CAST(
+			SUM(
+				CASE 
+					WHEN d.DiscountAmount > 0
+						THEN rd.QuotedRate - d.DiscountAmount
+						ELSE
+							( (100 - d.DiscountPercent) / 100 * rd.QuotedRate)
+				END * Nights * (RoomTaxRate / 100)
+			)
+		AS smallmoney) 
+	, 1) AS TaxRate
 FROM Hotel h
 	JOIN Room r ON h.HotelID = r.HotelID
 	JOIN ReservationDetail rd ON rd.RoomID = r.RoomID
-	LEFT JOIN Discount d ON rd.DiscountID = d.DiscountID
+	JOIN TaxRate tr ON h.TaxLocationID = tr.TaxLocationID
+	JOIN Discount d ON rd.DiscountID = d.DiscountID
 WHERE DatePart(M, rd.CheckinDate + rd.nights) = 2 -- February only
 GROUP BY h.HotelName
 
@@ -340,6 +430,37 @@ PRINT ''
 -- of your choice. Your non-clustered indexes should make sense from a performance 
 -- point of view. However, your clustered index is probably not realistic in this scenario -
 -- only to make sure you know how to do it.
+
+PRINT 'Creating non-clustered index #1'
+
+CREATE UNIQUE NONCLUSTERED INDEX HotelNameIndex ON Hotel (HotelName)
+
+PRINT 'Creating non-clustered index #2'
+
+CREATE NONCLUSTERED INDEX GuestNameIndex ON Guest (GuestLast, GuestFirst)
+
+PRINT 'Creating non-clustered index #3'
+
+CREATE NONCLUSTERED INDEX ReservationDetailStatusIndex ON 
+ReservationDetail (Status)
+
+PRINT 'Creating non-clustered index #4'
+
+CREATE NONCLUSTERED INDEX ReservationDetailCheckinDateIndex ON 
+ReservationDetail (CheckinDate)
+
+PRINT 'Removing FK Constraint for CreditCard table so we can remove the primary key'
+
+ALTER TABLE Reservation DROP Constraint FK_ReservationMustHaveCC
+
+PRINT 'Dropping clustered index on CreditCard to create clustered index'
+
+ALTER TABLE CreditCard DROP Constraint PK_CreditCardID
+
+PRINT 'Creating clustered index on CreditCard.CCNumber'
+
+CREATE CLUSTERED INDEX CreditCardCCNumberIndex ON CreditCard (CCNumber)
+
 
 -- #1-  2  Points
 -- #2 - 2  Points
