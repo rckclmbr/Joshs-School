@@ -176,7 +176,7 @@ GO
 
 PRINT '   (Creating custom error)'
 
-IF NOT EXISTS (SELECT error FROM master.dbo.sysmessages WHERE error = 76224)
+IF NOT EXISTS (SELECT * FROM sys.messages WHERE message_id = 76224)
 	EXEC sp_addmessage
     @msgnum = 76224, -- Message Number
     @severity = 15,  -- Severity
