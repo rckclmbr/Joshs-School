@@ -1,9 +1,13 @@
 use Braegger_Hotel
 
-DROP FUNCTION dbo.fn_GetTotalRoomCharge
-DROP FUNCTION dbo.fn_GetTotalTax
-DROP FUNCTION dbo.fn_ProduceBill
-DROP FUNCTION dbo.fn_AnticipatedRevenue
+IF EXISTS (SELECT name FROM sysobjects WHERE name = 'fn_GetTotalRoomCharge')
+	DROP FUNCTION dbo.fn_GetTotalRoomCharge
+IF EXISTS (SELECT name FROM sysobjects WHERE name = 'fn_GetTotalTax')
+	DROP FUNCTION dbo.fn_GetTotalTax
+IF EXISTS (SELECT name, type FROM sysobjects WHERE name = 'fn_ProduceBill')
+	DROP FUNCTION dbo.fn_ProduceBill
+IF EXISTS (SELECT name FROM sysobjects WHERE name = 'fn_AnticipatedRevenue')
+	DROP FUNCTION dbo.fn_AnticipatedRevenue
 
 
 -- In this project, you will start to develop data components for the Hotel On-time Booking System (HOBS). 
@@ -159,7 +163,7 @@ RETURNS @Report Table (
 AS
 
 BEGIN
-	DECLARE @ERROR varchar(32)
+	DECLARE @ERROR varchar(64)
 
 	IF (@1stDate > @2ndDate)
 	BEGIN

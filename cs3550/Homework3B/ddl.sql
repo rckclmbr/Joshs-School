@@ -78,6 +78,7 @@ CREATE TABLE ReservationDetail
 		CONSTRAINT DC_ReservationDetailStatus CHECK ([Status] IN ('A','B','C')),  
   Comments	varchar(200),
   DiscountID	smallint	NOT NULL
+	DEFAULT 0
 )
 
 CREATE TABLE Room

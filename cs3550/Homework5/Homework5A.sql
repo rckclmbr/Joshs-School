@@ -1,11 +1,17 @@
 use Braegger_Hotel;
 
-DROP PROC sp_InsertGuest
-DROP PROC sp_InsertRooms
-DROP PROC sp_InsertReservationDetail
-DROP PROC sp_UpdatePrices
-DROP PROC sp_UpdateResDetail
-DROP PROC sp_InsertReservation
+IF EXISTS (SELECT name FROM sysobjects WHERE name = 'sp_InsertGuest' AND type = 'P')
+	DROP PROC sp_InsertGuest
+IF EXISTS (SELECT name FROM sysobjects WHERE name = 'sp_InsertRooms' AND type = 'P')
+	DROP PROC sp_InsertRooms
+IF EXISTS (SELECT name FROM sysobjects WHERE name = 'sp_InsertReservationDetail' AND type = 'P')
+	DROP PROC sp_InsertReservationDetail
+IF EXISTS (SELECT name FROM sysobjects WHERE name = 'sp_UpdatePrices' AND type = 'P')
+	DROP PROC sp_UpdatePrices
+IF EXISTS (SELECT name FROM sysobjects WHERE name = 'sp_UpdateResDetail' AND type = 'P')
+	DROP PROC sp_UpdateResDetail
+IF EXISTS (SELECT name FROM sysobjects WHERE name = 'sp_InsertReservation' AND type = 'P')
+	DROP PROC sp_InsertReservation
 
 -- 1.  Write a stored procedure named sp_InsertGuest that can be used to insert a row of data into the GuestTable. 
 PRINT '1. Creating sp_InsertGuest stored procedure'
@@ -250,27 +256,44 @@ GO
 CREATE PROC sp_InsertReservation
 @CreditCardID smallint,
 @ReservationDate smalldatetime,
-@ReservationStatus char(1),
-@ReservationComments varchar(200),
--- For reservation insert
-@RoomID smallint,
-@QuotedRate smallmoney,
-@CheckinDate smalldatetime,
-@Nights tinyint,
-@DiscountID smallint
+@ReservationStatus char(1) = 'A',
+@ReservationComments varchar(200) = NULL
 
 AS
+	DECLARE @ReservationID smallint
+	DECLARE @SuiteID smallint
 
-INSERT INTO Reservation (CreditCardID, ReservationDate, ReservationStatus, ReservationComments) VALUES
-(@CreditCardID, @ReservationDate, @ReservationStatus, @ReservationComments)
+	INSERT INTO Reservation (CreditCardID, ReservationDate, ReservationStatus, ReservationComments) VALUES
+	(@CreditCardID, @ReservationDate, @ReservationStatus, @ReservationComments)
 
-EXEC sp_InsertReservationDetail
-@RoomID = @RoomID,
-@ReservationID = @@IDENTITY,
-@QuotedRate = @QuotedRate,
-@CheckinDate = @CheckinDate,
-@Nights = @Nights,
-@DiscountID = @DiscountID
+	SELECT @ReservationID = @@IDENTITY
+
+	-- Get the RoomID for the Suite
+	SELECT @SuiteID = RoomID
+	FROM Room
+	WHERE RoomNumber = 351
+	AND HotelID = 2300
+
+	EXEC sp_InsertReservationDetail
+	@RoomID = @SuiteID,
+	@ReservationID = @ReservationID,
+	@CheckinDate = 'April 21, 2008',
+	@Nights = 2,
+	@QuotedRate = 500.99
+
+	EXEC sp_InsertReservationDetail
+	@RoomID = 3, -- Rich's bed and breakfast, Double Room, non-smoking
+	@ReservationID = @ReservationID,
+	@CheckinDate = 'April 28, 2008',
+	@Nights = 2,
+	@QuotedRate = 250.99
+
+	EXEC sp_InsertReservationDetail
+	@RoomID = 3, -- Rich's bed and breakfast, Double Room, non-smoking
+	@ReservationID = @ReservationID,
+	@CheckinDate = 'May 28, 2008',
+	@Nights = 2,
+	@QuotedRate = 299.99
 
 GO
 PRINT '5. (cont) Creating sp_InsertReservationDetail'
@@ -279,17 +302,16 @@ CREATE PROC sp_InsertReservationDetail
 @RoomID smallint,
 @ReservationID smallint,
 @QuotedRate smallmoney,
-@CheckinDate smallint,
+@CheckinDate smalldatetime,
 @Nights tinyint,
 @Comments varchar(200) = NULL,
-@DiscountID smallint,
-@Status char(1) = NULL
+@DiscountID smallint = 1,
+@Status char(1) = 'A'
 
 AS
-
-INSERT INTO ReservationDetail (RoomID, ReservationID, QuotedRate, CheckinDate, Nights, Status, Comments, DiscountID)
-VALUES
-(@RoomID, @ReservationID, @QuotedRate, @CheckinDate, @Nights, @Status, @Comments, @DiscountID)
+	INSERT INTO ReservationDetail (RoomID, ReservationID, QuotedRate, CheckinDate, Nights, Status, Comments, DiscountID)
+	VALUES
+	(@RoomID, @ReservationID, @QuotedRate, @CheckinDate, @Nights, @Status, @Comments, @DiscountID)
 
 GO
 
@@ -298,9 +320,13 @@ GO
 --         for 2 nights, (double room), non-smoking, and a reservation for the Rich's B&B on May 28th for 2 nights, 
 --         (double room), non-smoking.  
 --         *You'll run the second part of the stored procedure (in #5) three times, with different data.
-PRINT '5A. Creating reservation using sp_InsertReservations (TODO)'
--- TODO: ?
+PRINT '5A. Creating reservation using sp_InsertReservations'
 
+EXEC sp_InsertReservation
+@CreditCardID = 7, -- Just a credit card
+@ReservationDate = 'March 24, 2008'
+
+GO
 --    5B.  Select * From Reservations and ReservationDetails to show the results. 
 PRINT '5B.  Showing results'
 
