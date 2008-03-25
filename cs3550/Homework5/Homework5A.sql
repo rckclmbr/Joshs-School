@@ -149,6 +149,8 @@ SELECT * FROM HotelRoomType
 
 --    3C.  Demonstrate:  Calling the exact same sp_UpdatePrices (only supplying a different Hotel # and %), increase the 
 --         price of all Rooms at Weber Towers and Suites 5% (rounding up to the nearest dollar). 
+PRINT '3C.  Calling sp_UpdatePrices (again, with different params)'
+GO
 EXEC sp_UpdatePrices
 @HotelID = 2300, -- Weber Towers and Suites
 @PercentInc = 5
@@ -163,7 +165,18 @@ SELECT * FROM HotelRoomType
 --    value.  This stored procedure should include appropriate error handling to give the user a friendly message.  For 
 --    example:  Show a friendly message like "Sorry, but 'A' is not a valid value for the number of nights.  Record not 
 --    updated."  You only need to do one error handling routine - you don't need to account for every possible error.
-PRINT '3A. Creating sp_UpdateResDetail'
+PRINT '4. Creating sp_UpdateResDetail'
+GO
+
+PRINT '   (Creating custom error)'
+
+IF NOT EXISTS (SELECT error FROM master.dbo.sysmessages WHERE error = 76224)
+	EXEC sp_addmessage
+    @msgnum = 76224, -- Message Number
+    @severity = 15,  -- Severity
+    @msgtext = 'Sorry the ReservationID %s was not found.' -- Custom message
+
+PRINT '   (Creating SPROC)'
 GO
 
 CREATE PROC sp_UpdateResDetail
@@ -221,8 +234,11 @@ EXEC sp_UpdateResDetail
 
 --    4C.  Do it a third time so it triggers your error.
 PRINT '4C. Demonstrating sp_UpdateResDetail so it triggers my error'
-
---TODO: Do this
+GO
+EXEC sp_UpdateResDetail
+@ReservationDetailID = 2222, -- Invalid ReservationDetailID
+@CheckinDate = '6/9/2008',
+@Status = 'A'
 
 --5.  Write a stored procedure named sp_InsertReservation that can be used to insert reservation data into the 
 --    Reservations Table AND ReservationDetails Table.  You will need to retrieve the value of @@IDENTITY from the 
@@ -286,7 +302,6 @@ PRINT '5A. Creating reservation using sp_InsertReservations (TODO)'
 -- TODO: ?
 
 --    5B.  Select * From Reservations and ReservationDetails to show the results. 
-
 PRINT '5B.  Showing results'
 
 SELECT * FROM Reservation
