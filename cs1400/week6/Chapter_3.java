@@ -1,3 +1,9 @@
+// Josh Braegger
+// CS1400 
+
+// Prints how many presents were received on each day of the 12 days of 
+// Christmas
+
 public class Chapter_3 {
 	public static void main(String[] args) {
 		int total_presents = 0;
