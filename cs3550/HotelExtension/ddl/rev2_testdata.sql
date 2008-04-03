@@ -3,8 +3,8 @@
 
 USE Braegger_HotelEvents
 
-INSERT INTO Event(EventName, EventDate, EventMaxTickets, EventNumStaffReq, EventTicketPrice) VALUES ('Three Kings Performing', '2008-03-03', 100, 10, 75.50);
-INSERT INTO Event(EventName, EventDate, EventMaxTickets, EventNumStaffReq, EventTicketPrice) VALUES ('Super Concert', '2008-08-03', 200, 24, 25.50);
+INSERT INTO Event(HotelID, EventName, EventDate, EventMaxTickets, EventNumStaffReq, EventTicketPrice) VALUES (2100, 'Three Kings Performing', '2008-03-03', 100, 10, 75.50);
+INSERT INTO Event(HotelID, EventName, EventDate, EventMaxTickets, EventNumStaffReq, EventTicketPrice) VALUES (2300, 'Super Concert', '2008-08-03', 200, 24, 25.50);
 
 INSERT INTO Stage(StageName, StageLocation) VALUES ('Stage 1', 'Outside');
 INSERT INTO Stage(StageName, StageLocation) VALUES ('Back Stage', 'Near the kitchen');
@@ -23,10 +23,10 @@ INSERT INTO StaffType(StaffTypeDescription) VALUES ('Host');
 INSERT INTO StaffType(StaffTypeDescription) VALUES ('Garbage Man');
 INSERT INTO StaffType(StaffTypeDescription) VALUES ('Security');
 
-INSERT INTO EventStaff(StaffTypeID, StaffLastName, StaffFirstName, StaffStartDate) VALUES (1, 'George', 'Boy', '2007-06-06');
-INSERT INTO EventStaff(StaffTypeID, StaffLastName, StaffFirstName, StaffStartDate) VALUES (3, 'Bird', 'Lady', '2007-07-17');
-INSERT INTO EventStaff(StaffTypeID, StaffLastName, StaffFirstName, StaffStartDate) VALUES (3, 'Jackson', 'Michael', '2007-05-21');
-INSERT INTO EventStaff(StaffTypeID, StaffLastName, StaffFirstName, StaffStartDate) VALUES (2, 'Hilton', 'Paris', '2008-01-12');
+INSERT INTO EventStaff(StaffTypeID, StaffLastName, StaffFirstName, StaffHourlyRate, StaffStartDate) VALUES (1, 'George', 'Boy', 8.00, '2007-06-06');
+INSERT INTO EventStaff(StaffTypeID, StaffLastName, StaffFirstName, StaffHourlyRate, StaffStartDate) VALUES (3, 'Bird', 'Lady', 9.50, '2007-07-17');
+INSERT INTO EventStaff(StaffTypeID, StaffLastName, StaffFirstName, StaffHourlyRate, StaffStartDate) VALUES (3, 'Jackson', 'Michael', 7.50, '2007-05-21');
+INSERT INTO EventStaff(StaffTypeID, StaffLastName, StaffFirstName, StaffHourlyRate, StaffStartDate) VALUES (2, 'Hilton', 'Paris', 7.50, '2008-01-12');
 
 INSERT INTO StaffClock(EventID, EventStaffID, SCClockinDate, SCClockoutDate) VALUES (1, 1, '2008-03-03', '2008-03-03');
 INSERT INTO StaffClock(EventID, EventStaffID, SCClockinDate, SCClockoutDate) VALUES (1, 2, '2008-03-03', '2008-03-03');
@@ -44,6 +44,9 @@ INSERT INTO Ticket(EventID, ViewerID, TicketPrice, TicketPurchaseDate, TicketSca
 INSERT INTO Ticket(EventID, ViewerID, TicketPrice, TicketPurchaseDate, TicketScannedDate) VALUES (1, 1, 60.50, '2007-09-09', NULL);
 INSERT INTO Ticket(EventID, ViewerID, TicketPrice, TicketPurchaseDate, TicketScannedDate) VALUES (2, 1, 25.50, '2007-09-09', NULL);
 
+INSERT INTO Paycheck(PaycheckAmount, PaycheckHoursWorked, EventStaffID) VALUES (40.00, 5, 1)
+INSERT INTO Paycheck(PaycheckAmount, PaycheckHoursWorked, EventStaffID) VALUES (38.00, 4, 2)
+
 SELECT * FROM Booking
 SELECT * FROM Event
 SELECT * FROM EventStaff
@@ -53,3 +56,4 @@ SELECT * FROM StaffType
 SELECT * FROM Stage
 SELECT * FROM Ticket
 SELECT * FROM Viewer
+SELECT * FROM Paycheck

@@ -46,7 +46,7 @@ CREATE TABLE Booking
   BookingComments   varchar(256),
   BookingStatus char(1) NOT NULL
     DEFAULT 'A'
-    CONSTRAINT DC_EventStatus CHECK (EventStatus IN ('A','C','O'))
+    CONSTRAINT DC_BookingStatus CHECK (BookingStatus IN ('A','C','O'))
 )
 
 CREATE TABLE Stage
@@ -55,14 +55,14 @@ CREATE TABLE Stage
   StageLocation	varchar(64)
 )
 
-CREATE TABLE Event
+CREATE TABLE [Event]
 ( EventID	smallint	IDENTITY(1,1)	NOT NULL,
   EventName	varchar(64)	NOT NULL,
   EventDate	smalldatetime	NOT NULL,
   EventMaxTickets	smallint,
   EventNumStaffReq	tinyint	NOT NULL,
   EventTicketPrice	smallmoney	NOT NULL,
-  HotelID tinyint NOT NULL,
+  HotelID smallint NOT NULL,
   EventStatus char(1) NOT NULL 
     DEFAULT 'A'
     CONSTRAINT DC_EventStatus CHECK (EventStatus IN ('A','C','O'))
