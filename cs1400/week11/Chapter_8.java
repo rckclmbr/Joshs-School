@@ -1,5 +1,5 @@
 // Josh Braegger
-// CS1440
+// CS1400
 // Creates a grocery list
 
 class GroceryList {
