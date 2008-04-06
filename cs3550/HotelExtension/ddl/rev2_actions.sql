@@ -12,6 +12,15 @@ AS
 
 GO
 
+-- When a staff member clocks out, run sp_paycheck to automatically create the paycheck
+CREATE TRIGGER tr_staffClockOut
+ON StaffClock
+AFTER UPDATE
+AS
+
+
+GO
+
 -- In order to keep the hotel database and the extension in sync, this procedure
 -- is required.
 CREATE TRIGGER tr_hotelSync
@@ -42,9 +51,13 @@ CREATE PROC sp_assignStaff
 
 GO
 
--- Allows a staff member to clock in or out of an event.  After a staff member
--- is clocked out, his paycheck is automatically written.
+-- Allows a staff member to clock in or out of an event.
 CREATE PROC sp_staffClock
+
+GO
+
+--  Inserts a clock record into the paycheck table.
+CREATE PROC sp_paycheck
 
 GO
 
