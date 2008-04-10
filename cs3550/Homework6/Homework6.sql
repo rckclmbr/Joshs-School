@@ -23,6 +23,8 @@ CREATE TRIGGER tr_UpdateReservation
 ON ReservationDetail
 FOR UPDATE 
 AS
+IF UPDATE(Status)
+BEGIN
 	DECLARE @ReservationDetailID smallint
 	DECLARE @InsertedCheckinDate smalldatetime
 	DECLARE @InsertedNights tinyint
@@ -78,7 +80,6 @@ AS
 		)
 	END
 
-
 --   * If Reservation Status changes to 'B' for Billed, run the appropriate statements to INSERT a Room 
 --     and a Tax entry in the ReservationDetailsBilling Table (factoring in the late checkout surcharge 
 --     policy*). 
@@ -125,7 +126,7 @@ AS
 			GetDate()
 		)
 		END
-
+END
 
 GO
 
@@ -171,7 +172,7 @@ sp_UpdateResDetail
 PRINT '4.  Setting Swen''s Reservation to Cancelled'
 
 PRINT '    (The date was actually January 24, so change it to April to reflect the assignment)'
-UPDATE ReservationDetail SET CheckinDate = '04-28-2008' WHERE ReservationDetailID = 16
+UPDATE ReservationDetail SET CheckinDate = '04-24-2008' WHERE ReservationDetailID = 16
 
 PRINT '    Executing sp_UpdateResDetail'
 GO
