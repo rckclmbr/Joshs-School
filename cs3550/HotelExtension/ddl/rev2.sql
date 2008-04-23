@@ -14,7 +14,7 @@ GO
 CREATE DATABASE Braegger_HotelEvents
 ON Primary
 (NAME = 'Braegger_HotelEvents', -- Virtual Internal Name
- FILENAME = 'O:\SQLDB\Braegger_HotelEvents.mdf',
+ FILENAME = 'C:\Program Files\Microsoft SQL Server\MSSQL.1\MSSQL\Data\Braegger_HotelEvents.mdf',
  SIZE = 2MB,
  MAXSIZE = 4MB, 
  FILEGROWTH = 500KB
@@ -22,7 +22,7 @@ ON Primary
 
 LOG ON
 (NAME = 'Braegger_HotelEvents_Log', -- Virtual Internal Name
- FILENAME = 'O:\SQLDB\Braegger_HotelEvents.ldf',
+ FILENAME = 'C:\Program Files\Microsoft SQL Server\MSSQL.1\MSSQL\Data\Braegger_HotelEvents.ldf',
  SIZE = 2MB,
  MAXSIZE = 4MB, 
  FILEGROWTH = 500KB
