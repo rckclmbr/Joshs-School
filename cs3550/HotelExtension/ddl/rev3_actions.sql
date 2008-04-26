@@ -101,13 +101,20 @@ CREATE TRIGGER tr_staffClockOut
 ON StaffClock
 AFTER UPDATE
 AS
-	DECLARE @StaffClockID smallint
-
-	IF UPDATE(SCClockoutDate)
+	IF @@ROWCOUNT = 1
 	BEGIN
-		SET @StaffClockID = (SELECT StaffClockID FROM Inserted i)
+		DECLARE @StaffClockID smallint
 
-		EXEC sp_paycheck @StaffClockID
+		IF UPDATE(SCClockoutDate)
+		BEGIN
+			SET @StaffClockID = (SELECT StaffClockID FROM Inserted i)
+
+			IF @StaffClockID IS NULL
+				RAISERROR('StaffClockID IS NULL... that shouldnt happen', 15, 1)
+
+			EXEC sp_paycheck 
+			@StaffClockID = @StaffClockID
+		END
 	END
 GO
 
@@ -147,18 +154,20 @@ GO
 CREATE PROC sp_purchaseTicket
 @TicketPrice money = NULL,
 @ViewerID smallint,
-@EventID smallint
+@EventID smallint,
+@TicketID smallint = NULL OUTPUT
 AS
 	IF @TicketPrice IS NULL
 		SET @TicketPrice = (
 			SELECT EventTicketPrice
-			FROM Events
+			FROM [Event]
 			WHERE EventID = @EventID
 		)
 
 	INSERT INTO Ticket (EventID, ViewerID, TicketPrice)
 	VALUES (@EventID, @ViewerID, @TicketPrice)
 
+	SET @TicketID = @@IDENTITY
 GO
 
 --  Books an event for a performer.  Performers can only be booked for an event once.
@@ -176,7 +185,7 @@ AS
 		WHERE PerformerID = @PerformerID
 			AND EventID = @EventID
 	) > 0
-		RAISERROR('Cannot book event -- there is already a performer assigned to this event', 1, 10)
+		RAISERROR('Cannot book event -- there is already a performer assigned to this event', 15, 1)
 
 	INSERT INTO Booking (PerformerID, EventID, StageID, BookingComments)
 	VALUES (@PerformerID, @EventID, @StageID, @bookingComments)
@@ -202,7 +211,7 @@ AS
 			AND e.EventDate = @EventDay
 			-- TODO: Compare by day
 	)
-		RAISERROR('A staff member cannot be assigned to more than 1 event per day', 1, 15)
+		RAISERROR('A staff member cannot be assigned to more than 1 event per day', 15, 1)
 
 	INSERT INTO StaffClock (EventID, EventStaffID)
 	VALUES (@EventID, @EventStaffID)
@@ -224,15 +233,31 @@ AS
 
 	-- Get the Event the staff member is registered for
 	SET @StaffClockID = (
-		SELECT e.EventID
+		SELECT sc.StaffClockID
 		FROM [Event] e
 			JOIN StaffClock sc ON e.EventID = sc.EventID
 		WHERE sc.EventStaffID = @EventStaffID
 			AND DATEADD(dd, DATEDIFF(dd,0,e.EventDate), 0) = @Today -- compare only date, not time
 	)
 
+	IF @StaffClockID IS NULL
+	BEGIN
+		DECLARE @Date varchar
+		SET @Date = CAST(@Today AS varchar)
+		RAISERROR('That staff member is not assigned to work %s', 15, 1, @Date)
+	END
+
 	IF (@Clockin = 1)
 	BEGIN
+		-- Throw an error if they're already clocked in
+		IF EXISTS (
+			SELECT 1
+			FROM StaffClock
+			WHERE StaffClockID = @StaffClockID
+				AND SCClockinDate IS NOT NULL
+		)
+			RAISERROR('Staff member is already clocked in!', 15, 1)
+
 		UPDATE StaffClock
 		SET SCClockinDate = GetDate()
 		WHERE StaffClockID = @StaffClockID
@@ -240,8 +265,22 @@ AS
 
 	IF (@Clockout = 1)
 	BEGIN
+		-- Throw an error if they're not clocked in or already clocked out
+		IF EXISTS (
+			SELECT 1
+			FROM StaffClock
+			WHERE StaffClockID = @StaffClockID
+				AND (
+					SCClockinDate IS NULL
+					OR SCClockoutDate IS NOT NULL
+				)
+		)
+			RAISERROR('Staff member is not clocked in or already clocked out!', 15, 1)
+
+		PRINT '     (For testing purposes, adding 3 hours to the clockout date)'
+
 		UPDATE StaffClock
-		SET SCClockoutDate = GetDate()
+		SET SCClockoutDate = DateAdd(hh, 3, GetDate())
 		WHERE StaffClockID = @StaffClockID		
 	END
 
@@ -263,14 +302,13 @@ AS
 			AND SCClockinDate IS NOT NULL
 			AND SCClockoutDate IS NOT NULL
 			AND SCClockinDate < SCClockoutDate
-			AND (
-				 -- Make sure it's on the same date
-				DATEADD(dd, DATEDIFF(dd,0,SCClockinDate), 0)
-				=
-				DATEADD(dd, DATEDIFF(dd,0,SCClockoutDate), 0) 
-			)
+			-- Make sure it's within 9 hours of each other
+			AND DATEDIFF(hh,SCClockinDate, SCClockoutDate) < 9
 	)
-		RAISERROR('You have entered an invalid StaffClockID: %d', 1, 15, @StaffClockID)
+	BEGIN
+		RAISERROR('You have entered an invalid StaffClockID: %d', 15, 1, @StaffClockID)
+	END
+
 
 	SELECT
 		@EventStaffID   = sc.EventStaffID,
@@ -297,7 +335,14 @@ AS
 		WHERE TicketID = @TicketID
 			AND TicketScannedDate IS NOT NULL
 	)
-		RAISERROR('Ticket %d has already been scanned, and re-entry is not allowed', 1, 15, @TicketID)
+		RAISERROR('Ticket %d has already been scanned, and re-entry is not allowed', 15, 1, @TicketID)
+
+	IF NOT EXISTS (
+		SELECT TicketID
+		FROM Ticket
+		WHERE TicketID = @TicketID
+	)
+		RAISERROR('Ticket %d does not exist!', 15, 1, @TicketID)
 
 	UPDATE Ticket
 	SET TicketScannedDate = GetDate()
@@ -336,36 +381,42 @@ AS
 
 	SET @HotelID = (SELECT HotelID FROM [Event] WHERE EventID = @EventID)
 
-	DECLARE revenue_cursor CURSOR
+	DECLARE RevenueCursor CURSOR
 	FOR
 		-- Get all Tickets sold
 		SELECT TicketPrice
 		FROM Ticket
 		WHERE EventID = @EventID
 
-	OPEN revenue_cursor
+	OPEN RevenueCursor
 
-	FETCH NEXT FROM revenue_cursor
+	FETCH NEXT FROM RevenueCursor
 	INTO @Revenue
 
 	WHILE @@FETCH_STATUS = 0
 	BEGIN
 		SET @TotalRevenue = @TotalRevenue + @Revenue
-		FETCH NEXT FROM revenue_cursor INTO @Revenue
+		FETCH NEXT FROM RevenueCursor INTO @Revenue
 	END
 
 	CLOSE RevenueCursor
 	DEALLOCATE RevenueCursor
 	
+	-- This can't work, can't figure out why
+	BEGIN DISTRIBUTED TRANSACTION
+	SET XACT_ABORT ON
+
 	INSERT OPENQUERY (TITAN_BRAEGGER, 
-		'SELECT RevenueAmount, RevenueComments, HotelID, RevenueCategoryID 
+		'SELECT RevenueAmount, RevenueComments, RevenueCategoryID 
 		 FROM Braegger_Hotel.dbo.Revenue') 
 	VALUES (
 		@TotalRevenue,
 		'Ticket sales',
-		@HotelID,
 		6 -- 'Ticket Sales'
 	)
+
+	SET XACT_ABORT OFF
+	COMMIT TRANSACTION
 
 GO
 
