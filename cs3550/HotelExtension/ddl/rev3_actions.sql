@@ -9,6 +9,8 @@ IF EXISTS (SELECT name FROM sysobjects WHERE name = 'tr_eventStatus')
 	DROP TRIGGER tr_eventStatus
 IF EXISTS (SELECT name FROM sysobjects WHERE name = 'tr_staffClockOut')
 	DROP TRIGGER tr_staffClockOut
+IF EXISTS (SELECT name FROM sysobjects WHERE name = 'tr_createEvent')
+	DROP TRIGGER tr_createEvent
 IF EXISTS (SELECT name FROM sysobjects WHERE name = 'sp_purchaseTicket' AND type = 'P')
 	DROP PROC sp_purchaseTicket
 IF EXISTS (SELECT name FROM sysobjects WHERE name = 'sp_bookEvent' AND type = 'P')
@@ -21,8 +23,6 @@ IF EXISTS (SELECT name FROM sysobjects WHERE name = 'sp_paycheck' AND type = 'P'
 	DROP PROC sp_paycheck
 IF EXISTS (SELECT name FROM sysobjects WHERE name = 'sp_scanTicket' AND type = 'P')
 	DROP PROC sp_scanTicket
-IF EXISTS (SELECT name FROM sysobjects WHERE name = 'sp_createEvent' AND type = 'P')
-	DROP PROC sp_createEvent
 IF EXISTS (SELECT name FROM sysobjects WHERE name = 'sp_addEventRevenue' AND type = 'P')
 	DROP PROC sp_addEventRevenue
 
@@ -61,6 +61,25 @@ GO
 -- GO
 -- sp_configure 'Ad Hoc Distributed Queries', 1
 -- reconfigure
+
+GO
+
+-- Creates an event.  If no default ticket price is specified, then the default is 
+-- calculated as the number of staff required divided by two.
+CREATE TRIGGER tr_createEvent
+ON [Event]
+INSTEAD OF INSERT
+AS
+
+	INSERT INTO [Event] (EventName, EventDate, EventMaxTickets, EventNumStaffReq, 
+			EventTicketPrice, HotelID)
+	SELECT EventName, EventDate, EventMaxTickets, EventNumStaffReq, 
+			CASE
+				WHEN EventTicketPrice IS NULL THEN EventNumStaffReq / 2
+				ELSE EventTicketPrice
+			END,
+		HotelID
+	FROM Inserted i
 
 GO
 
@@ -347,26 +366,6 @@ AS
 	UPDATE Ticket
 	SET TicketScannedDate = GetDate()
 	WHERE TicketID = @TicketID
-
-GO
-
--- Creates an event.  If no default ticket price is specified, then the default is 
--- calculated as the number of staff required divided by two.
-CREATE PROC sp_createEvent
-@EventName varchar(64),
-@EventDate smalldatetime,
-@EventMaxTickets smallint,
-@EventNumStaffReq tinyint,
-@EventTicketPrice smallmoney = NULL,
-@HotelID smallint
-AS
-	IF @EventTicketPrice IS NULL
-		SET @EventTicketPrice = @EventNumStaffReq / 2
-
-	INSERT INTO [Event] (EventName, EventDate, EventMaxTickets, EventNumStaffReq, 
-			EventTicketPrice, HotelID)
-	VALUES (@EventName, @EventDate, @EventMaxTickets, @EventNumStaffReq, @EventTicketPrice,
-			@HotelID)
 
 GO
 

@@ -54,22 +54,13 @@ PRINT '----------------------------------------------------'
 PRINT 'Testing creation of an event with an SPROC'
 PRINT '  Creating with a default ticket price'
 
-	EXEC sp_createEvent
-	@EventName = 'Test event sproc 1',
-	@EventDate = '2008-12-03',
-	@EventMaxTickets = 200,
-	@EventNumStaffReq = 30,
-	@EventTicketPrice = 35.00,
-	@HotelID = 2300
+	INSERT INTO [Event] (EventName, EventDate, EventMaxTickets, EventNumStaffReq, EventTicketPrice, HotelID)
+	VALUES ('Test event sproc 1', '2008-12-03', 200, 30, 35.00, 2300)
 
 PRINT '  Creating with no default price (should be EventNumStaffReq / 2)'
 
-	EXEC sp_createEvent
-	@EventName = 'Test event sproc 2',
-	@EventDate = '2008-12-25',
-	@EventMaxTickets = 120,
-	@EventNumStaffReq = 90,
-	@HotelID = 2300
+	INSERT INTO [Event] (EventName, EventDate, EventMaxTickets, EventNumStaffReq, HotelID)
+	VALUES ('Test event sproc 2', '2008-12-25', 120, 90, 2300)
 
 PRINT '  Showing Results:'
 
