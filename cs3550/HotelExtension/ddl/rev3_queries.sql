@@ -51,7 +51,7 @@ PRINT '  Testing UPDATE with valid HotelID'
 	UPDATE [Event] SET HotelID = 2400 WHERE EventID = @EventID
 
 PRINT '----------------------------------------------------'
-PRINT 'Testing creation of an event with an SPROC'
+PRINT 'Testing creation of an event'
 PRINT '  Creating with a default ticket price'
 
 	INSERT INTO [Event] (EventName, EventDate, EventMaxTickets, EventNumStaffReq, EventTicketPrice, HotelID)
