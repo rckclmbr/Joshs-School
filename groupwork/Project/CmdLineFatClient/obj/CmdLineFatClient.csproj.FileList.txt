@@ -1,0 +1,9 @@
+obj\Debug\ResolveAssemblyReference.cache
+bin\Debug\CmdLineFatClient.exe
+bin\Debug\CmdLineFatClient.pdb
+bin\Debug\ATM.BLL.dll
+bin\Debug\ATM.DAL.dll
+bin\Debug\ATM.DAL.pdb
+bin\Debug\ATM.BLL.pdb
+obj\Debug\CmdLineFatClient.exe
+obj\Debug\CmdLineFatClient.pdb

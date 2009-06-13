@@ -1,0 +1,8 @@
+bin\Debug\ATM.DAL.dll.config
+bin\Debug\ATM.DAL.dll
+bin\Debug\ATM.DAL.pdb
+obj\Debug\ResolveAssemblyReference.cache
+obj\Debug\ATM.DAL.dll
+obj\Debug\ATM.DAL.pdb
+bin\Debug\ATM.BLL.dll
+bin\Debug\ATM.BLL.pdb
